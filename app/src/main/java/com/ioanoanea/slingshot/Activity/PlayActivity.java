@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ioanoanea.slingshot.Game.GameRender;
+import com.ioanoanea.slingshot.GameEngine.GameRender;
 
 public class PlayActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

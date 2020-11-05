@@ -1,34 +1,30 @@
-package com.ioanoanea.slingshot.Game;
+package com.ioanoanea.slingshot.GameEngine;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
-import androidx.core.content.ContextCompat;
-
+import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.R;
 
 
 public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
-    private Context context;
+
     private GameLoop gameLoop;
+    private GameArena gameArena;
 
     public GameRender(Context context){
         super(context);
-
-        this.context = context;
 
         // Get surface holder and add callback
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
         gameLoop = new GameLoop(this, surfaceHolder);
+        gameArena = new GameArena(getContext());
 
         setFocusable(true);
     }
@@ -40,17 +36,17 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        gameArena.draw(canvas, getWidth(), getHeight());
+        //gameArena.drawObstacle(canvas, 0, 450, 120);
         drawUPS(canvas);
         drawFPS(canvas);
     }
@@ -65,7 +61,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         int color = getResources().getColor(R.color.teal);
         paint.setColor(color);
         paint.setTextSize(50);
-        canvas.drawText("UPS: " + averageUPS,100, 100, paint);
+        canvas.drawText("UPS: " + averageUPS,100, 150, paint);
     }
 
     /**

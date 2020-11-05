@@ -1,4 +1,4 @@
-package com.ioanoanea.slingshot.Game;
+package com.ioanoanea.slingshot.GameEngine;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
