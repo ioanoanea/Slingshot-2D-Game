@@ -9,11 +9,11 @@ import com.ioanoanea.slingshot.R;
 public class Obstacle {
 
     private Context context;
-    private int positionX;
-    private int positionY;
+    private double positionX;
+    private double positionY;
     private int length;
 
-    public Obstacle(Context context, int positionX, int positionY, int length){
+    public Obstacle(Context context, double positionX, double positionY, int length){
         this.context = context;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -23,18 +23,18 @@ public class Obstacle {
 
     /**
      * Returns obstacle's position X
-     * @return (int) position X
+     * @return (double) position X
      */
-    public int getPositionX() {
+    public double getPositionX() {
         return positionX;
     }
 
 
     /**
      * Returns obstacle's position Y
-     * @return (int) position Y
+     * @return (double) position Y
      */
-    public int getPositionY() {
+    public double getPositionY() {
         return positionY;
     }
 
@@ -48,7 +48,7 @@ public class Obstacle {
 
     /**
      * Returns display density
-     * @return (int) density
+     * @return (float) density
      */
     private float getDensity(){
         return context.getResources().getDisplayMetrics().density;
@@ -62,9 +62,13 @@ public class Obstacle {
     public void draw(Canvas canvas){
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_blue));
-        canvas.drawRect(positionX * getDensity(), positionY * getDensity(),
-                positionX * getDensity() + length * getDensity(),
-                positionY * getDensity() + 20 * getDensity(), paint);
+        canvas.drawRect(
+                (float) positionX * getDensity(),
+                (float) positionY * getDensity(),
+                (float) positionX * getDensity() + length * getDensity(),
+                (float) positionY * getDensity() + 20 * getDensity(),
+                paint
+        );
     }
 
 

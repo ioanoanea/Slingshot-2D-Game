@@ -3,11 +3,11 @@ package com.ioanoanea.slingshot.GameEngine;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.ioanoanea.slingshot.GameObject.GameArena;
-import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.R;
 
@@ -26,15 +26,39 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
-        gameLoop = new GameLoop(this, surfaceHolder);
-        gameArena = new GameArena(getContext());
-
         setFocusable(true);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+        gameLoop = new GameLoop(this, surfaceHolder);
+        gameArena = new GameArena(getContext());
+        sling = new Sling(
+                getContext(),
+                (getWidth() / getDensity()) / 2,
+                ((getHeight() / getDensity()) / 4 * 3),
+                (getWidth() / getDensity()) / 2,
+                (getHeight() / getDensity()) / 4 * 3
+        );
+
         gameLoop.startLoop();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        // Handle touch events actions
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                return true;
+            default:
+                sling.reset();
+                return super.onTouchEvent(event);
+        }
+
     }
 
     @Override
@@ -50,7 +74,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         // here game elements are drawing
         gameArena.draw(canvas, getWidth(), getHeight());
-        sling = new Sling(getContext(), (int)(getWidth() / getDensity()) / 2, (int)((getHeight() / getDensity()) / 4 * 3));
         sling.draw(canvas);
         drawUPS(canvas);
         drawFPS(canvas);
@@ -58,7 +81,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * Returns display density
-     * @return (int) density
+     * @return (float) density
      */
     private float getDensity(){
         return getContext().getResources().getDisplayMetrics().density;
@@ -92,6 +115,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         // update
+        //sling.setCordPosition(sling.getCordPositionX() + 1, sling.getCordPositionY());
     }
 
 }
