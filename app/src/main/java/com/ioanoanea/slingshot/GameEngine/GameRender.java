@@ -52,10 +52,18 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                // If sling is not lock redraw sling's cord
+                if (!sling.isLocked())
+                    sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                // If touch event intersect the sling, unlock the sling
+                if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity()))
+                    sling.unlock();
+                return true;
+            case MotionEvent.ACTION_UP:
+                sling.lock();
+                sling.reset();
                 return true;
             default:
-                sling.reset();
                 return super.onTouchEvent(event);
         }
 

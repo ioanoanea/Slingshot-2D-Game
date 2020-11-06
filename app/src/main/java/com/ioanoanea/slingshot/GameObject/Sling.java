@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 import com.ioanoanea.slingshot.R;
 
@@ -13,6 +14,7 @@ public class Sling {
     private double positionY;
     private double cordPositionX;
     private double cordPositionY;
+    private boolean locked = true;
 
     public Sling(Context context, double positionX, double positionY, double cordPositionX, double cordPositionY){
         this.context = context;
@@ -86,6 +88,30 @@ public class Sling {
 
 
     /**
+     * Check is sling is locked or not
+     * @return (boolean) true if sling is locked, false otherwise
+     */
+    public boolean isLocked() {
+        return locked;
+    }
+
+
+    /**
+     * Lock the sling
+     */
+    public void lock(){
+        this.locked = true;
+    }
+
+
+    /**
+     * Unlock the sling
+     */
+    public void unlock(){
+        this.locked = false;
+    }
+
+    /**
      * Set cord position
      * @param cordPositionX (double) cord position X
      * @param cordPositionY (double) cord position y
@@ -105,12 +131,20 @@ public class Sling {
     }
 
 
+    public boolean intersect(float x, float y){
+        if(Math.abs(x - positionX) < 50 && Math.abs(y - positionY) < 50)
+            return true;
+        else return false;
+    }
+
+
     /**
      * Draw the sling
      * @param canvas (canvas) canvas value
      */
     public void draw(Canvas canvas){
 
+        drawCenter(canvas);
         drawCord(canvas);
 
         Paint paint = new Paint();
@@ -145,6 +179,10 @@ public class Sling {
         paint.setStrokeWidth(5);
         paint.setColor(context.getResources().getColor(R.color.light_grey));
 
+        // Set cord position y >= than sling position Y
+        if (cordPositionY < positionY)
+            cordPositionY = positionY;
+
         // Draw left side cord
         canvas.drawLine(
                 (float) getLeftRectanglePositionX() * getDensity(),
@@ -162,6 +200,14 @@ public class Sling {
                 (float) this.positionY * getDensity(),
                 paint
         );
+
+    }
+
+
+    private void drawCenter(Canvas canvas){
+        Paint paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.light_grey));
+        canvas.drawCircle((float) positionX * getDensity(), (float) positionY * getDensity(), 5, paint);
     }
 
 }
