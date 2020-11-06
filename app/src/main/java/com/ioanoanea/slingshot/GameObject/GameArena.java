@@ -37,7 +37,7 @@ public class GameArena {
         canvas.drawColor(context.getResources().getColor(R.color.dark_grey));
 
         // Draw arena's walls
-        // Draw a rectangle with heavy strokes
+        // Draw a heavy stroked rectangle
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_blue));
         paint.setStyle(Paint.Style.STROKE);
@@ -45,20 +45,4 @@ public class GameArena {
         canvas.drawRect(0, 0, width, height, paint);
     }
 
-
-    /**
-     * Draw an obstacle in the arena
-     * @param canvas (canvas) canvas value
-     * @param positionX (int) position x of the obstacle
-     * @param positionY (int) position y of the obstacle
-     * @param length (int) length of the obstacle
-     */
-    public void drawObstacle(Canvas canvas, int positionX, int positionY, int length){
-        // Draw an horizontal oriented rectangle at specified position
-        Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.light_blue));
-        canvas.drawRect(positionX * getDensity(), positionY * getDensity(),
-                positionX * getDensity() + length * getDensity(),
-                positionY * getDensity() + 20 * getDensity(), paint);
-    }
 }

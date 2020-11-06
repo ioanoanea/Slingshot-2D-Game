@@ -7,6 +7,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.ioanoanea.slingshot.GameObject.GameArena;
+import com.ioanoanea.slingshot.GameObject.Obstacle;
+import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.R;
 
 
@@ -15,6 +17,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameLoop gameLoop;
     private GameArena gameArena;
+    private Sling sling;
 
     public GameRender(Context context){
         super(context);
@@ -45,10 +48,20 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        // here game elements are drawing
         gameArena.draw(canvas, getWidth(), getHeight());
-        //gameArena.drawObstacle(canvas, 0, 450, 120);
+        sling = new Sling(getContext(), (int)(getWidth() / getDensity()) / 2, (int)((getHeight() / getDensity()) / 4 * 3));
+        sling.draw(canvas);
         drawUPS(canvas);
         drawFPS(canvas);
+    }
+
+    /**
+     * Returns display density
+     * @return (int) density
+     */
+    private float getDensity(){
+        return getContext().getResources().getDisplayMetrics().density;
     }
 
     /**
