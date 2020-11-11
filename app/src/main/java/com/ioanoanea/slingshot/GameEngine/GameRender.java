@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Sling;
+import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 
@@ -34,13 +35,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         gameLoop = new GameLoop(this, surfaceHolder);
         gameArena = new GameArena(getContext());
-        sling = new Sling(
-                getContext(),
-                (getWidth() / getDensity()) / 2,
-                ((getHeight() / getDensity()) / 4 * 3),
-                (getWidth() / getDensity()) / 2,
-                (getHeight() / getDensity()) / 4 * 3
-        );
+        sling = new Sling(getContext(), getWidth(), getHeight());
 
         gameLoop.startLoop();
     }
@@ -53,8 +48,9 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
                 // If sling is not lock redraw sling's cord
-                if (!sling.isLocked())
+                if (!sling.isLocked()){
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                }
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity()))
                     sling.unlock();
@@ -83,8 +79,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // here game elements are drawing
         gameArena.draw(canvas, getWidth(), getHeight());
         sling.draw(canvas);
-        drawUPS(canvas);
-        drawFPS(canvas);
+        //drawUPS(canvas);
+        //drawFPS(canvas);
     }
 
     /**

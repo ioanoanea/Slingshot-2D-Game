@@ -5,23 +5,28 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.widget.Toast;
 
+import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 public class Sling {
 
-    private Context context;
-    private double positionX;
-    private double positionY;
+    private final Context context;
+    private final double screenWidth;
+    private final double screenHeight;
+    private final double positionX;
+    private final double positionY;
     private double cordPositionX;
     private double cordPositionY;
     private boolean locked = true;
 
-    public Sling(Context context, double positionX, double positionY, double cordPositionX, double cordPositionY){
+    public Sling(Context context, double screenWidth, double screenHeight){
         this.context = context;
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.cordPositionX = cordPositionX;
-        this.cordPositionY = cordPositionY;
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.positionX = (screenWidth / getDensity()) / 2;
+        this.positionY = (screenHeight / getDensity()) / 4 * 3;
+        this.cordPositionX = (screenWidth / getDensity()) / 2;
+        this.cordPositionY = (screenHeight / getDensity()) / 4 * 3;
     }
 
     /**
@@ -118,7 +123,11 @@ public class Sling {
      */
     public void setCordPosition(double cordPositionX, double cordPositionY){
         this.cordPositionX = cordPositionX;
-        this.cordPositionY = cordPositionY;
+
+        // if cord position Y is outside of allowed range, move cord position Y inside of allowed range
+        if(cordPositionY < getPositionY())
+            this.cordPositionY = getPositionY();
+        else this.cordPositionY = cordPositionY;
     }
 
 
@@ -132,7 +141,7 @@ public class Sling {
 
 
     public boolean intersect(float x, float y){
-        if(Math.abs(x - positionX) < 50 && Math.abs(y - positionY) < 50)
+        if(Math.abs(x - getPositionX()) < 50 && Math.abs(y - getPositionY()) < 50)
             return true;
         else return false;
     }
@@ -144,6 +153,8 @@ public class Sling {
      */
     public void draw(Canvas canvas){
 
+        if(!isLocked())
+            drawGuideLine(canvas);
         drawCenter(canvas);
         drawCord(canvas);
 
@@ -153,18 +164,18 @@ public class Sling {
         // Draw sling's left side rectangle
         canvas.drawRect(
                 (float) (getLeftRectanglePositionX() - 7) * getDensity(),
-                (float) (positionY - 7) * getDensity(),
+                (float) (getPositionY() - 7) * getDensity(),
                 (float) (getLeftRectanglePositionX() + 7) *getDensity(),
-                (float) (positionY + 7) * getDensity(),
+                (float) (getPositionY() + 7) * getDensity(),
                 paint
         );
 
         // Draw sling's right side rectangle
         canvas.drawRect(
                 (float) (getRightRectanglePositionX() - 7) * getDensity(),
-                (float) (positionY - 7) * getDensity(),
+                (float) (getPositionY() - 7) * getDensity(),
                 (float) (getRightRectanglePositionX() + 7) * getDensity(),
-                (float) (positionY + 7) * getDensity(),
+                (float) (getPositionY() + 7) * getDensity(),
                 paint
         );
     }
@@ -179,35 +190,77 @@ public class Sling {
         paint.setStrokeWidth(5);
         paint.setColor(context.getResources().getColor(R.color.light_grey));
 
-        // Set cord position y >= than sling position Y
-        if (cordPositionY < positionY)
-            cordPositionY = positionY;
-
         // Draw left side cord
         canvas.drawLine(
                 (float) getLeftRectanglePositionX() * getDensity(),
-                (float) this.positionY * getDensity(),
-                (float) cordPositionX * getDensity(),
-                (float) cordPositionY * getDensity(),
+                (float) getPositionY() * getDensity(),
+                (float) getCordPositionX() * getDensity(),
+                (float) getCordPositionY() * getDensity(),
                 paint
         );
 
         // Draw right side cord
         canvas.drawLine(
-                (float) cordPositionX * getDensity(),
-                (float) cordPositionY * getDensity(),
+                (float) getCordPositionX() * getDensity(),
+                (float) getCordPositionY() * getDensity(),
                 (float) getRightRectanglePositionX() * getDensity(),
-                (float) this.positionY * getDensity(),
+                (float) getPositionY() * getDensity(),
                 paint
         );
 
     }
 
 
+    /**
+     * Draw sling center as a smal circle
+     * @param canvas (canvas) canvas value
+     */
     private void drawCenter(Canvas canvas){
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_grey));
-        canvas.drawCircle((float) positionX * getDensity(), (float) positionY * getDensity(), 5, paint);
+        canvas.drawCircle((float) getPositionX() * getDensity(), (float) getPositionY() * getDensity(), 5, paint);
+    }
+
+
+    /**
+     * Draw indicator line
+     * @param canvas (canvas) canvas value
+     */
+    private void drawGuideLine(Canvas canvas){
+        // Set a line equation for line between sling center and cord
+        LineEquation equation = new LineEquation(
+                getCordPositionX() * getDensity(),
+                getCordPositionY() * getDensity(),
+                getPositionX() * getDensity(),
+                getPositionY() * getDensity()
+        );
+
+        double x;
+        double y;
+
+        // check guide line direction
+        if(getPositionX() - getCordPositionX() < 0)
+            x = 19 * getDensity();
+        else x = screenWidth - 19 * getDensity();
+
+        y = equation.getPositionY(x);
+
+        // if point is out of allowed range, move point inside allowed range
+        if(y < 19 * getDensity()){
+            y = 19 * getDensity();
+            x = equation.getPositionX(y);
+        }
+
+        Paint paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.light_grey));
+
+        // draw line
+        canvas.drawLine(
+                (float) getCordPositionX() * getDensity(),
+                (float) getCordPositionY() * getDensity(),
+                (float) x, (float) y,
+                paint
+        );
     }
 
 }

@@ -63,10 +63,10 @@ public class Obstacle {
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_blue));
         canvas.drawRect(
-                (float) positionX * getDensity(),
-                (float) positionY * getDensity(),
-                (float) positionX * getDensity() + length * getDensity(),
-                (float) positionY * getDensity() + 20 * getDensity(),
+                (float) getPositionX() * getDensity(),
+                (float) getPositionY() * getDensity(),
+                (float) getPositionX() * getDensity() + getLength() * getDensity(),
+                (float) getPositionY() * getDensity() + 20 * getDensity(),
                 paint
         );
     }
