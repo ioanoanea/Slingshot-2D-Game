@@ -57,7 +57,7 @@ public class Obstacle {
 
     /**
      * Draw the obstacle in the arena
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     public void draw(Canvas canvas){
         Paint paint = new Paint();

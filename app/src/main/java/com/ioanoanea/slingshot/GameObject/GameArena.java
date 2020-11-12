@@ -28,7 +28,7 @@ public class GameArena {
 
     /**
      * Draw the game arena
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      * @param width (int) screen width
      * @param height (int) screen height
      */

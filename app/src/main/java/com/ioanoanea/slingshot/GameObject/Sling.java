@@ -102,6 +102,15 @@ public class Sling {
 
 
     /**
+     * Check if sling's cord is stretched
+     * @return true if it is stretched, false otherwise
+     */
+    public boolean isStretched(){
+        return getCordPositionX() != getPositionX() || getCordPositionY() != getPositionY();
+    }
+
+
+    /**
      * Lock the sling
      */
     public void lock(){
@@ -135,21 +144,54 @@ public class Sling {
      * Reset sling's cord to initial position
      */
     public void reset(){
-        this.cordPositionX = this.positionX;
-        this.cordPositionY = this.positionY;
+        if(isStretched()){
+
+            // set line equation for stretched cord
+            LineEquation lineEquation = new LineEquation(
+                    getCordPositionX(),
+                    getCordPositionY(),
+                    getPositionX(),
+                    getPositionY()
+            );
+
+            int plusX;
+
+            // set moving direction for x position
+            if(getCordPositionX() < getPositionX())
+                plusX = 10;
+            else plusX = -10;
+
+            // move cord position closer to the sling
+            if(getCordPositionY() == getPositionY()){
+                setCordPosition(
+                        getCordPositionX() + plusX,
+                        lineEquation.getPositionY(getCordPositionX() + plusX)
+                );
+            } else{
+                setCordPosition(
+                        lineEquation.getPositionX(getCordPositionY() - 10),
+                        getCordPositionY() - 10
+                );
+            }
+        }
+
     }
 
 
-    public boolean intersect(float x, float y){
-        if(Math.abs(x - getPositionX()) < 50 && Math.abs(y - getPositionY()) < 50)
-            return true;
-        else return false;
+    /**
+     * Verify if other object intersects sling
+     * @param x (double) other object position X
+     * @param y (double) other object position Y
+     * @return true if object intersects sling, false otherwise
+     */
+    public boolean intersect(double x, double y){
+        return Math.abs(x - getPositionX()) < 50 && Math.abs(y - getPositionY()) < 50;
     }
 
 
     /**
      * Draw the sling
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     public void draw(Canvas canvas){
 
@@ -183,7 +225,7 @@ public class Sling {
 
     /**
      * Draw sling's cord
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     public void drawCord(Canvas canvas){
         Paint paint = new Paint();
@@ -213,7 +255,7 @@ public class Sling {
 
     /**
      * Draw sling center as a smal circle
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     private void drawCenter(Canvas canvas){
         Paint paint = new Paint();
@@ -224,7 +266,7 @@ public class Sling {
 
     /**
      * Draw indicator line
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     private void drawGuideLine(Canvas canvas){
         // Set a line equation for line between sling center and cord

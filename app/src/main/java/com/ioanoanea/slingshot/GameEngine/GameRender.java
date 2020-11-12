@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
@@ -19,6 +20,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private GameArena gameArena;
     private Sling sling;
+    private Bullet bullet;
 
     public GameRender(Context context){
         super(context);
@@ -36,6 +38,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this, surfaceHolder);
         gameArena = new GameArena(getContext());
         sling = new Sling(getContext(), getWidth(), getHeight());
+        bullet = new Bullet(getContext(), -100, -100);
 
         gameLoop.startLoop();
     }
@@ -50,14 +53,17 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 // If sling is not lock redraw sling's cord
                 if (!sling.isLocked()){
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                    bullet.setPosition(event.getX() / getDensity(), event.getY() / getDensity());
                 }
                 // If touch event intersect the sling, unlock the sling
-                if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity()))
+                if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
+                    bullet = new Bullet(getContext(), event.getX() / getDensity(), event.getY() / getDensity());
+                }
                 return true;
             case MotionEvent.ACTION_UP:
                 sling.lock();
-                sling.reset();
+                bullet.unlock();
                 return true;
             default:
                 return super.onTouchEvent(event);
@@ -79,6 +85,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // here game elements are drawing
         gameArena.draw(canvas, getWidth(), getHeight());
         sling.draw(canvas);
+        bullet.draw(canvas);
         //drawUPS(canvas);
         //drawFPS(canvas);
     }
@@ -93,7 +100,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * draw a text with value of updates per second on screen
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     public void drawUPS(Canvas canvas){
         String averageUPS = Double.toString(gameLoop.getAverageUPS());
@@ -106,7 +113,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * draw a text with value frames per second on screen
-     * @param canvas (canvas) canvas value
+     * @param canvas (Canvas) canvas value
      */
     public void drawFPS(Canvas canvas){
         String averageFPS = Double.toString(gameLoop.getAverageFPS());
@@ -119,7 +126,18 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         // update
-        //sling.setCordPosition(sling.getCordPositionX() + 1, sling.getCordPositionY());
+        if(sling.isLocked() && sling.isStretched()){
+            sling.reset();
+        }
+
+        if(!bullet.isLocked()){
+            bullet.move(new LineEquation(
+                    sling.getCordPositionX(),
+                    sling.getCordPositionY(),
+                    sling.getPositionX(),
+                    sling.getPositionY()
+            ), 10);
+        }
     }
 
 }
