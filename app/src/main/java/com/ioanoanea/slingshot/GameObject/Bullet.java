@@ -121,6 +121,7 @@ public class Bullet {
                 30,
                 paint
         );
+
     }
 
 }

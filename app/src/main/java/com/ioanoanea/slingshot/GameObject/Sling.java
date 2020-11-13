@@ -43,7 +43,7 @@ public class Sling {
      * @return (double) position X
      */
     private double getLeftRectanglePositionX(){
-        return positionX - 35;
+        return positionX - 30;
     }
 
 
@@ -52,7 +52,7 @@ public class Sling {
      * @return (double) position X
      */
     private double getRightRectanglePositionX(){
-        return positionX + 35;
+        return positionX + 30;
     }
 
 

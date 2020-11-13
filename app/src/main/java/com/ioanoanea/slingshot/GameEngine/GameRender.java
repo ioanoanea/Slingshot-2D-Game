@@ -21,6 +21,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private GameArena gameArena;
     private Sling sling;
     private Bullet bullet;
+    private LineEquation directionLineEcuation;
 
     public GameRender(Context context){
         super(context);
@@ -64,6 +65,12 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_UP:
                 sling.lock();
                 bullet.unlock();
+                directionLineEcuation = new LineEquation(
+                        sling.getCordPositionX(),
+                        sling.getCordPositionY(),
+                        sling.getPositionX(),
+                        sling.getPositionY()
+                );
                 return true;
             default:
                 return super.onTouchEvent(event);
@@ -131,12 +138,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         if(!bullet.isLocked()){
-            bullet.move(new LineEquation(
-                    sling.getCordPositionX(),
-                    sling.getCordPositionY(),
-                    sling.getPositionX(),
-                    sling.getPositionY()
-            ), 10);
+            bullet.move(directionLineEcuation, 10);
         }
     }
 
