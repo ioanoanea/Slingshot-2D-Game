@@ -3,23 +3,26 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 public class Bullet {
 
-    private Context context;
-    private double positionX;
-    private double positionY;
+    private final Context context;
+    private final double screenWidth;
+    private final double screenHeight;
+    private double positionX = -100;
+    private double positionY = -100;
     private boolean locked = true;
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
 
-    public Bullet(Context context, double positionX, double positionY){
+    public Bullet(Context context, double screenWidth, double screenHeight){
         this.context = context;
-        this.positionX = positionX;
-        this.positionY = positionY;
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
     }
 
 
@@ -38,8 +41,32 @@ public class Bullet {
      * @param positionY (double) position Y
      */
     public void setPosition(double positionX, double positionY){
-        this.positionX = positionX;
-        this.positionY = positionY;
+
+        // if next bullet position is not out of game arena, update bullet position
+        if (positionX > 30 && positionY > 30 && positionX < screenWidth / getDensity() - 30 && positionY < screenHeight / getDensity() - 30){
+            this.positionX = positionX;
+            this.positionY = positionY;
+        }
+        // if position next X is left to game arena left side, set position X to game arena left side and lock bullet
+        else if (positionX < 30){
+            this.positionX = 30;
+            lock();
+        }
+        // if position next Y is upper than game arena up side, set position Y to game arena up side and lock bullet
+        else if (positionY < 30){
+            this.positionY = 30;
+            lock();
+        }
+        // if position next X is right to game arena right side, set position X to game arena right side and lock bullet
+        else if(positionX > screenWidth / getDensity() - 30){
+            this.positionX = screenWidth / getDensity() - 30;
+            lock();
+        }
+        // if position next Y is lower than game arena bottom side, set position Y to game arena bottom side and lock bullet
+        else {
+            this.positionY = screenHeight / getDensity() - 30;
+            lock();
+        }
     }
 
 
@@ -105,10 +132,10 @@ public class Bullet {
      * Move the bullet
      */
     public void move(){
-        setPosition(
-                getPositionX() + distanceToNextPositionX,
-                getPositionY() + distanceToNextPositionY
-        );
+            setPosition(
+                    getPositionX() + distanceToNextPositionX,
+                    getPositionY() + distanceToNextPositionY
+            );
     }
 
     /**

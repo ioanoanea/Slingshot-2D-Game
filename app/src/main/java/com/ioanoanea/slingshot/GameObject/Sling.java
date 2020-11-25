@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
@@ -108,7 +109,7 @@ public class Sling {
      * @return true if it is stretched, false otherwise
      */
     public boolean isStretched(){
-        return getCordPositionY() != getPositionY() && Math.abs(getPositionX() - getCordPositionX()) > 0.1;
+        return cordPositionY != positionY || Math.abs(positionX - cordPositionX) > Math.abs(distanceToNextCordPositionX);
     }
 
 
@@ -186,6 +187,7 @@ public class Sling {
      */
     public void draw(Canvas canvas){
 
+        // if sling is unlocked draw guide line
         if(!isLocked()) {
             drawGuideLine(canvas);
         }
@@ -262,16 +264,17 @@ public class Sling {
      * @param canvas (Canvas) canvas value
      */
     private void drawGuideLine(Canvas canvas){
-        double x = getPositionX() + 3 * distanceToNextCordPositionY;
-        double y = getPositionY() + 3 * distanceToNextCordPositionY;
+        // determine guide line end point position
+        double x = getPositionX() + 5 * distanceToNextCordPositionX;
+        double y = getPositionY() + 5 * distanceToNextCordPositionY;
 
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_grey));
 
         // draw line
         canvas.drawLine(
-                (float) getPositionX() * getDensity(),
-                (float) getPositionY() * getDensity(),
+                (float) getCordPositionX() * getDensity(),
+                (float) getCordPositionY() * getDensity(),
                 (float) x * getDensity(),
                 (float) y * getDensity(),
                 paint

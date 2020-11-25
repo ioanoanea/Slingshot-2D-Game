@@ -40,7 +40,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this, surfaceHolder);
         gameArena = new GameArena(getContext());
         sling = new Sling(getContext(), getWidth(), getHeight());
-        bullet = new Bullet(getContext(), -100, -100);
+        bullet = new Bullet(getContext(), getWidth(), getHeight());
 
         gameLoop.startLoop();
     }
@@ -80,12 +80,16 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
-                    bullet = new Bullet(getContext(), event.getX() / getDensity(), event.getY() / getDensity());
+                    bullet = new Bullet(getContext(), getWidth(), getHeight());
+                    bullet.setPosition(event.getX() / getDensity(), event.getY() / getDensity());
                 }
                 return true;
             case MotionEvent.ACTION_UP:
-                sling.lock();
-                bullet.unlock();
+                // if sling is unlocked, unlock bullet and lock sling
+                if (!sling.isLocked()){
+                    sling.lock();
+                    bullet.unlock();
+                }
 
                 // Set sling next cord position X
                 sling.setDistanceToNextCordPositionX(
