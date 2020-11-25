@@ -23,7 +23,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private GameArena gameArena;
     private Sling sling;
     private Bullet bullet;
-    private LineEquation directionLineEcuation;
 
     public GameRender(Context context){
         super(context);
@@ -49,6 +48,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+
         // Handle touch events actions
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
@@ -57,6 +58,24 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 if (!sling.isLocked()){
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
                     bullet.setPosition(event.getX() / getDensity(), event.getY() / getDensity());
+
+                    // Set sling next cord position X
+                    sling.setDistanceToNextCordPositionX(
+                            distanceCalculator.getDistanceToNextPositionX(
+                                    new Point((int) sling.getCordPositionX(), (int) sling.getCordPositionY()),
+                                    new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                    10
+                            )
+                    );
+
+                    // Set sling next cord position Y
+                    sling.setDistanceToNextCordPositionY(
+                            distanceCalculator.getDistanceToNextPositionY(
+                                    new Point((int) sling.getCordPositionX(), (int) sling.getCordPositionY()),
+                                    new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                    10
+                            )
+                    );
                 }
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
@@ -67,31 +86,41 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_UP:
                 sling.lock();
                 bullet.unlock();
-                DistanceCalculator distanceCalculator = new DistanceCalculator();
 
-                // set bullet distance to next position X
+                // Set sling next cord position X
+                sling.setDistanceToNextCordPositionX(
+                        distanceCalculator.getDistanceToNextPositionX(
+                                new Point((int) sling.getCordPositionX(), (int) sling.getCordPositionY()),
+                                new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                10
+                        )
+                );
+
+                // Set sling next cord position Y
+                sling.setDistanceToNextCordPositionY(
+                        distanceCalculator.getDistanceToNextPositionY(
+                                new Point((int) sling.getCordPositionX(), (int) sling.getCordPositionY()),
+                                new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                10
+                        )
+                );
+
+                // Set bullet distance to next position X
                 bullet.setDistanceToNextPositionX(
-                        distanceCalculator.getDistanceX(
+                        distanceCalculator.getDistanceToNextPositionX(
                                 new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()),
                                 new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
                                 10
                         )
                 );
 
-                // set bullet distance to next position Y
+                // Set bullet distance to next position Y
                 bullet.setDistanceToNextPositionY(
-                        distanceCalculator.getDistanceY(
+                        distanceCalculator.getDistanceToNextPositionY(
                                 new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()),
                                 new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
                                 10
                         )
-                );
-
-                directionLineEcuation = new LineEquation(
-                        sling.getCordPositionX(),
-                        sling.getCordPositionY(),
-                        sling.getPositionX(),
-                        sling.getPositionY()
                 );
                 return true;
             default:
