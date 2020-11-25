@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.GameEngine;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -10,6 +11,7 @@ import android.view.SurfaceView;
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Sling;
+import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
@@ -65,6 +67,26 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_UP:
                 sling.lock();
                 bullet.unlock();
+                DistanceCalculator distanceCalculator = new DistanceCalculator();
+
+                // set bullet distance to next position X
+                bullet.setDistanceToNextPositionX(
+                        distanceCalculator.getDistanceX(
+                                new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()),
+                                new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                10
+                        )
+                );
+
+                // set bullet distance to next position Y
+                bullet.setDistanceToNextPositionY(
+                        distanceCalculator.getDistanceY(
+                                new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()),
+                                new Point((int) sling.getPositionX(), (int) sling.getPositionY()),
+                                10
+                        )
+                );
+
                 directionLineEcuation = new LineEquation(
                         sling.getCordPositionX(),
                         sling.getCordPositionY(),
@@ -138,7 +160,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         if(!bullet.isLocked()){
-            bullet.move(directionLineEcuation, 10);
+            bullet.move();
         }
     }
 

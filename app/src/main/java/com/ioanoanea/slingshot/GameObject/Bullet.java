@@ -13,6 +13,8 @@ public class Bullet {
     private double positionX;
     private double positionY;
     private boolean locked = true;
+    private double distanceToNextPositionX = 0;
+    private double distanceToNextPositionY = 0;
 
     public Bullet(Context context, double positionX, double positionY){
         this.context = context;
@@ -83,29 +85,31 @@ public class Bullet {
         this.locked = false;
     }
 
-
     /**
-     * Move bullet
-     * @param lineEquation (LineEquation) bullet's direction equation
-     * @param speed (int) bullet's speed
+     * Set distance from current position X to next position X
+     * @param distanceToPositionX (double) distance to next postion X
      */
-    public void move(LineEquation lineEquation, int speed){
-        //TODO Calculate distance
-
-        if(getPositionX() > 0 && getPositionX() < 2000 && getPositionY() > 0){
-            double x = lineEquation.getPositionX(getPositionY() - speed);
-            double y = getPositionY() - speed;
-
-            if(x == 0){
-                x = lineEquation.getPositionX(getPositionY() - speed - 1);
-                y = getPositionY() - speed - 1;
-                setPosition(x, y);
-            } else {
-                setPosition(x, y);
-            }
-        }
+    public void setDistanceToNextPositionX(double distanceToPositionX) {
+        this.distanceToNextPositionX = distanceToPositionX;
     }
 
+    /**
+     * Set distance from current position Y to next position Y
+     * @param distanceToPositionY (double) distance to next position Y
+     */
+    public void setDistanceToNextPositionY(double distanceToPositionY) {
+        this.distanceToNextPositionY = distanceToPositionY;
+    }
+
+    /**
+     * Move the bullet
+     */
+    public void move(){
+        setPosition(
+                getPositionX() + distanceToNextPositionX,
+                getPositionY() + distanceToNextPositionY
+        );
+    }
 
     /**
      * Draw bullet
