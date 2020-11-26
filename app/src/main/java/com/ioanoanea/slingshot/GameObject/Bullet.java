@@ -57,25 +57,21 @@ public class Bullet {
         // if position next X is left to game arena left side, set position X to game arena left side and lock bullet
         if (positionX < 29){
             this.positionX = 29;
-            this.positionY = positionY;
             setDistanceToNextPositionX(-distanceToNextPositionX);
             //setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next Y is upper than game arena up side, set position Y to game arena up side and lock bullet
         if (positionY < 29){
-            this.positionX = positionX;
             this.positionY = 29;
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next X is right to game arena right side, set position X to game arena right side and lock bullet
         if(positionX > screenWidth / getDensity() - 29){
             this.positionX = screenWidth / getDensity() - 29;
-            this.positionY = positionY;
             setDistanceToNextPositionX(-distanceToNextPositionX);
         }
         // if position next Y is lower than game arena bottom side, set position Y to game arena bottom side and lock bullet
         if (positionY > screenHeight / getDensity() - 29) {
-            this.positionY = positionY;
             this.positionY = screenHeight / getDensity() - 29;
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }

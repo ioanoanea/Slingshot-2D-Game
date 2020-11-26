@@ -109,7 +109,7 @@ public class Sling {
      * @return true if it is stretched, false otherwise
      */
     public boolean isStretched(){
-        return cordPositionY != positionY || Math.abs(positionX - cordPositionX) > Math.abs(distanceToNextCordPositionX) + 5;
+        return cordPositionY != positionY || cordPositionX != positionX;
     }
 
 
@@ -150,6 +150,10 @@ public class Sling {
         // if cord position is lower than game arena bottom side, set cord position inside game arena
         if (cordPositionY > screenHeight / getDensity() - 29){
             this.cordPositionY = screenHeight / getDensity() - 29;
+        }
+
+        if ((distanceToNextCordPositionX > 0 && cordPositionX > positionX) || (distanceToNextCordPositionX < 0 && cordPositionX < positionX)){
+            this.cordPositionX = positionX;
         }
 
     }

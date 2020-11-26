@@ -83,7 +83,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
                     bullet = new Bullet(getContext(), getWidth(), getHeight());
-                    bullet.setPosition(event.getX() / getDensity(), event.getY() / getDensity());
+                    bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
                 }
                 return true;
             case MotionEvent.ACTION_UP:
