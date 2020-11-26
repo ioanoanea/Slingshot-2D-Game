@@ -15,9 +15,9 @@ public class Bullet {
     private final double screenHeight;
     private double positionX = -100;
     private double positionY = -100;
-    private boolean locked = true;
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
+    private double decreaseSpeed;
 
     public Bullet(Context context, double screenWidth, double screenHeight){
         this.context = context;
@@ -36,36 +36,48 @@ public class Bullet {
 
 
     /**
+     * Check if bullet is set (bullet is set if his position is inside the screen)
+     * @return true if bullet is set, false otherwise
+     */
+    public boolean isSet(){
+        return positionX > 0 && positionY > 0;
+    }
+
+
+    /**
      * Set bullet position
      * @param positionX (double) position x
      * @param positionY (double) position Y
      */
     public void setPosition(double positionX, double positionY){
 
-        // if next bullet position is not out of game arena, update bullet position
-        if (positionX > 30 && positionY > 30 && positionX < screenWidth / getDensity() - 30 && positionY < screenHeight / getDensity() - 30){
-            this.positionX = positionX;
-            this.positionY = positionY;
-        }
+        this.positionX = positionX;
+        this.positionY = positionY;
+
         // if position next X is left to game arena left side, set position X to game arena left side and lock bullet
-        else if (positionX < 30){
-            this.positionX = 30;
-            lock();
+        if (positionX < 29){
+            this.positionX = 29;
+            this.positionY = positionY;
+            setDistanceToNextPositionX(-distanceToNextPositionX);
+            //setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next Y is upper than game arena up side, set position Y to game arena up side and lock bullet
-        else if (positionY < 30){
-            this.positionY = 30;
-            lock();
+        if (positionY < 29){
+            this.positionX = positionX;
+            this.positionY = 29;
+            setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next X is right to game arena right side, set position X to game arena right side and lock bullet
-        else if(positionX > screenWidth / getDensity() - 30){
-            this.positionX = screenWidth / getDensity() - 30;
-            lock();
+        if(positionX > screenWidth / getDensity() - 29){
+            this.positionX = screenWidth / getDensity() - 29;
+            this.positionY = positionY;
+            setDistanceToNextPositionX(-distanceToNextPositionX);
         }
         // if position next Y is lower than game arena bottom side, set position Y to game arena bottom side and lock bullet
-        else {
-            this.positionY = screenHeight / getDensity() - 30;
-            lock();
+        if (positionY > screenHeight / getDensity() - 29) {
+            this.positionY = positionY;
+            this.positionY = screenHeight / getDensity() - 29;
+            setDistanceToNextPositionY(-distanceToNextPositionY);
         }
     }
 
@@ -87,31 +99,6 @@ public class Bullet {
         return positionY;
     }
 
-
-    /**
-     * Check if bullet is locked
-     * @return (boolean) true if bullet is locked, false otherwise
-     */
-    public boolean isLocked() {
-        return locked;
-    }
-
-
-    /**
-     * Lock bullet
-     */
-    public void lock(){
-        this.locked = true;
-    }
-
-
-    /**
-     * Unlock bullet
-     */
-    public void unlock(){
-        this.locked = false;
-    }
-
     /**
      * Set distance from current position X to next position X
      * @param distanceToPositionX (double) distance to next postion X
@@ -129,6 +116,14 @@ public class Bullet {
     }
 
     /**
+     * Set decreasesing speed
+     * @param decreaseSpeed (double) decrease speed
+     */
+    public void setDecreaseSpeed(double decreaseSpeed) {
+        this.decreaseSpeed = decreaseSpeed;
+    }
+
+    /**
      * Move the bullet
      */
     public void move(){
@@ -136,6 +131,11 @@ public class Bullet {
                     getPositionX() + distanceToNextPositionX,
                     getPositionY() + distanceToNextPositionY
             );
+
+            // Decrease speed at every frame
+            setDistanceToNextPositionX(distanceToNextPositionX * decreaseSpeed);
+            setDistanceToNextPositionY(distanceToNextPositionY * decreaseSpeed);
+            setDecreaseSpeed(decreaseSpeed - 0.0001);
     }
 
     /**

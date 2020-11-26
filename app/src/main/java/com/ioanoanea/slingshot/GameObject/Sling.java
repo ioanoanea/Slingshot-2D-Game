@@ -109,7 +109,7 @@ public class Sling {
      * @return true if it is stretched, false otherwise
      */
     public boolean isStretched(){
-        return cordPositionY != positionY || Math.abs(positionX - cordPositionX) > Math.abs(distanceToNextCordPositionX);
+        return cordPositionY != positionY || Math.abs(positionX - cordPositionX) > Math.abs(distanceToNextCordPositionX) + 5;
     }
 
 
@@ -138,6 +138,20 @@ public class Sling {
 
         // if cord position Y is outside of allowed range, move cord position Y inside of allowed range
         this.cordPositionY = Math.max(cordPositionY, getPositionY());
+
+        // if cord position is left to the game arena, set cord position inside game arena
+        if (cordPositionX < 29){
+            this.cordPositionX = 29;
+        }
+        // if cord position is right to the game arena, set cord position inside game arena
+        if (cordPositionX > screenWidth / getDensity() - 29){
+            this.cordPositionX = screenWidth / getDensity() - 29;
+        }
+        // if cord position is lower than game arena bottom side, set cord position inside game arena
+        if (cordPositionY > screenHeight / getDensity() - 29){
+            this.cordPositionY = screenHeight / getDensity() - 29;
+        }
+
     }
 
     /**

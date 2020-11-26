@@ -11,10 +11,14 @@ import com.ioanoanea.slingshot.R;
 
 public class GameArena {
 
-    private Context context;
+    private final Context context;
+    private  final double screenWidth;
+    private final double screenHeight;
 
-    public GameArena(Context context){
+    public GameArena(Context context, double screenWidth, double screenHeight){
         this.context = context;
+        this. screenWidth = screenWidth;
+        this. screenHeight = screenHeight;
     }
 
     /**
@@ -29,10 +33,8 @@ public class GameArena {
     /**
      * Draw the game arena
      * @param canvas (Canvas) canvas value
-     * @param width (int) screen width
-     * @param height (int) screen height
      */
-    public void draw(Canvas canvas, int width, int height){
+    public void draw(Canvas canvas){
         // Draw background color
         canvas.drawColor(context.getResources().getColor(R.color.dark_grey));
 
@@ -42,7 +44,7 @@ public class GameArena {
         paint.setColor(context.getResources().getColor(R.color.light_blue));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(38 * getDensity());
-        canvas.drawRect(0, 0, width, height, paint);
+        canvas.drawRect(0, 0, (float) screenWidth, (float) screenHeight, paint);
     }
 
 }
