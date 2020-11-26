@@ -136,6 +136,8 @@ public class Bullet {
             setDistanceToNextPositionX(distanceToNextPositionX * decreaseSpeed);
             setDistanceToNextPositionY(distanceToNextPositionY * decreaseSpeed);
             setDecreaseSpeed(decreaseSpeed - 0.0001);
+
+            // TODO: Calculate speed depending on sling stretching
     }
 
     /**
