@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
+import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
@@ -24,6 +25,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameLoop gameLoop;
     private GameArena gameArena;
+    private ArrayList<Obstacle> obstacles;
     private Sling sling;
     private Bullet bullet;
     private double SPEED = 0;
@@ -85,7 +87,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
-                    bullet = new Bullet(getContext(), getWidth(), getHeight());
+                    bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
                     bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
                 }
                 return true;
@@ -145,8 +147,10 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         // initialize game elements
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
+        obstacles = new ArrayList<>();
+        setObstacles();
         sling = new Sling(getContext(), getWidth(), getHeight());
-        bullet = new Bullet(getContext(), getWidth(), getHeight());
+        bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
         sling = new Sling(getContext(), getWidth() ,getHeight());
     }
 
@@ -159,6 +163,9 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         // here game elements are drawing
         gameArena.draw(canvas);
+        for(Obstacle obstacle: obstacles){
+            obstacle.draw(canvas);
+        }
         sling.draw(canvas);
         bullet.draw(canvas);
 
@@ -184,6 +191,14 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         double maxSpeed = 25;
         double minSpeed = 0.15;
         return Math.min((Math.max(Math.pow(sling.getCordDistance() / 30, 1.8), minSpeed)), maxSpeed);
+    }
+
+    /**
+     * Set obstacle list
+     */
+    public void setObstacles(){
+        Obstacle obstacle = new Obstacle(getContext(), 0, 400, 120);
+        obstacles.add(obstacle);
     }
 
     /**

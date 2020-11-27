@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
+import java.util.ArrayList;
+
 public class Bullet {
 
     private final Context context;
@@ -18,11 +20,13 @@ public class Bullet {
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
     private double decreaseSpeed;
+    private ArrayList<Obstacle> obstacles;
 
-    public Bullet(Context context, double screenWidth, double screenHeight){
+    public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
         this.context = context;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        this.obstacles = obstacles;
     }
 
 
@@ -54,26 +58,39 @@ public class Bullet {
         this.positionX = positionX;
         this.positionY = positionY;
 
-        // if position next X is left to game arena left side, set position X to game arena left side and lock bullet
-        if (positionX < 29){
-            this.positionX = 29;
+        // if position next X is left to game arena left side, set position X to game arena left side and change direction
+        if (positionX * getDensity() < 19 * getDensity() + 29){
+            this.positionX = 19 + 29 / getDensity();
             setDistanceToNextPositionX(-distanceToNextPositionX);
             //setDistanceToNextPositionY(-distanceToNextPositionY);
         }
-        // if position next Y is upper than game arena up side, set position Y to game arena up side and lock bullet
-        if (positionY < 29){
-            this.positionY = 29;
+        // if position next Y is upper than game arena up side, set position Y to game arena up side and change direction
+        if (positionY * getDensity() < 19 * getDensity() + 29){
+            this.positionY = 19 + 29 / getDensity();
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
-        // if position next X is right to game arena right side, set position X to game arena right side and lock bullet
-        if(positionX > screenWidth / getDensity() - 29){
-            this.positionX = screenWidth / getDensity() - 29;
+        // if position next X is right to game arena right side, set position X to game arena right side change direction
+        if(positionX * getDensity() > screenWidth - (19 * getDensity() + 29)){
+            this.positionX = screenWidth / getDensity() - (19 + 29 / getDensity());
             setDistanceToNextPositionX(-distanceToNextPositionX);
         }
-        // if position next Y is lower than game arena bottom side, set position Y to game arena bottom side and lock bullet
-        if (positionY > screenHeight / getDensity() - 29) {
-            this.positionY = screenHeight / getDensity() - 29;
+        // if position next Y is lower than game arena bottom side, set position Y to game arena bottom side change direction
+        if (positionY * getDensity() > screenHeight - (19 * getDensity() + 29)) {
+            this.positionY = screenHeight / getDensity() - (19 + 29 / getDensity());
             setDistanceToNextPositionY(-distanceToNextPositionY);
+        }
+
+        // check if ball intersects any obstacle
+        for (Obstacle obstacle : obstacles){
+            // if intersects an obstacle set ball position outside of the obstacle and change direction
+            if(intersectsObstacle(positionX, positionY, obstacle)){
+                if (distanceToNextPositionY < 0){
+                    this.positionY = obstacle.getPositionY() + 20 + 29 / getDensity();
+                } else {
+                    this.positionY = obstacle.getPositionY() - 29 / getDensity();
+                }
+                setDistanceToNextPositionY(-distanceToNextPositionY);
+            }
         }
     }
 
@@ -117,6 +134,18 @@ public class Bullet {
      */
     public void setDecreaseSpeed(double decreaseSpeed) {
         this.decreaseSpeed = decreaseSpeed;
+    }
+
+    /**
+     * Verify if point of position (x, y) intersects obstacle
+     * @param x (double) position X
+     * @param y (double) position Y
+     * @param obstacle (Obstacle) obstacle
+     * @return true if point intersect the obstacle
+     */
+    private boolean intersectsObstacle(double x, double y, Obstacle obstacle){
+        return obstacle.getPositionX() < x && x < obstacle.getPositionX() + obstacle.getLength() &&
+                obstacle.getPositionY() < y && y < obstacle.getPositionY() + 20;
     }
 
     /**
