@@ -197,7 +197,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * Set obstacle list
      */
     public void setObstacles(){
-        Obstacle obstacle = new Obstacle(getContext(), 0, 400, 120);
+        Obstacle obstacle = new Obstacle(getContext(), 200, 400, 120);
         obstacles.add(obstacle);
     }
 

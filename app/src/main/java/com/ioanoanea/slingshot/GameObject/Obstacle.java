@@ -12,6 +12,7 @@ public class Obstacle {
     private double positionX;
     private double positionY;
     private int length;
+    private int height = 20;
 
     public Obstacle(Context context, double positionX, double positionY, int length){
         this.context = context;
@@ -47,6 +48,14 @@ public class Obstacle {
     }
 
     /**
+     * Returns obstacle's height
+     * @return (int) height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
      * Returns display density
      * @return (float) density
      */
@@ -66,7 +75,7 @@ public class Obstacle {
                 (float) getPositionX() * getDensity(),
                 (float) getPositionY() * getDensity(),
                 (float) getPositionX() * getDensity() + getLength() * getDensity(),
-                (float) getPositionY() * getDensity() + 20 * getDensity(),
+                (float) getPositionY() * getDensity() + height * getDensity(),
                 paint
         );
     }
