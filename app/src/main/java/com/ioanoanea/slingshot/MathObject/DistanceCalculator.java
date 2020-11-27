@@ -6,7 +6,18 @@ public class DistanceCalculator {
 
 
     /**
+     * Return distance between two points A and B
+     * @param pointA (Point) point A
+     * @param pointB (Point) point B
+     * @return distance between point a and point B
+     */
+    public double getDistance(Point pointA, Point pointB){
+        return Math.sqrt(Math.pow(pointA.x - pointB.x, 2) + Math.pow(pointA.y - pointB.y, 2));
+    }
+
+    /**
      * Calculate distance between point A position x and point A next position X
+     * Note: next position X is calculated on the direction from A - B
      * @param pointA (Point) point A
      * @param pointB (Point) point B
      * @param speed (double) Pixels at one move
@@ -28,6 +39,7 @@ public class DistanceCalculator {
 
     /**
      * Calculate distance between point A position Y and point A next position Y
+     * Note: next position X is calculated on the direction from A - B
      * @param pointA (Point) point A
      * @param pointB (Point) point B
      * @param speed (double) Pixels at one move

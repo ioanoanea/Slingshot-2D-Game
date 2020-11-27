@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.widget.Toast;
 
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
@@ -20,6 +21,7 @@ public class Sling {
     private double cordPositionY;
     private double distanceToNextCordPositionX = 0;
     private double distanceToNextCordPositionY = 0;
+    private double guideLineLength = 50;
     private boolean locked = true;
 
     public Sling(Context context, double screenWidth, double screenHeight){
@@ -175,6 +177,14 @@ public class Sling {
     }
 
     /**
+     * Set guide line length
+     * @param guideLineLength (double) guide line length
+     */
+    public void setGuideLineLength(double guideLineLength) {
+        this.guideLineLength = guideLineLength;
+    }
+
+    /**
      * Reset sling's cord to initial position
      */
     public void reset(){
@@ -196,6 +206,19 @@ public class Sling {
      */
     public boolean intersect(double x, double y){
         return Math.abs(x - getPositionX()) < 50 && Math.abs(y - getPositionY()) < 50;
+    }
+
+
+    /**
+     * Returns distance between cord position and sling position
+     * @return (double) distance between cord position and sling position
+     */
+    public double getCordDistance(){
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+        return distanceCalculator.getDistance(
+                new Point((int) getPositionX(), (int) getPositionY()),
+                new Point((int) getCordPositionX(), (int) getCordPositionY())
+        );
     }
 
 
@@ -283,8 +306,23 @@ public class Sling {
      */
     private void drawGuideLine(Canvas canvas){
         // determine guide line end point position
-        double x = getPositionX() + 5 * distanceToNextCordPositionX;
-        double y = getPositionY() + 5 * distanceToNextCordPositionY;
+        DistanceCalculator distanceCalculator = new DistanceCalculator();
+
+
+        //double x = getPositionX() + 5 * distanceToNextCordPositionX;
+        //double y = getPositionY() + 5 * distanceToNextCordPositionY;
+
+        double x = positionX + distanceCalculator.getDistanceToNextPositionX(
+                new Point((int) cordPositionX, (int) cordPositionY),
+                new Point((int) positionX, (int) positionY),
+                guideLineLength
+        );
+
+        double y = positionY + distanceCalculator.getDistanceToNextPositionY(
+                new Point((int) cordPositionX, (int) cordPositionY),
+                new Point((int) positionX, (int) positionY),
+                guideLineLength
+        );
 
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_grey));

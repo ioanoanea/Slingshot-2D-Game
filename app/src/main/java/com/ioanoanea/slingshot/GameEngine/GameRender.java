@@ -26,7 +26,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private GameArena gameArena;
     private Sling sling;
     private Bullet bullet;
-    private static final double SPEED = 12;
+    private double SPEED = 0;
 
     public GameRender(Context context){
         super(context);
@@ -59,6 +59,9 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     // Set sling cord position and bullet position
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
                     bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
+
+                    // Determine speed based on sling stretching
+                    SPEED = getSpeed(sling.getCordDistance());
 
                     // Set sling next cord position X
                     sling.setDistanceToNextCordPositionX(
@@ -161,6 +164,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         //drawUPS(canvas);
         //drawFPS(canvas);
+        bullet.drawSpeed(canvas);
     }
 
     /**
@@ -169,6 +173,17 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      */
     private float getDensity(){
         return getContext().getResources().getDisplayMetrics().density;
+    }
+
+    /**
+     * Determine the speed based on sling cord distance
+     * @param distance (double) distance
+     * @return estimated speed
+     */
+    private double getSpeed(double distance){
+        double maxSpeed = 25;
+        double minSpeed = 0.15;
+        return Math.min((Math.max(Math.pow(sling.getCordDistance() / 30, 1.8), minSpeed)), maxSpeed);
     }
 
     /**

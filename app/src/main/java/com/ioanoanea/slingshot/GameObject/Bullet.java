@@ -112,7 +112,7 @@ public class Bullet {
     }
 
     /**
-     * Set decreasesing speed
+     * Set decreasing speed
      * @param decreaseSpeed (double) decrease speed
      */
     public void setDecreaseSpeed(double decreaseSpeed) {
@@ -133,6 +133,16 @@ public class Bullet {
             setDistanceToNextPositionY(distanceToNextPositionY * decreaseSpeed);
             setDecreaseSpeed(decreaseSpeed - 0.0001);
 
+            // Set distance to next position to 0 if it is too smaller (this will skip many useless calculations)
+            // if distance to next position X is smaller than 0.001 set distance to next position X to 0
+            if (Math.abs(distanceToNextPositionX) < 0.001){
+                distanceToNextPositionX = 0;
+            }
+            // if distance to next position Y is smaller than 0.001 set distance to next position Y to 0
+            if (Math.abs(distanceToNextPositionY) < 0.001){
+                distanceToNextPositionY = 0;
+            }
+
             // TODO: Calculate speed depending on sling stretching
     }
 
@@ -151,6 +161,15 @@ public class Bullet {
                 paint
         );
 
+    }
+
+    public void drawSpeed(Canvas canvas){
+        String currentSpeed = Double.toString(Math.abs(distanceToNextPositionX));
+        Paint paint = new Paint();
+        int color = context.getResources().getColor(R.color.teal);
+        paint.setColor(color);
+        paint.setTextSize(50);
+        canvas.drawText("Speed: " + currentSpeed, 100, 150, paint);
     }
 
 }
