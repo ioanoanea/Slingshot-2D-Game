@@ -17,6 +17,7 @@ public class Bullet {
     private final double screenHeight;
     private double positionX = -100;
     private double positionY = -100;
+    private final double radius;
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
     private double decreaseSpeed;
@@ -27,6 +28,7 @@ public class Bullet {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.obstacles = obstacles;
+        this.radius = 29;
     }
 
 
@@ -59,54 +61,54 @@ public class Bullet {
         this.positionY = positionY;
 
         // if position next X is left to game arena left side, set position X to game arena left side and change direction
-        if (positionX * getDensity() < 19 * getDensity() + 29){
-            this.positionX = 19 + 29 / getDensity();
+        if (positionX * getDensity() < 19 * getDensity() + radius){
+            this.positionX = 19 + radius / getDensity();
             setDistanceToNextPositionX(-distanceToNextPositionX);
             //setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next Y is upper than game arena up side, set position Y to game arena up side and change direction
-        if (positionY * getDensity() < 19 * getDensity() + 29){
-            this.positionY = 19 + 29 / getDensity();
+        if (positionY * getDensity() < 19 * getDensity() + radius){
+            this.positionY = 19 + radius / getDensity();
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next X is right to game arena right side, set position X to game arena right side change direction
-        if(positionX * getDensity() > screenWidth - (19 * getDensity() + 29)){
-            this.positionX = screenWidth / getDensity() - (19 + 29 / getDensity());
+        if(positionX * getDensity() > screenWidth - (19 * getDensity() + radius)){
+            this.positionX = screenWidth / getDensity() - (19 + radius / getDensity());
             setDistanceToNextPositionX(-distanceToNextPositionX);
         }
         // if next position Y is lower than game arena bottom side, set position Y to game arena bottom side and change direction
-        if (positionY * getDensity() > screenHeight - (19 * getDensity() + 29)) {
-            this.positionY = screenHeight / getDensity() - (19 + 29 / getDensity());
+        if (positionY * getDensity() > screenHeight - (19 * getDensity() + radius)) {
+            this.positionY = screenHeight / getDensity() - (19 + radius / getDensity());
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
 
         // check if bullet intersects any obstacle
         for (Obstacle obstacle : obstacles){
-            // if intersects an obstacle set ball position outside of the obstacle and change direction
-            if(intersectsObstacle(positionX, positionY, obstacle)){
-                // if bullet intersects object on left side set bullet position outside the obstacle and change direction
-                if (positionX - distanceToNextPositionX < obstacle.getPositionX()){
-                    this.positionX = obstacle.getPositionX() - 29 / getDensity();
-                    setDistanceToNextPositionX(-distanceToNextPositionX);
-                }
-                // if bullet intersects object on right side set bullet position outside the obstacle and change direction
-                if (positionX - distanceToNextPositionX > obstacle.getPositionX() + obstacle.getLength()){
-                    this.positionX = obstacle.getPositionX() + obstacle.getLength() + 29 / getDensity();
-                    setDistanceToNextPositionX(-distanceToNextPositionX);
-                }
-                // if bullet intersects object on top side set bullet position outside the obstacle and change direction
-                if (positionY - distanceToNextPositionY < obstacle.getPositionY()){
-                    this.positionY = obstacle.getPositionY() - 29 / getDensity();
-                    setDistanceToNextPositionY(-distanceToNextPositionY);
-                }
-                // if bullet intersects object on bottom side set bullet position outside the obstacle and change direction
-                if (positionY - distanceToNextPositionY > obstacle.getPositionY() + obstacle.getHeight()){
-                    setDistanceToNextPositionY(-distanceToNextPositionY);
-                    this.positionY = obstacle.getPositionY() + obstacle.getHeight() + 29 / getDensity();
-                }
+            // if bullet intersects top side of the obstacle
+            if (positionY - distanceToNextPositionY < obstacle.getTop() && obstacle.intersectsSouthArea(positionX, positionY)){
+                this.positionY = obstacle.getTop() - radius / getDensity();
+                setDistanceToNextPositionY(-distanceToNextPositionY);
             }
+            // if bullet intersects bottom side of the obstacle
+            if (positionY - distanceToNextPositionY > obstacle.getBottom() && obstacle.intersectNorthArea(positionX, positionY)){
+                this.positionY = obstacle.getBottom() + radius / getDensity();
+                setDistanceToNextPositionY(-distanceToNextPositionY);
+            }
+            // if bullet intersects left side of the obstacle
+            if (positionX - distanceToNextPositionX < obstacle.getLeft() && obstacle.intersectsEastArea(positionX, positionY)){
+                this.positionX = obstacle.getLeft() - radius / getDensity();
+                setDistanceToNextPositionX(-distanceToNextPositionX);
+            }
+            // if bullet intersects right side of the obstacle
+            if (positionX - distanceToNextPositionX > obstacle.getRight() && obstacle.intersectsWestArea(positionX, positionY)){
+                this.positionX = obstacle.getRight() + radius / getDensity();
+                setDistanceToNextPositionX(-distanceToNextPositionX);
+            }
+
         }
     }
+
+
 
 
     /**
@@ -151,18 +153,6 @@ public class Bullet {
     }
 
     /**
-     * Verify if point of position (x, y) intersects obstacle
-     * @param x (double) position X
-     * @param y (double) position Y
-     * @param obstacle (Obstacle) obstacle
-     * @return true if point intersect the obstacle
-     */
-    private boolean intersectsObstacle(double x, double y, Obstacle obstacle){
-        return obstacle.getPositionX() < x && x < obstacle.getPositionX() + obstacle.getLength() &&
-                obstacle.getPositionY() < y && y < obstacle.getPositionY() + 20;
-    }
-
-    /**
      * Move the bullet
      */
     public void move(){
@@ -185,8 +175,6 @@ public class Bullet {
             if (Math.abs(distanceToNextPositionY) < 0.001){
                 distanceToNextPositionY = 0;
             }
-
-            // TODO: Calculate speed depending on sling stretching
     }
 
     /**
@@ -206,13 +194,25 @@ public class Bullet {
 
     }
 
-    public void drawSpeed(Canvas canvas){
-        String currentSpeed = Double.toString(Math.abs(distanceToNextPositionX));
+    public void drawPositionArea(Canvas canvas){
         Paint paint = new Paint();
-        int color = context.getResources().getColor(R.color.teal);
-        paint.setColor(color);
+        paint.setColor(context.getResources().getColor(R.color.teal));
         paint.setTextSize(50);
-        canvas.drawText("Speed: " + currentSpeed, 100, 150, paint);
+        String area;
+        Obstacle obstacle = obstacles.get(0);
+        if (obstacle.intersectNorthArea(getPositionX(), getPositionY())){
+            area = "North";
+        } else if (obstacle.intersectsSouthArea(getPositionX(), getPositionY())){
+            area = "South";
+        } else if (obstacle.intersectsWestArea(getPositionX(), getPositionY())){
+            area = "West";
+        } else if (obstacle.intersectsEastArea(getPositionX(), getPositionY())){
+            area = "East";
+        } else {
+            area = "Outside";
+        }
+
+        canvas.drawText(area, 100, 200, paint);
     }
 
 }

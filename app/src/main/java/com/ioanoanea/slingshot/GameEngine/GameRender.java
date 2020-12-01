@@ -171,7 +171,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         //drawUPS(canvas);
         //drawFPS(canvas);
-        bullet.drawSpeed(canvas);
+        bullet.drawPositionArea(canvas);
     }
 
     /**
@@ -188,7 +188,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * @return estimated speed
      */
     private double getSpeed(double distance){
-        double maxSpeed = 25;
+        double maxSpeed = 15;
         double minSpeed = 0.15;
         return Math.min((Math.max(Math.pow(sling.getCordDistance() / 30, 1.8), minSpeed)), maxSpeed);
     }
@@ -197,7 +197,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * Set obstacle list
      */
     public void setObstacles(){
-        Obstacle obstacle = new Obstacle(getContext(), 200, 400, 120);
+        Obstacle obstacle = new Obstacle(getContext(), 280, 400, 120);
         obstacles.add(obstacle);
     }
 
