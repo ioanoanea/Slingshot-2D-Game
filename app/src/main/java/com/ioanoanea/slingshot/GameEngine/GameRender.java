@@ -13,6 +13,7 @@ import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
+import com.ioanoanea.slingshot.GameObject.TargetObject;
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
@@ -26,6 +27,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private GameArena gameArena;
     private ArrayList<Obstacle> obstacles;
+    private ArrayList<TargetObject> targetObjects;
     private Sling sling;
     private Bullet bullet;
     private double SPEED = 0;
@@ -147,8 +149,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         // initialize game elements
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
-        obstacles = new ArrayList<>();
         setObstacles();
+        setTargetObjects();
         sling = new Sling(getContext(), getWidth(), getHeight());
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
         sling = new Sling(getContext(), getWidth() ,getHeight());
@@ -165,6 +167,10 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         gameArena.draw(canvas);
         for(Obstacle obstacle: obstacles){
             obstacle.draw(canvas);
+        }
+
+        for(TargetObject targetObject: targetObjects){
+            targetObject.draw(canvas);
         }
         sling.draw(canvas);
         bullet.draw(canvas);
@@ -197,8 +203,15 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * Set obstacle list
      */
     public void setObstacles(){
+        obstacles = new ArrayList<>();
         Obstacle obstacle = new Obstacle(getContext(), 280, 400, 120);
         obstacles.add(obstacle);
+    }
+
+    public void setTargetObjects(){
+        targetObjects = new ArrayList<>();
+        TargetObject targetObject = new TargetObject(getContext(), 100, 50);
+        targetObjects.add(targetObject);
     }
 
     /**
@@ -235,6 +248,12 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         if (bullet.isSet()){
             bullet.move();
+        }
+
+        for (TargetObject targetObject: targetObjects){
+            if (targetObject.intersects(bullet.getPositionX(), bullet.getPositionY())){
+                targetObject.destroy();
+            }
         }
     }
 

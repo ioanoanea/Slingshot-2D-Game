@@ -21,7 +21,7 @@ public class Bullet {
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
     private double decreaseSpeed;
-    private ArrayList<Obstacle> obstacles;
+    private final ArrayList<Obstacle> obstacles;
 
     public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
         this.context = context;
@@ -107,8 +107,6 @@ public class Bullet {
 
         }
     }
-
-
 
 
     /**
