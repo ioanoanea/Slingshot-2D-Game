@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.ioanoanea.slingshot.Animation.CrackingAnimation;
 import com.ioanoanea.slingshot.R;
 
 public class TargetObject {
@@ -123,6 +124,10 @@ public class TargetObject {
                     (float) bottom * getDensity(),
                     paint
             );
+        } else {
+            CrackingAnimation crackingAnimation = new CrackingAnimation(context, this);
+            crackingAnimation.animate();
+            crackingAnimation.draw(canvas);
         }
     }
 }

@@ -3,6 +3,8 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.widget.Toast;
 
 import com.ioanoanea.slingshot.MathObject.LineEquation;
@@ -142,6 +144,14 @@ public class Bullet {
         this.distanceToNextPositionY = distanceToPositionY;
     }
 
+    public double getDistanceToNextPositionX() {
+        return distanceToNextPositionX;
+    }
+
+    public double getDistanceToNextPositionY() {
+        return distanceToNextPositionY;
+    }
+
     /**
      * Set decreasing speed
      * @param decreaseSpeed (double) decrease speed
@@ -190,27 +200,6 @@ public class Bullet {
                 paint
         );
 
-    }
-
-    public void drawPositionArea(Canvas canvas){
-        Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.teal));
-        paint.setTextSize(50);
-        String area;
-        Obstacle obstacle = obstacles.get(0);
-        if (obstacle.intersectNorthArea(getPositionX(), getPositionY())){
-            area = "North";
-        } else if (obstacle.intersectsSouthArea(getPositionX(), getPositionY())){
-            area = "South";
-        } else if (obstacle.intersectsWestArea(getPositionX(), getPositionY())){
-            area = "West";
-        } else if (obstacle.intersectsEastArea(getPositionX(), getPositionY())){
-            area = "East";
-        } else {
-            area = "Outside";
-        }
-
-        canvas.drawText(area, 100, 200, paint);
     }
 
 }

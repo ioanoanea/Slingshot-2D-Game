@@ -100,6 +100,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                         sling.lock();
                         // Set value of
                         bullet.setDecreaseSpeed(0.9995);
+                        bullet.addTrace();
                     }
 
                     // Set sling next cord position X
@@ -177,7 +178,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         //drawUPS(canvas);
         //drawFPS(canvas);
-        bullet.drawPositionArea(canvas);
     }
 
     /**
@@ -210,7 +210,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     public void setTargetObjects(){
         targetObjects = new ArrayList<>();
-        TargetObject targetObject = new TargetObject(getContext(), 100, 50);
+        TargetObject targetObject = new TargetObject(getContext(), 300, 50);
         targetObjects.add(targetObject);
     }
 
