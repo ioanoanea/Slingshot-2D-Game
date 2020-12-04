@@ -3,11 +3,7 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.widget.Toast;
 
-import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
@@ -22,7 +18,7 @@ public class Bullet {
     private final double radius;
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
-    private double decreaseSpeed;
+    private double speed;
     private final ArrayList<Obstacle> obstacles;
 
     public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
@@ -144,20 +140,16 @@ public class Bullet {
         this.distanceToNextPositionY = distanceToPositionY;
     }
 
-    public double getDistanceToNextPositionX() {
-        return distanceToNextPositionX;
-    }
-
-    public double getDistanceToNextPositionY() {
-        return distanceToNextPositionY;
-    }
-
     /**
      * Set decreasing speed
-     * @param decreaseSpeed (double) decrease speed
+     * @param speed (double) decrease speed
      */
-    public void setDecreaseSpeed(double decreaseSpeed) {
-        this.decreaseSpeed = decreaseSpeed;
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public boolean isMoving(){
+        return distanceToNextPositionX != 0 || distanceToNextPositionY != 0;
     }
 
     /**
@@ -170,9 +162,9 @@ public class Bullet {
             );
 
             // Decrease speed at every frame
-            setDistanceToNextPositionX(distanceToNextPositionX * decreaseSpeed);
-            setDistanceToNextPositionY(distanceToNextPositionY * decreaseSpeed);
-            setDecreaseSpeed(decreaseSpeed - 0.0001);
+            setDistanceToNextPositionX(distanceToNextPositionX * speed);
+            setDistanceToNextPositionY(distanceToNextPositionY * speed);
+            setSpeed(speed - 0.0001);
 
             // Set distance to next position to 0 if it is too smaller (this will skip many useless calculations)
             // if distance to next position X is smaller than 0.001 set distance to next position X to 0

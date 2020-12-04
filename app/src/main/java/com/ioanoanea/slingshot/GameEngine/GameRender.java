@@ -14,8 +14,8 @@ import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
+import com.ioanoanea.slingshot.GameObject.Trace;
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
-import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<TargetObject> targetObjects;
     private Sling sling;
     private Bullet bullet;
+    private Trace bulletTrace;
     private double SPEED = 0;
 
     public GameRender(Context context){
@@ -90,6 +91,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
                     bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
+                    bulletTrace = new Trace(getContext());
                     bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
                 }
                 return true;
@@ -99,8 +101,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     if (!sling.isLocked()){
                         sling.lock();
                         // Set value of
-                        bullet.setDecreaseSpeed(0.9995);
-                        bullet.addTrace();
+                        bullet.setSpeed(0.9995);
                     }
 
                     // Set sling next cord position X
@@ -155,6 +156,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         sling = new Sling(getContext(), getWidth(), getHeight());
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
         sling = new Sling(getContext(), getWidth() ,getHeight());
+        bulletTrace = new Trace(getContext());
     }
 
     @Override
@@ -174,6 +176,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             targetObject.draw(canvas);
         }
         sling.draw(canvas);
+        bulletTrace.draw(canvas);
         bullet.draw(canvas);
 
         //drawUPS(canvas);
@@ -248,6 +251,12 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         if (bullet.isSet()){
             bullet.move();
+            if (bullet.isMoving()){
+                bulletTrace.adPosition(new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()));
+            }
+            if (bulletTrace.maxLengthReached()){
+                bulletTrace.removePosition();
+            }
         }
 
         for (TargetObject targetObject: targetObjects){
