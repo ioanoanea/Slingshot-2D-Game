@@ -6,16 +6,15 @@ import android.graphics.Paint;
 
 import com.ioanoanea.slingshot.R;
 
-public class Obstacle {
+public class Obstacle extends Object {
 
-    private final Context context;
     private final double left;
     private final double right;
     private final double top;
     private final double bottom;
 
     public Obstacle(Context context, double positionX, double positionY, double length){
-        this.context = context;
+        super(context);
         this.left = positionX - length / 2;
         this.right = positionX + length / 2;
         this.top = positionY - 10;
@@ -23,7 +22,7 @@ public class Obstacle {
     }
 
     public Obstacle(Context context, double left, double right, double top, double bottom){
-        this.context = context;
+        super(context);
         this.left = left;
         this.right = right;
         this.top = top;
@@ -76,14 +75,6 @@ public class Obstacle {
      */
     public int getHeight() {
         return (int) (bottom - top);
-    }
-
-    /**
-     * Returns display density
-     * @return (float) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
     }
 
     /**

@@ -9,26 +9,16 @@ import android.widget.Toast;
 
 import com.ioanoanea.slingshot.R;
 
-public class GameArena {
+public class GameArena extends Object {
 
-    private final Context context;
     private  final double screenWidth;
     private final double screenHeight;
 
     public GameArena(Context context, double screenWidth, double screenHeight){
-        this.context = context;
+        super(context);
         this. screenWidth = screenWidth;
         this. screenHeight = screenHeight;
     }
-
-    /**
-     * Returns display density
-     * @return (int) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
-    }
-
 
     /**
      * Draw the game arena

@@ -8,9 +8,8 @@ import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
 
-public class Bullet {
+public class Bullet extends Object {
 
-    private final Context context;
     private final double screenWidth;
     private final double screenHeight;
     private double positionX = -100;
@@ -22,20 +21,11 @@ public class Bullet {
     private final ArrayList<Obstacle> obstacles;
 
     public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
-        this.context = context;
+        super(context);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.obstacles = obstacles;
         this.radius = 29;
-    }
-
-
-    /**
-     * Returns display density
-     * @return (float) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
     }
 
 
@@ -164,7 +154,7 @@ public class Bullet {
             // Decrease speed at every frame
             setDistanceToNextPositionX(distanceToNextPositionX * speed);
             setDistanceToNextPositionY(distanceToNextPositionY * speed);
-            setSpeed(speed - 0.0001);
+            setSpeed(speed - Math.pow(2, speed) / 50000);
 
             // Set distance to next position to 0 if it is too smaller (this will skip many useless calculations)
             // if distance to next position X is smaller than 0.001 set distance to next position X to 0

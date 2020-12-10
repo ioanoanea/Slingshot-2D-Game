@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -39,6 +41,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // Get surface holder and add callback
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+        setObstacles();
+        setTargetObjects();
 
         setFocusable(true);
     }
@@ -151,11 +155,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         // initialize game elements
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
-        setObstacles();
-        setTargetObjects();
         sling = new Sling(getContext(), getWidth(), getHeight());
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
-        sling = new Sling(getContext(), getWidth() ,getHeight());
         bulletTrace = new Trace(getContext());
     }
 
@@ -179,6 +180,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         bulletTrace.draw(canvas);
         bullet.draw(canvas);
 
+        //drawSpeed(canvas);
         //drawUPS(canvas);
         //drawFPS(canvas);
     }
@@ -197,9 +199,9 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * @return estimated speed
      */
     private double getSpeed(double distance){
-        double maxSpeed = 15;
+        double maxSpeed = 10;
         double minSpeed = 0.15;
-        return Math.min((Math.max(Math.pow(sling.getCordDistance() / 30, 1.8), minSpeed)), maxSpeed);
+        return Math.min((Math.max(Math.pow(sling.getCordDistance() / 50, 1.8), minSpeed)), maxSpeed);
     }
 
     /**
@@ -241,6 +243,15 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(50);
         canvas.drawText("FPS: " + averageFPS, 100, 200, paint);
+    }
+
+    private void drawSpeed(Canvas canvas){
+        Paint paint = new Paint();
+        int color = getResources().getColor(R.color.teal);
+        paint.setColor(color);
+        paint.setTextSize(50);
+
+        canvas.drawText("Speed" + SPEED, 100, 300, paint);
     }
 
     public void update(){

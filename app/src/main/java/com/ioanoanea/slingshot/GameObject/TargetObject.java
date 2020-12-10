@@ -7,9 +7,8 @@ import android.graphics.Paint;
 import com.ioanoanea.slingshot.Animation.CrackingAnimation;
 import com.ioanoanea.slingshot.R;
 
-public class TargetObject {
+public class TargetObject extends Object {
 
-    private final Context context;
     private final double positionX;
     private final double positionY;
     private final double left;
@@ -19,21 +18,13 @@ public class TargetObject {
     private boolean destroyed = false;
 
     public TargetObject(Context context, double positionX, double positionY){
-        this.context = context;
+        super(context);
         this.positionX = positionX;
         this.positionY = positionY;
         this.left = positionX - 15;
         this.right = positionX + 15;
         this.top = positionY - 15;
         this.bottom = positionY + 15;
-    }
-
-    /**
-     * Returns display density
-     * @return (float) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
     }
 
     /**

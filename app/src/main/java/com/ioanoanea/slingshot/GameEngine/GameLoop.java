@@ -9,8 +9,8 @@ import android.view.SurfaceHolder;
 public class GameLoop extends Thread {
 
 
-    private GameRender gameRender;
-    private SurfaceHolder surfaceHolder;
+    private final GameRender gameRender;
+    private final SurfaceHolder surfaceHolder;
 
     private boolean isRunning = false;
     private double averageUPS = 0;
@@ -76,6 +76,7 @@ public class GameLoop extends Thread {
                 synchronized (surfaceHolder){
                     // update game rendering
                     gameRender.update();
+                    gameRender.update();
                     updateCount++;
                     // draw
                     gameRender.draw(canvas);
@@ -106,6 +107,8 @@ public class GameLoop extends Thread {
                 }
             }
 
+
+            /*
             // Skip frames to keep up with target UPS
             while(sleepTime < 0 && updateCount < MAX_UPS - 1){
                 // Update game rendering
@@ -115,6 +118,8 @@ public class GameLoop extends Thread {
                 elapsedTime = System.currentTimeMillis() - startTime;
                 sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
             }
+             */
+
 
             // Calculate average UPS and FPS
             elapsedTime = System.currentTimeMillis() - startTime;

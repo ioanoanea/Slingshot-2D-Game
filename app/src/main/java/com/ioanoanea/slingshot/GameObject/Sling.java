@@ -10,9 +10,8 @@ import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
-public class Sling {
+public class Sling extends Object {
 
-    private final Context context;
     private final double screenWidth;
     private final double screenHeight;
     private final double positionX;
@@ -25,21 +24,13 @@ public class Sling {
     private boolean locked = true;
 
     public Sling(Context context, double screenWidth, double screenHeight){
-        this.context = context;
+        super(context);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.positionX = (screenWidth / getDensity()) / 2;
         this.positionY = (screenHeight / getDensity()) / 4 * 3;
         this.cordPositionX = (screenWidth / getDensity()) / 2;
         this.cordPositionY = (screenHeight / getDensity()) / 4 * 3;
-    }
-
-    /**
-     * Returns display density
-     * @return (int) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
     }
 
 

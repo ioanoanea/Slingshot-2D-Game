@@ -10,23 +10,14 @@ import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
 
-public class Trace {
+public class Trace extends Object {
 
-    private final Context context;
     private final ArrayList<Point> positions;
     private boolean mLengthReached = false;
 
     public Trace(Context context){
-        this.context = context;
+        super(context);
         positions = new ArrayList<>();
-    }
-
-    /**
-     * Returns display density
-     * @return (float) density
-     */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
     }
 
     /**
@@ -82,9 +73,6 @@ public class Trace {
 
             float distanceX = (positions.get(length - 1).y - positions.get(length - 2).y) / 28f;
             float distanceY = (positions.get(length - 1).x - positions.get(length - 2).x) / 28f;
-
-            canvas.drawText("Distance X: " + distanceX, 100, 150, paint);
-            canvas.drawText("Distance Y: " + distanceY, 100, 250, paint);
 
             float posX = 0;
             float posY = 0;
