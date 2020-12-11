@@ -136,13 +136,9 @@ public class Obstacle extends Object {
     public void draw(Canvas canvas){
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_blue));
-        canvas.drawRect(
-                (float) left * getDensity(),
-                (float) top * getDensity(),
-                (float) right * getDensity(),
-                (float) bottom * getDensity(),
-                paint
-        );
+
+        TextureDrawer textureDrawer = new TextureDrawer(context, left, right, top, bottom);
+        textureDrawer.draw(canvas);
     }
 
 

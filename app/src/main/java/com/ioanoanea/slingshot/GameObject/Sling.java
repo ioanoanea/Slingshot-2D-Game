@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.widget.Toast;
 
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
-import com.ioanoanea.slingshot.MathObject.LineEquation;
 import com.ioanoanea.slingshot.R;
 
 public class Sling extends Object {
@@ -228,7 +226,7 @@ public class Sling extends Object {
         drawCord(canvas);
 
         Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.cyan_blue));
+        paint.setColor(context.getResources().getColor(R.color.magenta));
 
         // Draw sling's left side rectangle
         canvas.drawRect(

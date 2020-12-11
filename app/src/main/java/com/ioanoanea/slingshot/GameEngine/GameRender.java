@@ -180,7 +180,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         bulletTrace.draw(canvas);
         bullet.draw(canvas);
 
-        //drawSpeed(canvas);
         //drawUPS(canvas);
         //drawFPS(canvas);
     }
@@ -243,15 +242,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(50);
         canvas.drawText("FPS: " + averageFPS, 100, 200, paint);
-    }
-
-    private void drawSpeed(Canvas canvas){
-        Paint paint = new Paint();
-        int color = getResources().getColor(R.color.teal);
-        paint.setColor(color);
-        paint.setTextSize(50);
-
-        canvas.drawText("Speed" + SPEED, 100, 300, paint);
     }
 
     public void update(){

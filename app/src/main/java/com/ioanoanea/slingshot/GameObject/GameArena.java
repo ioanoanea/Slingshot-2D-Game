@@ -28,13 +28,46 @@ public class GameArena extends Object {
         // Draw background color
         canvas.drawColor(context.getResources().getColor(R.color.dark_grey));
 
-        // Draw arena's walls
-        // Draw a heavy stroked rectangle
-        Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.light_blue));
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(38 * getDensity());
-        canvas.drawRect(0, 0, (float) screenWidth, (float) screenHeight, paint);
+        drawTopSide(canvas);
+        drawBottomSide(canvas);
+        drawLeftSide(canvas);
+        drawRightSide(canvas);
+    }
+
+    /**
+     * Draw left side wall
+     * @param canvas (Canvas) Canvas value
+     */
+    private void drawLeftSide(Canvas canvas){
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, 20, 0, screenHeight / getDensity());
+        textureDrawer.draw(canvas);
+    }
+
+    /**
+     * Draw right side wall
+     * @param canvas (Canvas) canvas value
+     */
+    private void drawRightSide(Canvas canvas){
+        TextureDrawer textureDrawer = new TextureDrawer(context, screenWidth / getDensity() - 20, screenWidth / getDensity(), 0, screenHeight / getDensity());
+        textureDrawer.draw(canvas);
+    }
+
+    /**
+     * Draw top side wall
+     * @param canvas (Canvas) Canvas value
+     */
+    private void drawTopSide(Canvas canvas){
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), 0, 20);
+        textureDrawer.draw(canvas);
+    }
+
+    /**
+     * Draw bottom side wall
+     * @param canvas (Canvas) canvas value
+     */
+    private void drawBottomSide(Canvas canvas){
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), screenHeight / getDensity() - 20, screenHeight / getDensity());
+        textureDrawer.draw(canvas);
     }
 
 }

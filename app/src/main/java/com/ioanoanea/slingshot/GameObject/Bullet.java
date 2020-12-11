@@ -28,7 +28,7 @@ public class Bullet extends Object {
         this.radius = 29;
     }
 
-
+    
     /**
      * Check if bullet is set (bullet is set if his position is inside the screen)
      * @return true if bullet is set, false otherwise
@@ -173,7 +173,7 @@ public class Bullet extends Object {
      */
     public void draw(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.cyan_blue));
+        paint.setColor(context.getResources().getColor(R.color.magenta));
 
         canvas.drawCircle(
                 (float) getPositionX() * getDensity(),

@@ -2,6 +2,7 @@ package com.ioanoanea.slingshot.GameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -55,44 +56,18 @@ public class Trace extends Object {
      * @param canvas (Canvas) canvas value
      */
     public void draw(Canvas canvas){
-        // set paint
         Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.transparent_white));
-        paint.setTextSize(50);
 
-        // if trace length is not 0 draw the trace
-        if (positions.size() > 0){
-            // set a path
-            Path path = new Path();
-
-            path.moveTo(positions.get(0).x * getDensity(), positions.get(0).y * getDensity());
-            path.lineTo(positions.get(0).x * getDensity(), positions.get(0).y * getDensity());
-
-            // set trace width to 0 at the beginning
-            int length = positions.size();
-
-            float distanceX = (positions.get(length - 1).y - positions.get(length - 2).y) / 28f;
-            float distanceY = (positions.get(length - 1).x - positions.get(length - 2).x) / 28f;
-
-            float posX = 0;
-            float posY = 0;
-
-            // draw oan path side from first position to last position of list
-            for (int i = 0; i < length; i++){
-                posX += distanceX;
-                posY += distanceY;
-                path.lineTo(positions.get(i).x * getDensity() + posX, positions.get(i).y * getDensity() + posY);
-            }
-
-            // draw other side from last position to first position of list
-            for (int i = length - 1; i >= 0; i--){
-                posX -= distanceX;
-                posY -= distanceY;
-                path.lineTo(positions.get(i).x * getDensity() - posX, positions.get(i).y * getDensity() - posY);
-            }
-
-            // draw the path
-            canvas.drawPath(path, paint);
+        float r = 18;
+        int length = positions.size();
+        double alpha = 5 * length;
+        for (int i = length - 3; i >= 0; i-=5){
+            alpha -= 6;
+            int color = Color.argb((int) alpha, 128, 128, 128);
+            paint.setColor(color);
+            canvas.drawCircle(positions.get(i).x * getDensity(), positions.get(i).y * getDensity(), r, paint);
+            r -= 2;
         }
     }
+
 }

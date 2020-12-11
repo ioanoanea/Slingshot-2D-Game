@@ -106,15 +106,50 @@ public class TargetObject extends Object {
      */
     public void draw(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.cyan_blue));
+        paint.setColor(context.getResources().getColor(R.color.magenta));
         if (!isDestroyed()){
-            canvas.drawRect(
+
+            canvas.drawRoundRect(
                     (float) left * getDensity(),
                     (float) top * getDensity(),
-                    (float) right * getDensity(),
-                    (float) bottom * getDensity(),
+                    (float) positionX * getDensity() - 5,
+                    (float) positionY * getDensity() - 5,
+                    5,
+                    5,
                     paint
             );
+
+
+            canvas.drawRoundRect(
+                    (float) positionX * getDensity() + 5,
+                    (float) top * getDensity(),
+                    (float) right * getDensity(),
+                    (float) positionY * getDensity() - 5,
+                    5,
+                    5,
+                    paint
+            );
+
+            canvas.drawRoundRect(
+                    (float) left * getDensity(),
+                    (float) positionY * getDensity() + 5,
+                    (float) positionX * getDensity() - 5,
+                    (float) bottom * getDensity(),
+                    5,
+                    5,
+                    paint
+            );
+
+            canvas.drawRoundRect(
+                    (float) positionX * getDensity() + 5,
+                    (float) positionY * getDensity() + 5,
+                    (float) right * getDensity(),
+                    (float) bottom * getDensity(),
+                    5,
+                    5,
+                    paint
+            );
+
         } else {
             CrackingAnimation crackingAnimation = new CrackingAnimation(context, this);
             crackingAnimation.animate();
