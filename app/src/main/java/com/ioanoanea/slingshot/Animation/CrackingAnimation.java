@@ -5,47 +5,58 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.ioanoanea.slingshot.GameObject.Object;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
 import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
 
-public class CrackingAnimation {
+public class CrackingAnimation extends AnimationObject {
 
-    private final Context context;
     private final double left;
     private final double right;
     private final double top;
     private final double bottom;
-    Path path;
+    Particle particleNV, particleNE, particleSW, particleSE;
 
     public CrackingAnimation(Context context, TargetObject targetObject){
-        this.context = context;
+        super(context);
         this.left = targetObject.getLeft();
         this.right = targetObject.getRight();
         this.top = targetObject.getTop();
         this.bottom = targetObject.getBottom();
+        setBiggestParticles();
     }
 
     /**
-     * Returns display density
-     * @return (float) density
+     * Update particles position
      */
-    private float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
+    public void update(){
+        // update biggest particle
+        particleNV.update();
+        particleNE.update();
+        particleSE.update();
+        particleSW.update();
     }
 
-    public void animate(){
-        path = new Path();
+    /**
+     * Set four bigger particles in each corner of the object
+     */
+    private void setBiggestParticles(){
+        particleNV = new Particle(context, left + 5, top - 5, 5, -1, -1);
+        particleNE = new Particle(context, right - 5, top - 5, 5, 1, -1);
+        particleSE = new Particle(context, left + 5, bottom - 5, 5, -1, 1);
+        particleSW = new Particle(context, right - 5, bottom - 5, 5, 1, 1);
     }
 
-    private void animate(ArrayList<Path> paths){
-    }
-
+    /**
+     * Draw particles
+     * @param canvas (Canvas) Canvas value
+     */
     public void draw(Canvas canvas){
-        Paint paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.magenta));
-
-        canvas.drawPath(path, paint);
+        particleNV.draw(canvas);
+        particleNE.draw(canvas);
+        particleSE.draw(canvas);
+        particleSW.draw(canvas);
     }
 }

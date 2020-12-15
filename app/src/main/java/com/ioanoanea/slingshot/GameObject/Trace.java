@@ -60,11 +60,11 @@ public class Trace extends Object {
 
         float r = 18;
         int length = positions.size();
-        double alpha = 5 * length;
-        for (int i = length - 3; i >= 0; i-=5){
+        int alpha = 5 * length;
+        for (int i = length - 5; i >= 0; i-=5){
             alpha -= 6;
-            int color = Color.argb((int) alpha, 128, 128, 128);
-            paint.setColor(color);
+            paint.setColor(context.getResources().getColor(R.color.transparent_grey));
+            paint.setAlpha(alpha);
             canvas.drawCircle(positions.get(i).x * getDensity(), positions.get(i).y * getDensity(), r, paint);
             r -= 2;
         }

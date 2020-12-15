@@ -11,6 +11,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.ioanoanea.slingshot.Animation.Particle;
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Obstacle;

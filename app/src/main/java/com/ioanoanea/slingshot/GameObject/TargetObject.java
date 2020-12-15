@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.ioanoanea.slingshot.Animation.CrackingAnimation;
+import com.ioanoanea.slingshot.Animation.Particle;
 import com.ioanoanea.slingshot.R;
 
 public class TargetObject extends Object {
@@ -16,6 +17,7 @@ public class TargetObject extends Object {
     private final double top;
     private final double bottom;
     private boolean destroyed = false;
+    private CrackingAnimation crackingAnimation;
 
     public TargetObject(Context context, double positionX, double positionY){
         super(context);
@@ -25,6 +27,7 @@ public class TargetObject extends Object {
         this.right = positionX + 15;
         this.top = positionY - 15;
         this.bottom = positionY + 15;
+        this.crackingAnimation = new CrackingAnimation(context, this);
     }
 
     /**
@@ -151,9 +154,8 @@ public class TargetObject extends Object {
             );
 
         } else {
-            CrackingAnimation crackingAnimation = new CrackingAnimation(context, this);
-            crackingAnimation.animate();
             crackingAnimation.draw(canvas);
+            crackingAnimation.update();
         }
     }
 }
