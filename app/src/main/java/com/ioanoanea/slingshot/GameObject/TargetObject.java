@@ -122,7 +122,6 @@ public class TargetObject extends Object {
                     paint
             );
 
-
             canvas.drawRoundRect(
                     (float) positionX * getDensity() + 5,
                     (float) top * getDensity(),

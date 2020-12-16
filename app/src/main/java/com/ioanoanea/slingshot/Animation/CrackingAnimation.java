@@ -2,14 +2,11 @@ package com.ioanoanea.slingshot.Animation;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
 
-import com.ioanoanea.slingshot.GameObject.Object;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
-import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CrackingAnimation extends AnimationObject {
 
@@ -18,6 +15,8 @@ public class CrackingAnimation extends AnimationObject {
     private final double top;
     private final double bottom;
     Particle particleNV, particleNE, particleSW, particleSE;
+    ArrayList<Particle> mParticles = new ArrayList<>();
+    ArrayList<Particle> sParticles = new ArrayList<>();
 
     public CrackingAnimation(Context context, TargetObject targetObject){
         super(context);
@@ -25,29 +24,87 @@ public class CrackingAnimation extends AnimationObject {
         this.right = targetObject.getRight();
         this.top = targetObject.getTop();
         this.bottom = targetObject.getBottom();
-        setBiggestParticles();
+        setBigParticles();
+        setMediumParticle();
+        setSmallParticles();
     }
 
     /**
      * Update particles position
      */
     public void update(){
-        // update biggest particle
+        // update big particles
         particleNV.update();
         particleNE.update();
         particleSE.update();
         particleSW.update();
+
+        // update medium particles
+        for (Particle particle: mParticles){
+            particle.update();
+        }
+
+        // update small particles
+        for (Particle particle: sParticles){
+            particle.update();
+        }
     }
 
     /**
-     * Set four bigger particles in each corner of the object
+     * Set 4 big particles in each corner of the object
      */
-    private void setBiggestParticles(){
+    private void setBigParticles(){
         particleNV = new Particle(context, left + 5, top - 5, 5, -1, -1);
         particleNE = new Particle(context, right - 5, top - 5, 5, 1, -1);
         particleSE = new Particle(context, left + 5, bottom - 5, 5, -1, 1);
         particleSW = new Particle(context, right - 5, bottom - 5, 5, 1, 1);
     }
+
+    /**
+     * Set 6 medium particles in target object area
+     */
+    private void setMediumParticle(){
+        Random random = new Random();
+        for (int i = 0; i < 6; i++){
+            // set particle position
+            double positionX = random.nextDouble() * (right  - left) + left;
+            double positionY  = random.nextDouble() * (bottom - top) + top;
+
+            // set particle direction
+            double directionX;
+            double directionY;
+
+            if (right - positionX > positionX - left)
+                directionX = -1;
+            else directionX = 1;
+
+            if (bottom - positionY > positionY - top)
+                directionY = -1;
+            else directionY = 1;
+
+            // set particle
+            Particle particle = new Particle(context, positionX, positionY, 3, directionX, directionY);
+            mParticles.add(particle);
+        }
+    }
+
+    /**
+     * Set 8 small particles in target object area
+     */
+    private void setSmallParticles(){
+        Random random = new Random();
+
+        for (int i = 0; i < 8; i++){
+            // set particle position
+            double positionX = random.nextDouble() * (right  - left) + left;
+            double positionY  = random.nextDouble() * (bottom - top) + top;
+
+            // set particle
+            Particle particle = new Particle(context, positionX, positionY, 2, 150);
+            sParticles.add(particle);
+        }
+    }
+
 
     /**
      * Draw particles
@@ -58,5 +115,13 @@ public class CrackingAnimation extends AnimationObject {
         particleNE.draw(canvas);
         particleSE.draw(canvas);
         particleSW.draw(canvas);
+
+        for (Particle particle: mParticles){
+            particle.draw(canvas);
+        }
+
+        for (Particle particle: sParticles){
+            particle.draw(canvas);
+        }
     }
 }

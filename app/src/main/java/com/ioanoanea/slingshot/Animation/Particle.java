@@ -25,9 +25,21 @@ public class Particle extends AnimationObject {
         this.y = y;
         this.radius = radius;
         Random random = new Random();
-        this.directionX = -1f + random.nextDouble() * 2;
-        this.directionY = -1 + random.nextInt(2) + Math.sqrt(1 - Math.pow(directionX, 2));
+        this.directionX = -1.5f + random.nextDouble() * 3;
+        this.directionY = -1 + random.nextInt(2) + Math.sqrt(Math.pow(1.5, 2) - Math.pow(directionX, 2));
         paint = new Paint();
+    }
+
+    public Particle(Context context, double x, double y, int radius, int alpha){
+        super(context);
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        Random random = new Random();
+        this.directionX = -1.5f + random.nextDouble() * 3;
+        this.directionY = -1 + random.nextInt(2) + Math.sqrt(Math.pow(1.5, 2) - Math.pow(directionX, 2));
+        paint = new Paint();
+        this.alpha = alpha;
     }
 
     public Particle(Context context, double x, double y, int radius, double directionX, double directionY){
@@ -36,9 +48,21 @@ public class Particle extends AnimationObject {
         this.y = y;
         this.radius = radius;
         Random random = new Random();
-        this.directionX = directionX * random.nextDouble();
-        this.directionY = directionY * Math.sqrt(1 - Math.pow(this.directionX, 2));
+        this.directionX = directionX * random.nextDouble() * 1.5;
+        this.directionY = directionY * Math.sqrt(Math.pow(1.5, 2) - Math.pow(this.directionX, 2));
         paint = new Paint();
+    }
+
+    public Particle(Context context, double x, double y, int radius, double directionX, double directionY, int alpha){
+        super(context);
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        Random random = new Random();
+        this.directionX = directionX * random.nextDouble() * 1.5;
+        this.directionY = directionY * Math.sqrt(Math.pow(1.5, 2) - Math.pow(this.directionX, 2));
+        paint = new Paint();
+        this.alpha = alpha;
     }
 
     /**
@@ -56,7 +80,7 @@ public class Particle extends AnimationObject {
         move();
         paint.setColor(context.getResources().getColor(R.color.magenta));
         paint.setAlpha(alpha);
-        alpha = Math.max(alpha - 1, 0);
+        alpha = Math.max(alpha - 2, 0);
     }
 
     /**
