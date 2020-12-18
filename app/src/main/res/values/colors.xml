@@ -2,8 +2,9 @@
 <resources>
     <color name="light_blue">#2196F3</color>
     <color name="magenta">#EC114F</color>
-    <color name="dark_blue">#5050A5</color>
-    <color name="dark_grey">#202020</color>
+    <color name="dark_blue">#4D579E</color>
+    <color name="dark_grey">#141622</color>
+    <color name="transparent_dark_grey">#9F171923</color>
     <color name="accent_blue">#CD65AACA</color>
     <color name="light_accent_blue">#FAA0D4EC</color>
     <color name="dark_blue_shadow">#313163</color>
@@ -17,5 +18,7 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="transparent_grey">#1D858585</color>
+    <color name="dark_green">#144150</color>
+    <color name="dark">#101119</color>
 
 </resources>

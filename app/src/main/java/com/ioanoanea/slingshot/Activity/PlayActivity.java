@@ -1,19 +1,26 @@
 package com.ioanoanea.slingshot.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.ioanoanea.slingshot.GameEngine.GameRender;
+import com.ioanoanea.slingshot.R;
 
 public class PlayActivity extends AppCompatActivity {
 
 
+    LinearLayout container;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new GameRender(this));
+        setContentView(R.layout.activity_play);
+
+        container = findViewById(R.id.container);
+        container.addView(new GameRender(this));
     }
 
 

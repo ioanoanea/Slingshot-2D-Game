@@ -5,13 +5,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.ioanoanea.slingshot.Animation.Particle;
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
@@ -104,8 +101,10 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 if (sling.isStretched()){
                     // if sling is unlocked, unlock bullet and lock sling
                     if (!sling.isLocked()){
+                        // lock sling and unlock bullet
                         sling.lock();
-                        // Set value of
+                        bullet.unlock();
+                        // Set bullet speed
                         bullet.setSpeed(0.9995);
                     }
 
@@ -215,7 +214,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     public void setTargetObjects(){
         targetObjects = new ArrayList<>();
-        TargetObject targetObject = new TargetObject(getContext(), 300, 50);
+        TargetObject targetObject = new TargetObject(getContext(), 250, 50);
         targetObjects.add(targetObject);
     }
 

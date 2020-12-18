@@ -28,10 +28,15 @@ public class GameArena extends Object {
         // Draw background color
         canvas.drawColor(context.getResources().getColor(R.color.dark_grey));
 
+        // draw arena limits
+        Paint paint = new Paint();
+        paint.setColor(context.getResources().getColor(R.color.dark_grey));
+        //canvas.drawRoundRect(0, 0, (float) screenWidth, (float) screenHeight, 18, 18, paint);
+
         drawTopSide(canvas);
-        drawBottomSide(canvas);
-        drawLeftSide(canvas);
-        drawRightSide(canvas);
+        //drawBottomSide(canvas);
+        //drawLeftSide(canvas);
+        //drawRightSide(canvas);
     }
 
     /**
@@ -39,7 +44,7 @@ public class GameArena extends Object {
      * @param canvas (Canvas) Canvas value
      */
     private void drawLeftSide(Canvas canvas){
-        TextureDrawer textureDrawer = new TextureDrawer(context, 0, 20, 0, screenHeight / getDensity());
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, 10, 0, screenHeight / getDensity());
         textureDrawer.draw(canvas);
     }
 
@@ -48,7 +53,7 @@ public class GameArena extends Object {
      * @param canvas (Canvas) canvas value
      */
     private void drawRightSide(Canvas canvas){
-        TextureDrawer textureDrawer = new TextureDrawer(context, screenWidth / getDensity() - 20, screenWidth / getDensity(), 0, screenHeight / getDensity());
+        TextureDrawer textureDrawer = new TextureDrawer(context, screenWidth / getDensity() - 10, screenWidth / getDensity(), 0, screenHeight / getDensity());
         textureDrawer.draw(canvas);
     }
 
@@ -57,7 +62,7 @@ public class GameArena extends Object {
      * @param canvas (Canvas) Canvas value
      */
     private void drawTopSide(Canvas canvas){
-        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), 0, 20);
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), 0, 10);
         textureDrawer.draw(canvas);
     }
 
@@ -66,7 +71,7 @@ public class GameArena extends Object {
      * @param canvas (Canvas) canvas value
      */
     private void drawBottomSide(Canvas canvas){
-        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), screenHeight / getDensity() - 20, screenHeight / getDensity());
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), screenHeight / getDensity() - 10, screenHeight / getDensity());
         textureDrawer.draw(canvas);
     }
 

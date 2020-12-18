@@ -18,6 +18,7 @@ public class Bullet extends Object {
     private double distanceToNextPositionX = 0;
     private double distanceToNextPositionY = 0;
     private double speed;
+    private boolean locked = true;
     private final ArrayList<Obstacle> obstacles;
 
     public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
@@ -28,13 +29,19 @@ public class Bullet extends Object {
         this.radius = 29;
     }
 
-    
+    /**
+     * Unlock bullet
+     */
+    public void unlock(){
+        this.locked = false;
+    }
+
     /**
      * Check if bullet is set (bullet is set if his position is inside the screen)
      * @return true if bullet is set, false otherwise
      */
     public boolean isSet(){
-        return positionX > 0 && positionY > 0;
+        return !locked;
     }
 
 
@@ -49,26 +56,28 @@ public class Bullet extends Object {
         this.positionY = positionY;
 
         // if position next X is left to game arena left side, set position X to game arena left side and change direction
-        if (positionX * getDensity() < 19 * getDensity() + radius){
-            this.positionX = 19 + radius / getDensity();
+        if (positionX * getDensity() <  radius){
+           this.positionX = radius / getDensity();
             setDistanceToNextPositionX(-distanceToNextPositionX);
             //setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next Y is upper than game arena up side, set position Y to game arena up side and change direction
-        if (positionY * getDensity() < 19 * getDensity() + radius){
-            this.positionY = 19 + radius / getDensity();
+        if (positionY * getDensity() < radius){
+            this.positionY = radius / getDensity();
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next X is right to game arena right side, set position X to game arena right side change direction
-        if(positionX * getDensity() > screenWidth - (19 * getDensity() + radius)){
-            this.positionX = screenWidth / getDensity() - (19 + radius / getDensity());
+        if(positionX * getDensity() > screenWidth - radius){
+            this.positionX = screenWidth / getDensity() - radius / getDensity();
             setDistanceToNextPositionX(-distanceToNextPositionX);
         }
         // if next position Y is lower than game arena bottom side, set position Y to game arena bottom side and change direction
-        if (positionY * getDensity() > screenHeight - (19 * getDensity() + radius)) {
-            this.positionY = screenHeight / getDensity() - (19 + radius / getDensity());
+        if (positionY * getDensity() > screenHeight - radius) {
+            this.positionY = screenHeight / getDensity() - radius / getDensity();
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
+
+
 
         // check if bullet intersects any obstacle
         for (Obstacle obstacle : obstacles){

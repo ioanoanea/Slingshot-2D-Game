@@ -111,17 +111,21 @@ public class CrackingAnimation extends AnimationObject {
      * @param canvas (Canvas) Canvas value
      */
     public void draw(Canvas canvas){
+        // Draw big particles
         particleNV.draw(canvas);
         particleNE.draw(canvas);
         particleSE.draw(canvas);
         particleSW.draw(canvas);
 
+        // Draw medium particles
         for (Particle particle: mParticles){
             particle.draw(canvas);
         }
 
+        // Draw small particles
         for (Particle particle: sParticles){
             particle.draw(canvas);
         }
     }
+    
 }

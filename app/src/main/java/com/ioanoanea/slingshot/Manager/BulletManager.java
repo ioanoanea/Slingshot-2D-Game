@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 
 public class BulletManager {
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private Context context;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
+    private final Context context;
 
     @SuppressLint("CommitPrefEdits")
     public BulletManager(Context context){

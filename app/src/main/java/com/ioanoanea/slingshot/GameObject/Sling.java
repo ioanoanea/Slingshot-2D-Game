@@ -131,16 +131,16 @@ public class Sling extends Object {
         this.cordPositionY = Math.max(cordPositionY, getPositionY());
 
         // if cord position is left to the game arena, set cord position inside game arena
-        if (cordPositionX < 29){
-            this.cordPositionX = 29;
+        if (cordPositionX < 0){
+            this.cordPositionX = 0;
         }
         // if cord position is right to the game arena, set cord position inside game arena
-        if (cordPositionX > screenWidth / getDensity() - 29){
-            this.cordPositionX = screenWidth / getDensity() - 29;
+        if (cordPositionX > screenWidth / getDensity()){
+            this.cordPositionX = screenWidth / getDensity();
         }
         // if cord position is lower than game arena bottom side, set cord position inside game arena
-        if (cordPositionY > screenHeight / getDensity() - 29){
-            this.cordPositionY = screenHeight / getDensity() - 29;
+        if (cordPositionY > screenHeight / getDensity()){
+            this.cordPositionY = screenHeight / getDensity();
         }
 
         if ((distanceToNextCordPositionX > 0 && cordPositionX > positionX) || (distanceToNextCordPositionX < 0 && cordPositionX < positionX)){

@@ -27,7 +27,7 @@ public class TextureDrawer extends Object {
     public void draw(Canvas canvas){
         // set paint for first color
         Paint paint1 = new Paint();
-        paint1.setColor(context.getResources().getColor(R.color.light_blue));
+        paint1.setColor(context.getResources().getColor(R.color.dark_blue));
 
         // set paint for second color
         Paint paint2 = new Paint();
@@ -56,6 +56,7 @@ public class TextureDrawer extends Object {
                 x1 += 20;
             }
             // draw second color rectangles
+            /*
             while (x2 < right){
                 canvas.drawRect(
                         (float) x2 * getDensity(),
@@ -65,7 +66,7 @@ public class TextureDrawer extends Object {
                         paint2
                 );
                 x2 += 20;
-            }
+            }*/
 
             y += 10;
             k++;
