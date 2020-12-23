@@ -14,7 +14,6 @@ import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
-import com.ioanoanea.slingshot.GameObject.Trace;
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.R;
 
@@ -30,8 +29,10 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<TargetObject> targetObjects;
     private Sling sling;
     private Bullet bullet;
-    private Trace bulletTrace;
+    private ArrayList<Bullet> bullets;
+    private int bulletIndex = 0;
     private double SPEED = 0;
+    public OnBulletShotListener onBulletShotListener;
 
     public GameRender(Context context){
         super(context);
@@ -49,6 +50,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         gameLoop = new GameLoop(this, surfaceHolder);
         gameLoop.startLoop();
+        //onBulletDestroyedListener = null;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -63,9 +65,12 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_MOVE:
                 // If sling is not lock redraw sling's cord
                 if (!sling.isLocked()){
-                    // Set sling cord position and bullet position
+                    // Set sling cord position
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
-                    bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
+                    // set bullet position if there are still bullets remained
+                    if (bullets.size() < bulletIndex){
+                        bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
+                    }
 
                     // Determine speed based on sling stretching
                     SPEED = getSpeed(sling.getCordDistance());
@@ -88,13 +93,11 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                             )
                     );
                 }
-
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
+                    // initialize a new bullet
                     bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
-                    bulletTrace = new Trace(getContext());
-                    bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
                 }
                 return true;
             case MotionEvent.ACTION_UP:
@@ -103,9 +106,15 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     if (!sling.isLocked()){
                         // lock sling and unlock bullet
                         sling.lock();
-                        bullet.unlock();
-                        // Set bullet speed
-                        bullet.setSpeed(0.9995);
+                        // if there any bullet remained, shot
+                        if (bullets.size() < bulletIndex){
+                            bullet.unlock();
+                            // Set bullet speed
+                            bullet.setSpeed(0.9995);
+                            // notify a bullet have been shot
+                            onBulletShotListener.onShot();
+                            bullets.add(bullet);
+                        }
                     }
 
                     // Set sling next cord position X
@@ -157,7 +166,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
         sling = new Sling(getContext(), getWidth(), getHeight());
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
-        bulletTrace = new Trace(getContext());
     }
 
     @Override
@@ -176,9 +184,13 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         for(TargetObject targetObject: targetObjects){
             targetObject.draw(canvas);
         }
+
         sling.draw(canvas);
-        bulletTrace.draw(canvas);
+
         bullet.draw(canvas);
+        for (Bullet bullet: bullets){
+            bullet.draw(canvas);
+        }
 
         //drawUPS(canvas);
         //drawFPS(canvas);
@@ -212,10 +224,30 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         obstacles.add(obstacle);
     }
 
+    /**
+     * Set target objects list
+     */
     public void setTargetObjects(){
         targetObjects = new ArrayList<>();
         TargetObject targetObject = new TargetObject(getContext(), 250, 50);
         targetObjects.add(targetObject);
+    }
+
+    /**
+     * Set bullets
+     * @param nrBullets (int) number of bullets
+     */
+    public void setBullets(int nrBullets) {
+        bullets = new ArrayList<>();
+        this.bulletIndex = nrBullets;
+    }
+
+    /**
+     * Set an action when a bullet is shot
+     * @param listener bullet shot listener
+     */
+    public void setOnBulletShot(OnBulletShotListener listener){
+        this.onBulletShotListener = listener;
     }
 
     /**
@@ -244,27 +276,44 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("FPS: " + averageFPS, 100, 200, paint);
     }
 
+    /**
+     * Update game elements
+     */
     public void update(){
-        // update
+        // update sling
         if (sling.isLocked() && sling.isStretched()){
             sling.reset();
         }
 
-        if (bullet.isSet()){
-            bullet.move();
-            if (bullet.isMoving()){
-                bulletTrace.adPosition(new Point((int) bullet.getPositionX(), (int) bullet.getPositionY()));
-            }
-            if (bulletTrace.maxLengthReached()){
-                bulletTrace.removePosition();
+        // update bullets
+        for (Bullet bullet: bullets){
+            if (bullet.isSet()){
+                bullet.move();
+                if(!bullet.isMoving()){
+                    onBulletShotListener.onShot();
+                }
             }
         }
 
+        // update target objects
         for (TargetObject targetObject: targetObjects){
             if (targetObject.intersects(bullet.getPositionX(), bullet.getPositionY())){
                 targetObject.destroy();
             }
         }
     }
+
+    /**
+     * Handle bullet shot event
+     */
+    public interface OnBulletShotListener {
+        /**
+         * Method called when a bullet is shot
+         * Must override this method with code that will be executed when a bullet is shot
+         */
+        default void onShot(){
+        }
+    }
+
 
 }

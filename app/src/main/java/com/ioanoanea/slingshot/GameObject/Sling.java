@@ -301,29 +301,53 @@ public class Sling extends Object {
         //double x = getPositionX() + 5 * distanceToNextCordPositionX;
         //double y = getPositionY() + 5 * distanceToNextCordPositionY;
 
-        double x = positionX + distanceCalculator.getDistanceToNextPositionX(
-                new Point((int) cordPositionX, (int) cordPositionY),
-                new Point((int) positionX, (int) positionY),
-                guideLineLength
-        );
-
-        double y = positionY + distanceCalculator.getDistanceToNextPositionY(
-                new Point((int) cordPositionX, (int) cordPositionY),
-                new Point((int) positionX, (int) positionY),
-                guideLineLength
-        );
-
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.light_grey));
 
-        // draw line
-        canvas.drawLine(
-                (float) getCordPositionX() * getDensity(),
-                (float) getCordPositionY() * getDensity(),
-                (float) x * getDensity(),
-                (float) y * getDensity(),
-                paint
+        guideLineLength = distanceCalculator.getDistance(
+                new Point((int) cordPositionX, (int) cordPositionY),
+                new Point((int) positionX, (int) positionY)
         );
+
+        guideLineLength += 45;
+
+        double distanceToNextX = distanceCalculator.getDistanceToNextPositionX(
+                new Point((int) cordPositionX, (int) cordPositionY),
+                new Point((int) positionX, (int) positionY),
+                9
+        );
+
+        double distanceToNextY = distanceCalculator.getDistanceToNextPositionY(
+                new Point((int) cordPositionX, (int) cordPositionY),
+                new Point((int) positionX, (int) positionY),
+                9
+        );
+
+        double x = cordPositionX;
+        double y = cordPositionY;
+
+        for (int i = 0; i <= guideLineLength; i += 9){
+            canvas.drawCircle(
+                    (float) (x + distanceToNextX) * getDensity(),
+                    (float) (y + distanceToNextY) * getDensity(),
+                    3,
+                    paint
+            );
+
+            x += distanceToNextX;
+            y += distanceToNextY;
+        }
+
+
+
+        // draw line
+        //canvas.drawLine(
+        //        (float) getCordPositionX() * getDensity(),
+        //        (float) getCordPositionY() * getDensity(),
+        //        (float) x * getDensity(),
+        //        (float) y * getDensity(),
+        //        paint
+        //);
     }
 
 }

@@ -5,9 +5,11 @@ import android.content.Context;
 public class Object {
 
     protected final Context context;
+    protected DestroyListener destroyListener;
 
     public Object(Context context){
         this.context = context;
+        this.destroyListener = null;
     }
 
     /**
@@ -16,5 +18,10 @@ public class Object {
      */
     protected float getDensity(){
         return context.getResources().getDisplayMetrics().density;
+    }
+
+    public interface DestroyListener {
+        default void onDestroy(){
+        }
     }
 }

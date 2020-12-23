@@ -1,11 +1,12 @@
 package com.ioanoanea.slingshot.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ioanoanea.slingshot.GameEngine.GameRender;
 import com.ioanoanea.slingshot.R;
@@ -13,14 +14,43 @@ import com.ioanoanea.slingshot.R;
 public class PlayActivity extends AppCompatActivity {
 
 
-    LinearLayout container;
+    private LinearLayout container;
+    private TextView levelText;
+    private TextView bulletsText;
+    private int bulletsNumber = 3;
+    private GameRender gameRender;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        setViews();
+
+        gameRender = new GameRender(this);
+        gameRender.setBullets(3);
+
+        gameRender.setOnBulletShot(new GameRender.OnBulletShotListener() {
+            @Override
+            public void onShot() {
+                bulletsText.setText(String.valueOf(bulletsNumber - 1));
+                bulletsNumber--;
+            }
+        });
+
+        container.addView(gameRender);
+
+        bulletsText.setText(String.valueOf(bulletsNumber));
+        levelText.setText("Level: 1");
+
+    }
+
+
+    private void setViews(){
         container = findViewById(R.id.container);
-        container.addView(new GameRender(this));
+        levelText = findViewById(R.id.text_level);
+        bulletsText = findViewById(R.id.text_bullets);
     }
 
 

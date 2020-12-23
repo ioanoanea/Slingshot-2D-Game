@@ -31,6 +31,10 @@ public class GameArena extends Object {
         // draw arena limits
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.dark_grey));
+        //paint.setStyle(Paint.Style.STROKE);
+        //paint.setStrokeWidth(18);
+
+        //canvas.drawRoundRect(0, 0, (float) screenWidth, (float) screenHeight, 22, 22, paint);
         //canvas.drawRoundRect(0, 0, (float) screenWidth, (float) screenHeight, 18, 18, paint);
 
         drawTopSide(canvas);
@@ -62,7 +66,7 @@ public class GameArena extends Object {
      * @param canvas (Canvas) Canvas value
      */
     private void drawTopSide(Canvas canvas){
-        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), 0, 10);
+        TextureDrawer textureDrawer = new TextureDrawer(context, 0, screenWidth / getDensity(), 0, 20);
         textureDrawer.draw(canvas);
     }
 

@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.GameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import com.ioanoanea.slingshot.R;
 
@@ -20,6 +21,7 @@ public class Bullet extends Object {
     private double speed;
     private boolean locked = true;
     private final ArrayList<Obstacle> obstacles;
+    private final Trace trace;
 
     public Bullet(Context context, double screenWidth, double screenHeight, ArrayList<Obstacle> obstacles){
         super(context);
@@ -27,6 +29,7 @@ public class Bullet extends Object {
         this.screenHeight = screenHeight;
         this.obstacles = obstacles;
         this.radius = 29;
+        this.trace = new Trace(context);
     }
 
     /**
@@ -56,26 +59,26 @@ public class Bullet extends Object {
         this.positionY = positionY;
 
         // if position next X is left to game arena left side, set position X to game arena left side and change direction
-        if (positionX * getDensity() <  radius){
-           this.positionX = radius / getDensity();
-            setDistanceToNextPositionX(-distanceToNextPositionX);
-            //setDistanceToNextPositionY(-distanceToNextPositionY);
-        }
+        //if (positionX * getDensity() <  radius){
+        //   this.positionX = radius / getDensity();
+        //    setDistanceToNextPositionX(-distanceToNextPositionX);
+        //    //setDistanceToNextPositionY(-distanceToNextPositionY);
+        //}
         // if position next Y is upper than game arena up side, set position Y to game arena up side and change direction
-        if (positionY * getDensity() < radius){
-            this.positionY = radius / getDensity();
+        if (positionY * getDensity() < radius  + 19 * getDensity()){
+            this.positionY = radius / getDensity() + 19;
             setDistanceToNextPositionY(-distanceToNextPositionY);
         }
         // if position next X is right to game arena right side, set position X to game arena right side change direction
-        if(positionX * getDensity() > screenWidth - radius){
-            this.positionX = screenWidth / getDensity() - radius / getDensity();
-            setDistanceToNextPositionX(-distanceToNextPositionX);
-        }
+        //if(positionX * getDensity() > screenWidth - radius){
+        //    this.positionX = screenWidth / getDensity() - radius / getDensity();
+        //    setDistanceToNextPositionX(-distanceToNextPositionX);
+        //}
         // if next position Y is lower than game arena bottom side, set position Y to game arena bottom side and change direction
-        if (positionY * getDensity() > screenHeight - radius) {
-            this.positionY = screenHeight / getDensity() - radius / getDensity();
-            setDistanceToNextPositionY(-distanceToNextPositionY);
-        }
+        //if (positionY * getDensity() > screenHeight - radius) {
+        //    this.positionY = screenHeight / getDensity() - radius / getDensity();
+        //    setDistanceToNextPositionY(-distanceToNextPositionY);
+        //}
 
 
 
@@ -147,8 +150,26 @@ public class Bullet extends Object {
         this.speed = speed;
     }
 
+    /**
+     * Check if bullet is moving
+     * @return True if is moving, false otherwise
+     */
     public boolean isMoving(){
         return distanceToNextPositionX != 0 || distanceToNextPositionY != 0;
+    }
+
+    /**
+     * Destroy current bullet
+     * Lock bullet
+     * Move bullet outside of the game arena
+     * destroy bullet trace
+     */
+    private void destroy(){
+        locked = true;
+        positionX = -100;
+        positionY = -100;
+        trace.destroy();
+        super.destroyListener.onDestroy();
     }
 
     /**
@@ -174,6 +195,27 @@ public class Bullet extends Object {
             if (Math.abs(distanceToNextPositionY) < 0.001){
                 distanceToNextPositionY = 0;
             }
+
+            updateTrace();
+
+            if (distanceToNextPositionX == 0 && distanceToNextPositionY == 0){
+                destroy();
+            }
+    }
+
+    /**
+     * Update trace
+     * Add and remove position, depending on bullet position
+     */
+    private void updateTrace(){
+        trace.adPosition(new Point((int) getPositionX(), (int) getPositionY()));
+        if (trace.maxLengthReached()){
+            trace.removePosition();
+        }
+    }
+
+    public void setOnDestroyed(DestroyListener destroyListener){
+        super.destroyListener = destroyListener;
     }
 
     /**
@@ -184,13 +226,14 @@ public class Bullet extends Object {
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.magenta));
 
+        trace.draw(canvas);
+
         canvas.drawCircle(
                 (float) getPositionX() * getDensity(),
                 (float) getPositionY() * getDensity(),
                 30,
                 paint
         );
-
     }
 
 }

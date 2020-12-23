@@ -52,6 +52,14 @@ public class Trace extends Object {
     }
 
     /**
+     * Destroy the trace
+     * Clear positions list so nothing will be drawn
+     */
+    public void destroy(){
+        positions.clear();
+    }
+
+    /**
      * Draw the trace
      * @param canvas (Canvas) canvas value
      */
