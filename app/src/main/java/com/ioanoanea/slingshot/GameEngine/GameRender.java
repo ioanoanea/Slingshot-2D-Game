@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
+import com.ioanoanea.slingshot.GameObject.Object;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
@@ -32,7 +33,11 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Bullet> bullets;
     private int bulletIndex = 0;
     private double SPEED = 0;
-    public OnBulletShotListener onBulletShotListener;
+    private int destroyedBullets = 0;
+    private int destroyedTargetObjects = 0;
+    private OnBulletShotListener onBulletShotListener;
+    private OnLastBulletDestroyedListener onLastBulletDestroyedListener;
+    private OnLastTargetObjectDestroyedListener onLastTargetObjectDestroyedListener;
 
     public GameRender(Context context){
         super(context);
@@ -98,6 +103,17 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     sling.unlock();
                     // initialize a new bullet
                     bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
+                    // increase destroyed bullets on bullet destroyed
+                    bullet.setOnDestroyed(new Object.DestroyListener() {
+                        @Override
+                        public void onDestroy() {
+                            destroyedBullets++;
+                            // set onDestroyed() method if last bullet is destroyed
+                            if (destroyedBullets == bulletIndex) {
+                                onLastBulletDestroyedListener.onDestroyed();
+                            }
+                        }
+                    });
                 }
                 return true;
             case MotionEvent.ACTION_UP:
@@ -229,8 +245,20 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void setTargetObjects(){
         targetObjects = new ArrayList<>();
-        TargetObject targetObject = new TargetObject(getContext(), 250, 50);
-        targetObjects.add(targetObject);
+        TargetObject to = new TargetObject(getContext(), 250, 50);
+        targetObjects.add(to);
+        // set action when a target object was destroyed
+        for (TargetObject targetObject: targetObjects){
+            targetObject.setOnDestroyed(new Object.DestroyListener() {
+                @Override
+                public void onDestroy() {
+                    destroyedTargetObjects++;
+                    if (destroyedTargetObjects == targetObjects.size()){
+                        onLastTargetObjectDestroyedListener.onDestroyed();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -248,6 +276,22 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void setOnBulletShot(OnBulletShotListener listener){
         this.onBulletShotListener = listener;
+    }
+
+    /**
+     * Set an action when last bullet is destroyed
+     * @param listener last bullet destroyed listener
+     */
+    public void setOnLastBulletDestroyed(OnLastBulletDestroyedListener listener){
+        this.onLastBulletDestroyedListener = listener;
+    }
+
+    /**
+     * Set an action when last target object is destroyed
+     * @param listener last target object destroyed listener
+     */
+    public void setOnLastTargetObjectDestroyed(OnLastTargetObjectDestroyedListener listener){
+        this.onLastTargetObjectDestroyedListener = listener;
     }
 
     /**
@@ -289,16 +333,15 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         for (Bullet bullet: bullets){
             if (bullet.isSet()){
                 bullet.move();
-                if(!bullet.isMoving()){
-                    onBulletShotListener.onShot();
-                }
             }
         }
 
-        // update target objects
+        // check if a bullet intersects a target object
         for (TargetObject targetObject: targetObjects){
-            if (targetObject.intersects(bullet.getPositionX(), bullet.getPositionY())){
-                targetObject.destroy();
+            for (Bullet bullet: bullets) {
+                if (targetObject.intersects(bullet.getPositionX(), bullet.getPositionY())) {
+                    targetObject.destroy();
+                }
             }
         }
     }
@@ -312,6 +355,30 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
          * Must override this method with code that will be executed when a bullet is shot
          */
         default void onShot(){
+        }
+    }
+
+    /**
+     * Handle last bullet destroyed event
+     */
+    public interface OnLastBulletDestroyedListener {
+        /**
+         * Method called when last bullet is destroyed
+         * Must override this method with code that will be executed when last bullet is destroyed
+         */
+        default void onDestroyed(){
+        }
+    }
+
+    /**
+     * Handle last target object destroyed event
+     */
+    public interface OnLastTargetObjectDestroyedListener {
+        /**
+         * Method called when last target object is destroyed
+         * Must override this method with code that will be executed when last target object is destroyed
+         */
+        default void onDestroyed(){
         }
     }
 

@@ -17,7 +17,8 @@ public class TargetObject extends Object {
     private final double top;
     private final double bottom;
     private boolean destroyed = false;
-    private CrackingAnimation crackingAnimation;
+    private final CrackingAnimation crackingAnimation;
+    private DestroyListener destroyListener;
 
     public TargetObject(Context context, double positionX, double positionY){
         super(context);
@@ -101,6 +102,15 @@ public class TargetObject extends Object {
      */
     public void destroy(){
         destroyed = true;
+        destroyListener.onDestroy();
+    }
+
+    /**
+     * Set action on target object destroyed
+     * @param listener destroyed listener
+     */
+    public void setOnDestroyed(DestroyListener listener){
+        destroyListener = listener;
     }
 
     /**

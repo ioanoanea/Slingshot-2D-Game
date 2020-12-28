@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,7 +19,6 @@ public class PlayActivity extends AppCompatActivity {
     private TextView levelText;
     private TextView bulletsText;
     private int bulletsNumber = 3;
-    private GameRender gameRender;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -28,14 +28,31 @@ public class PlayActivity extends AppCompatActivity {
 
         setViews();
 
-        gameRender = new GameRender(this);
+        GameRender gameRender = new GameRender(this);
         gameRender.setBullets(3);
 
+        // decrease bullet number on bullets text when a bullet is shot
         gameRender.setOnBulletShot(new GameRender.OnBulletShotListener() {
             @Override
             public void onShot() {
                 bulletsText.setText(String.valueOf(bulletsNumber - 1));
                 bulletsNumber--;
+            }
+        });
+
+        // close game when last bullet is destroyed
+        gameRender.setOnLastBulletDestroyed(new GameRender.OnLastBulletDestroyedListener() {
+            @Override
+            public void onDestroyed() {
+                startActivity(new Intent(PlayActivity.this, HomeActivity.class));
+            }
+        });
+
+        // close game when last target object is destroyed
+        gameRender.setOnLastTargetObjectDestroyed(new GameRender.OnLastTargetObjectDestroyedListener() {
+            @Override
+            public void onDestroyed() {
+                startActivity(new Intent(PlayActivity.this, HomeActivity.class));
             }
         });
 
@@ -46,7 +63,9 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Set activity views
+     */
     private void setViews(){
         container = findViewById(R.id.container);
         levelText = findViewById(R.id.text_level);
@@ -64,6 +83,11 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Hide system UI
+     * Remove nav bar and notification bar
+     * Set fullscreen
+     */
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
