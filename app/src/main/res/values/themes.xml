@@ -15,4 +15,11 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
+    <!-- Pop up window theme -->
+    <style name="PopUpTheme" parent="Theme.Slingshot">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+    </style>
+
 </resources>

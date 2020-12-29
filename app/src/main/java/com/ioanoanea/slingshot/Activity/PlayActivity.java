@@ -3,6 +3,7 @@ package com.ioanoanea.slingshot.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class PlayActivity extends AppCompatActivity {
     private TextView levelText;
     private TextView bulletsText;
     private int bulletsNumber = 3;
+    public final Activity activity = this;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -44,7 +46,7 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnLastBulletDestroyed(new GameRender.OnLastBulletDestroyedListener() {
             @Override
             public void onDestroyed() {
-                startActivity(new Intent(PlayActivity.this, HomeActivity.class));
+                startActivity(new Intent(PlayActivity.this, GameOverActivity.class));
             }
         });
 
@@ -52,7 +54,7 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnLastTargetObjectDestroyed(new GameRender.OnLastTargetObjectDestroyedListener() {
             @Override
             public void onDestroyed() {
-                startActivity(new Intent(PlayActivity.this, HomeActivity.class));
+                //startActivity(new Intent(PlayActivity.this, GameOverActivity.class));
             }
         });
 
@@ -104,4 +106,8 @@ public class PlayActivity extends AppCompatActivity {
         );
     }
 
+    @Override
+    public void onBackPressed() {
+        PlayActivity.this.finish();
+    }
 }

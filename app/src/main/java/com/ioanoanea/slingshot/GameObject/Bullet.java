@@ -169,7 +169,7 @@ public class Bullet extends Object {
         positionX = -100;
         positionY = -100;
         trace.destroy();
-        super.destroyListener.onDestroy();
+        super.destroyListener.onDestroyed();
     }
 
     /**

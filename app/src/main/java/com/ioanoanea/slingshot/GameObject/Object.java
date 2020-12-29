@@ -21,7 +21,7 @@ public class Object {
     }
 
     public interface DestroyListener {
-        default void onDestroy(){
+        default void onDestroyed(){
         }
     }
 }

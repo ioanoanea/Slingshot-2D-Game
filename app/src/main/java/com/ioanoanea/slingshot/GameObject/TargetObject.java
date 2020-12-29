@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.ioanoanea.slingshot.Animation.CrackingAnimation;
-import com.ioanoanea.slingshot.Animation.Particle;
 import com.ioanoanea.slingshot.R;
 
 public class TargetObject extends Object {
@@ -102,7 +101,7 @@ public class TargetObject extends Object {
      */
     public void destroy(){
         destroyed = true;
-        destroyListener.onDestroy();
+        destroyListener.onDestroyed();
     }
 
     /**
@@ -121,7 +120,6 @@ public class TargetObject extends Object {
         Paint paint = new Paint();
         paint.setColor(context.getResources().getColor(R.color.magenta));
         if (!isDestroyed()){
-
             canvas.drawRoundRect(
                     (float) left * getDensity(),
                     (float) top * getDensity(),

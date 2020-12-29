@@ -106,7 +106,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     // increase destroyed bullets on bullet destroyed
                     bullet.setOnDestroyed(new Object.DestroyListener() {
                         @Override
-                        public void onDestroy() {
+                        public void onDestroyed() {
                             destroyedBullets++;
                             // set onDestroyed() method if last bullet is destroyed
                             if (destroyedBullets == bulletIndex) {
@@ -251,7 +251,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         for (TargetObject targetObject: targetObjects){
             targetObject.setOnDestroyed(new Object.DestroyListener() {
                 @Override
-                public void onDestroy() {
+                public void onDestroyed() {
                     destroyedTargetObjects++;
                     if (destroyedTargetObjects == targetObjects.size()){
                         onLastTargetObjectDestroyedListener.onDestroyed();
