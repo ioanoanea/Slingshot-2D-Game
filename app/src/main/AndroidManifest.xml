@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Slingshot">
-        <activity android:name=".Activity.GameOverActivity"
+        <activity
+            android:name=".Activity.WinActivity"
             android:theme="@style/PopUpTheme"/>
+        <activity
+            android:name=".Activity.GameOverActivity"
+            android:theme="@style/PopUpTheme" />
         <activity
             android:name=".Activity.SettingsActivity"
             android:screenOrientation="portrait" />

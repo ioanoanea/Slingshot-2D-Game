@@ -54,7 +54,7 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnLastTargetObjectDestroyed(new GameRender.OnLastTargetObjectDestroyedListener() {
             @Override
             public void onDestroyed() {
-                //startActivity(new Intent(PlayActivity.this, GameOverActivity.class));
+                startActivity(new Intent(PlayActivity.this, WinActivity.class));
             }
         });
 
