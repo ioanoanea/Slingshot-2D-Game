@@ -84,6 +84,14 @@ public class Particle extends AnimationObject {
     }
 
     /**
+     * Returns particle's alpha
+     * @return (int) alpha value
+     */
+    public int getAlpha() {
+        return alpha;
+    }
+
+    /**
      * Draw the particle
      * @param canvas (Canvas) Canavs value
      */

@@ -14,9 +14,10 @@ public class CrackingAnimation extends AnimationObject {
     private final double right;
     private final double top;
     private final double bottom;
-    Particle particleNV, particleNE, particleSW, particleSE;
-    ArrayList<Particle> mParticles = new ArrayList<>();
-    ArrayList<Particle> sParticles = new ArrayList<>();
+    private Particle particleNV, particleNE, particleSW, particleSE;
+    private final ArrayList<Particle> mParticles = new ArrayList<>();
+    private final ArrayList<Particle> sParticles = new ArrayList<>();
+    private OnAnimationFinishedListener onAnimationFinishedListener;
 
     public CrackingAnimation(Context context, TargetObject targetObject){
         super(context);
@@ -48,6 +49,9 @@ public class CrackingAnimation extends AnimationObject {
         for (Particle particle: sParticles){
             particle.update();
         }
+
+        if (checkAnimationFinished())
+            onAnimationFinishedListener.onFinished();
     }
 
     /**
@@ -105,6 +109,14 @@ public class CrackingAnimation extends AnimationObject {
         }
     }
 
+    /**
+     * Checks if animation is finished
+     * Checks if particle's alpha is 0
+     * @return true if is finished, false otherwise
+     */
+    private boolean checkAnimationFinished(){
+        return particleNV.getAlpha() == 0;
+    }
 
     /**
      * Draw particles
@@ -125,6 +137,26 @@ public class CrackingAnimation extends AnimationObject {
         // Draw small particles
         for (Particle particle: sParticles){
             particle.draw(canvas);
+        }
+    }
+
+    /**
+     * Set an action when animation is finished
+     * @param listener Animation finished listener
+     */
+    public void setOnAnimationFinishedListener(OnAnimationFinishedListener listener){
+        this.onAnimationFinishedListener = listener;
+    }
+
+    /**
+     * Handle animation was finished
+     */
+    public interface OnAnimationFinishedListener {
+        /**
+         * Method called when animation was finished
+         * Must override this method with code that will be executed when animation is finished
+         */
+        default void onFinished(){
         }
     }
     

@@ -28,6 +28,12 @@ public class TargetObject extends Object {
         this.top = positionY - 15;
         this.bottom = positionY + 15;
         this.crackingAnimation = new CrackingAnimation(context, this);
+        crackingAnimation.setOnAnimationFinishedListener(new CrackingAnimation.OnAnimationFinishedListener() {
+            @Override
+            public void onFinished() {
+                destroyListener.onDestroyed();
+            }
+        });
     }
 
     /**
@@ -101,7 +107,6 @@ public class TargetObject extends Object {
      */
     public void destroy(){
         destroyed = true;
-        destroyListener.onDestroyed();
     }
 
     /**

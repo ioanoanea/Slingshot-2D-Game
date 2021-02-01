@@ -255,6 +255,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     destroyedTargetObjects++;
                     if (destroyedTargetObjects == targetObjects.size()){
                         onLastTargetObjectDestroyedListener.onDestroyed();
+                        gameLoop.pause();
                     }
                 }
             });

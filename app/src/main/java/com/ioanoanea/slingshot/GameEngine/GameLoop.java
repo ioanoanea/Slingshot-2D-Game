@@ -50,6 +50,13 @@ public class GameLoop extends Thread {
         start();
     }
 
+    /**
+     * Pause game loop
+     */
+    public void pause(){
+        isRunning = false;
+    }
+
 
     @Override
     public void run() {
