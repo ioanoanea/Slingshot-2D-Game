@@ -1,18 +1,31 @@
 package com.ioanoanea.slingshot.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.ioanoanea.slingshot.Adapter.BuyBulletsAdapter;
 import com.ioanoanea.slingshot.R;
 
 public class ShopActivity extends AppCompatActivity {
+
+    private RecyclerView container;
+    private BuyBulletsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+        // set views
+        setViews();
+
+        // set container adapter
+        adapter = new BuyBulletsAdapter(this);
+        container.setLayoutManager(new LinearLayoutManager(this));
+        container.setAdapter(adapter);
     }
 
 
@@ -39,5 +52,12 @@ public class ShopActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         );
+    }
+
+    /**
+     * Set activity views
+     */
+    private void setViews(){
+        container = findViewById(R.id.shop_container);
     }
 }

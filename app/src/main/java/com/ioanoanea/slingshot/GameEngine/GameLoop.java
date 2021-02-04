@@ -3,9 +3,7 @@ package com.ioanoanea.slingshot.GameEngine;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-/**
- *
- */
+
 public class GameLoop extends Thread {
 
 
@@ -101,8 +99,7 @@ public class GameLoop extends Thread {
                     }
                 }
             }
-
-
+            
             // Pause game loop to not exceed target UPS
             elapsedTime = System.currentTimeMillis() - startTime;
             sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
