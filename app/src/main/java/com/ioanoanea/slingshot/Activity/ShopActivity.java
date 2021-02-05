@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ioanoanea.slingshot.Adapter.BuyBulletsAdapter;
+import com.ioanoanea.slingshot.Adapter.ShopContainerAdapter;
 import com.ioanoanea.slingshot.R;
 
 public class ShopActivity extends AppCompatActivity {
 
     private RecyclerView container;
-    private BuyBulletsAdapter adapter;
+    private ShopContainerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class ShopActivity extends AppCompatActivity {
         setViews();
 
         // set container adapter
-        adapter = new BuyBulletsAdapter(this);
+        adapter = new ShopContainerAdapter(this);
         container.setLayoutManager(new LinearLayoutManager(this));
         container.setAdapter(adapter);
     }
