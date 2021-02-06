@@ -45,8 +45,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // Get surface holder and add callback
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        setObstacles();
-        setTargetObjects();
 
         setFocusable(true);
     }
@@ -234,19 +232,16 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * Set obstacle list
      */
-    public void setObstacles(){
-        obstacles = new ArrayList<>();
-        Obstacle obstacle = new Obstacle(getContext(), 280, 400, 120);
-        obstacles.add(obstacle);
+    public void setObstacles(ArrayList<Obstacle> obstacles){
+        this.obstacles = obstacles;
     }
 
     /**
      * Set target objects list
      */
-    public void setTargetObjects(){
-        targetObjects = new ArrayList<>();
-        TargetObject to = new TargetObject(getContext(), 250, 50);
-        targetObjects.add(to);
+    public void setTargetObjects(ArrayList<TargetObject> targetObjects){
+        this.targetObjects = targetObjects;
+
         // set action when a target object was destroyed
         for (TargetObject targetObject: targetObjects){
             targetObject.setOnDestroyed(new Object.DestroyListener() {

@@ -11,11 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ioanoanea.slingshot.Levels.Level;
+import com.ioanoanea.slingshot.Levels.LevelList;
+import com.ioanoanea.slingshot.Manager.LevelManager;
 import com.ioanoanea.slingshot.R;
 
 public class WinActivity extends AppCompatActivity {
 
     private Button nextLevelButton;
+    private LevelManager levelManager;
+    private LevelList levelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +30,20 @@ public class WinActivity extends AppCompatActivity {
         setViews();
         resizeWindow();
 
+        // initialize level manger
+        levelManager = new LevelManager(this);
+        levelList = new LevelList(this);
+
         nextLevelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(WinActivity.this, "No levels available!", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                if (levelList.getLevels().size() == levelManager.getLevel()){
+                    Toast.makeText(WinActivity.this, "This is the last level!", Toast.LENGTH_SHORT).show();
+                } else {
+                    levelManager.nextLevel();
+                    startActivity(new Intent(WinActivity.this, PlayActivity.class));
+                    WinActivity.this.finish();
+                }
             }
         });
     }

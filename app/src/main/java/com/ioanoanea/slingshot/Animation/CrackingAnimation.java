@@ -18,6 +18,7 @@ public class CrackingAnimation extends AnimationObject {
     private final ArrayList<Particle> mParticles = new ArrayList<>();
     private final ArrayList<Particle> sParticles = new ArrayList<>();
     private OnAnimationFinishedListener onAnimationFinishedListener;
+    private boolean finished = false;
 
     public CrackingAnimation(Context context, TargetObject targetObject){
         super(context);
@@ -50,8 +51,10 @@ public class CrackingAnimation extends AnimationObject {
             particle.update();
         }
 
-        if (checkAnimationFinished())
+        if (checkAnimationFinished() && !finished) {
             onAnimationFinishedListener.onFinished();
+            finished = true;
+        }
     }
 
     /**

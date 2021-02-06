@@ -16,7 +16,7 @@ import com.ioanoanea.slingshot.ViewHolder.BuyCoinsViewHolder;
 
 public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
+    private final Context context;
 
     public ShopContainerAdapter(Context context){
         this.context = context;
@@ -29,12 +29,10 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
         View coinsView = LayoutInflater.from(parent.getContext()).inflate(R.layout.buy_coins_card, parent,false);
 
         // initialize viewHolder
-        switch (viewType){
-            case 1:
-                return new BuyCoinsViewHolder(coinsView);
-            default:
-                return new BuyBulletsViewHolder(bulletsView);
+        if (viewType == 1) {
+            return new BuyCoinsViewHolder(coinsView);
         }
+        return new BuyBulletsViewHolder(bulletsView);
     }
 
     @Override

@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ioanoanea.slingshot.GameEngine.GameRender;
+import com.ioanoanea.slingshot.Levels.LevelList;
+
 public class LevelManager {
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
     private Context context;
 
     @SuppressLint("CommitPrefEdits")
