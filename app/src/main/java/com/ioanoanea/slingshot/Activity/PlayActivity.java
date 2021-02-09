@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ioanoanea.slingshot.GameEngine.GameRender;
+import com.ioanoanea.slingshot.Levels.Level;
 import com.ioanoanea.slingshot.Levels.LevelList;
 import com.ioanoanea.slingshot.Manager.LevelManager;
 import com.ioanoanea.slingshot.R;
@@ -21,10 +22,11 @@ public class PlayActivity extends AppCompatActivity {
     private LinearLayout container;
     private TextView levelText;
     private TextView bulletsText;
-    private int bulletsNumber = 3;
+    private int bulletsNumber;
     public final Activity activity = this;
     private LevelManager levelManager;
     private LevelList levelList;
+    private Level level;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -33,13 +35,14 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
 
         setViews();
+        GameRender gameRender = new GameRender(this);
+        container.addView(gameRender);
 
         // initializing levels data
         levelManager = new LevelManager(this);
         levelList = new LevelList(this);
-
-        GameRender gameRender = new GameRender(this);
-        gameRender.setBullets(3);
+        level = levelList.getLevels().get(levelManager.getLevel() - 1);
+        bulletsNumber = level.getBullets();
 
         // decrease bullet number on bullets text when a bullet is shot
         gameRender.setOnBulletShot(new GameRender.OnBulletShotListener() {
@@ -67,13 +70,12 @@ public class PlayActivity extends AppCompatActivity {
         });
 
         // set level data (obstacles and target object)
-        gameRender.setObstacles(levelList.getLevels().get(levelManager.getLevel() - 1).getObstacles());
-        gameRender.setTargetObjects(levelList.getLevels().get(levelManager.getLevel() - 1).getTargetObjects());
-
-        container.addView(gameRender);
+        gameRender.setObstacles(level.getObstacles());
+        gameRender.setTargetObjects(level.getTargetObjects());
+        gameRender.setBullets(level.getBullets());
 
         bulletsText.setText(String.valueOf(bulletsNumber));
-        levelText.setText("Level: 1");
+        levelText.setText("Level: " + levelManager.getLevel());
 
     }
 

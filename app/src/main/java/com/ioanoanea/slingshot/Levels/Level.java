@@ -12,6 +12,7 @@ public class Level {
     private final Context context;
     private final ArrayList<Obstacle> obstacles;
     private final ArrayList<TargetObject> targetObjects;
+    private int bullets;
 
     public Level(Context context){
         this.context = context;
@@ -41,6 +42,14 @@ public class Level {
     }
 
     /**
+     * Set bullets numbers
+     * @param bullets (int) bullets number
+     */
+    public void setBullets(int bullets) {
+        this.bullets = bullets;
+    }
+
+    /**
      * Returns obstacles list
      * @return (ArrayList) a list with all obstacles
      */
@@ -54,5 +63,13 @@ public class Level {
      */
     public ArrayList<TargetObject> getTargetObjects() {
         return targetObjects;
+    }
+
+    /**
+     * Returns bullets number
+     * @return (int) bullets number
+     */
+    public int getBullets() {
+        return bullets;
     }
 }

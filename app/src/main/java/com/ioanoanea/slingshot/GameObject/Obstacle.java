@@ -29,6 +29,34 @@ public class Obstacle extends Object {
         this.bottom = bottom;
     }
 
+    public Obstacle(Context context, double left, double right, double top, double bottom,
+                    double screenWidth, double screenHeight){
+        super(context);
+        double length = right - left;
+        // set obstacle position X inside of screen
+        if (left < 0){
+            this.left = 0;
+            this.right = this.left + length;
+        } else if (right > screenWidth / getDensity()){
+            this.right = screenWidth / getDensity();
+            this.left = this.right - length;
+        } else {
+            this.left = left;
+            this.right = right;
+        }
+        // set obstacle position Y inside of screen
+        if (top < 25){
+            this.top = 25;
+            this.bottom = 45;
+        } else if (bottom > screenHeight / getDensity()){
+            this.bottom = screenHeight / getDensity();
+            this.top = this.bottom - 20;
+        } else {
+            this.top = top;
+            this.bottom = bottom;
+        }
+    }
+
     /**
      * Returns position of obstacle's left side
      * @return (double) left side position

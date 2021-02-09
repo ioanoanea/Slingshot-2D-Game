@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.core.content.res.TypedArrayUtils;
+
 import com.ioanoanea.slingshot.GameObject.Bullet;
 import com.ioanoanea.slingshot.GameObject.GameArena;
 import com.ioanoanea.slingshot.GameObject.Object;
@@ -179,7 +181,29 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // initialize game elements
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
         sling = new Sling(getContext(), getWidth(), getHeight());
+        // set target objects inside the arena
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
+        for (i = 0; i < targetObjects.size(); i++){
+            TargetObject targetObject = new TargetObject(getContext(), targetObjects.get(i).getPositionX(),
+                    targetObjects.get(i).getPositionY(), getWidth(), getHeight());
+            targetObject.setOnDestroyed(new Object.DestroyListener() {
+                @Override
+                public void onDestroyed() {
+                    destroyedTargetObjects++;
+                    if (destroyedTargetObjects == targetObjects.size()){
+                        onLastTargetObjectDestroyedListener.onDestroyed();
+                        gameLoop.pause();
+                    }
+                }
+            });
+            targetObjects.set(i, targetObject);
+        }
+        // set obstacles inside the arena
+        for (i = 0; i < obstacles.size(); i++){
+            Obstacle obstacle = new Obstacle(getContext(), obstacles.get(i).getLeft(), obstacles.get(i).getRight(),
+                    obstacles.get(i).getTop(), obstacles.get(i).getBottom(), getWidth(), getHeight());
+            obstacles.set(i, obstacle);
+        }
     }
 
     @Override
@@ -241,20 +265,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void setTargetObjects(ArrayList<TargetObject> targetObjects){
         this.targetObjects = targetObjects;
-
-        // set action when a target object was destroyed
-        for (TargetObject targetObject: targetObjects){
-            targetObject.setOnDestroyed(new Object.DestroyListener() {
-                @Override
-                public void onDestroyed() {
-                    destroyedTargetObjects++;
-                    if (destroyedTargetObjects == targetObjects.size()){
-                        onLastTargetObjectDestroyedListener.onDestroyed();
-                        gameLoop.pause();
-                    }
-                }
-            });
-        }
     }
 
     /**

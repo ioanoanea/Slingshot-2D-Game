@@ -21,12 +21,53 @@ public class TargetObject extends Object {
 
     public TargetObject(Context context, double positionX, double positionY){
         super(context);
+
+        // set position
         this.positionX = positionX;
         this.positionY = positionY;
-        this.left = positionX - 15;
-        this.right = positionX + 15;
-        this.top = positionY - 15;
-        this.bottom = positionY + 15;
+
+        // set target object size
+        this.left = this.positionX - 15;
+        this.right = this.positionX + 15;
+        this.top = this.positionY - 15;
+        this.bottom = this.positionY + 15;
+
+        this.crackingAnimation = new CrackingAnimation(context, this);
+        crackingAnimation.setOnAnimationFinishedListener(new CrackingAnimation.OnAnimationFinishedListener() {
+            @Override
+            public void onFinished() {
+                destroyListener.onDestroyed();
+            }
+        });
+    }
+
+    public TargetObject(Context context, double positionX, double positionY, double screenWidth, double screenHeight){
+        super(context);
+
+        // set position X inside of screen
+        if (positionX * getDensity() < 15){
+            this.positionX = 15 / getDensity();
+        } else if (positionX * getDensity() > screenWidth - 15){
+            this.positionX = screenWidth / getDensity() - 15;
+        } else {
+            this.positionX = positionX;
+        }
+        // set position Y inside of screen
+        if (positionY * getDensity() < 25){
+            this.positionY = 25 / getDensity();
+            //this.positionY = 50 / getDensity();
+        } else if (positionY * getDensity() > screenHeight - 15){
+            this.positionY = screenHeight / getDensity() - 15;
+        } else {
+            this.positionY = positionY;
+        }
+
+        // set target object size
+        this.left = this.positionX - 15;
+        this.right = this.positionX + 15;
+        this.top = this.positionY - 15;
+        this.bottom = this.positionY + 15;
+
         this.crackingAnimation = new CrackingAnimation(context, this);
         crackingAnimation.setOnAnimationFinishedListener(new CrackingAnimation.OnAnimationFinishedListener() {
             @Override
