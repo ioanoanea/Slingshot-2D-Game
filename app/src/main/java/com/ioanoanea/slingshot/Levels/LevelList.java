@@ -29,7 +29,7 @@ public class LevelList {
         Level level2 = new Level(context);
         level2.addTargetObject(100, 200);
         level2.addTargetObject(350, 50);
-        level1.setBullets(3);
+        level2.setBullets(3);
         levels.add(level2);
 
         // level 3

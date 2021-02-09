@@ -1,5 +1,7 @@
 package com.ioanoanea.slingshot.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,8 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.ioanoanea.slingshot.Adapter.ShopContainerAdapter;
 import com.ioanoanea.slingshot.R;
+
+import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
 
