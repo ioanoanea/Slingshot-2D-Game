@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Slingshot">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3650822610871452~4355005768"/>
+
+
         <activity
             android:name=".Activity.WinActivity"
             android:theme="@style/PopUpTheme"/>
