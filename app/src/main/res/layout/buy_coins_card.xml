@@ -75,6 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
             <TextView
+                android:id="@+id/price_item_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -130,6 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <TextView
+                android:id="@+id/price_item_25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -185,6 +187,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <TextView
+                android:id="@+id/price_item_50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -256,6 +259,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
             <TextView
+                android:id="@+id/price_item_100"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -311,6 +315,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
             <TextView
+                android:id="@+id/price_item_250"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -366,6 +371,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
             <TextView
+                android:id="@+id/price_item_500"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
