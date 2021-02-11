@@ -17,6 +17,7 @@ import com.ioanoanea.slingshot.GameObject.Object;
 import com.ioanoanea.slingshot.GameObject.Obstacle;
 import com.ioanoanea.slingshot.GameObject.Sling;
 import com.ioanoanea.slingshot.GameObject.TargetObject;
+import com.ioanoanea.slingshot.Manager.SoundManager;
 import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
 import com.ioanoanea.slingshot.R;
 
@@ -37,6 +38,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private double SPEED = 0;
     private int destroyedBullets = 0;
     private int destroyedTargetObjects = 0;
+    private SoundManager soundManager;
     private OnBulletShotListener onBulletShotListener;
     private OnLastBulletDestroyedListener onLastBulletDestroyedListener;
     private OnLastTargetObjectDestroyedListener onLastTargetObjectDestroyedListener;
@@ -101,6 +103,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                 // If touch event intersect the sling, unlock the sling
                 if (sling.intersect(event.getX() / getDensity(), event.getY() / getDensity())) {
                     sling.unlock();
+                    // load stretch sound
+                    soundManager.loadSound(SoundManager.STRETCH);
                     // initialize a new bullet
                     bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
                     // increase destroyed bullets on bullet destroyed
@@ -125,6 +129,8 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                         // if there any bullet remained, shot
                         if (bullets.size() < bulletIndex){
                             bullet.unlock();
+                            // load shot sound
+                            soundManager.loadSound(SoundManager.SHOT);
                             // Set bullet speed
                             bullet.setSpeed(0.9995);
                             // notify a bullet have been shot
@@ -181,6 +187,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         // initialize game elements
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
         sling = new Sling(getContext(), getWidth(), getHeight());
+        soundManager = new SoundManager(getContext());
         // set target objects inside the arena
         bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
         for (i = 0; i < targetObjects.size(); i++){

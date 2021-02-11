@@ -11,7 +11,7 @@ public class LevelManager {
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
-    private Context context;
+    private final Context context;
 
     @SuppressLint("CommitPrefEdits")
     public LevelManager(Context context){

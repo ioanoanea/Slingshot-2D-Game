@@ -76,12 +76,15 @@
 
             <TextView
                 android:id="@+id/price_item_10"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:textAlignment="center"
                 android:text="3.99$"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_10"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_10"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_10" />
@@ -132,12 +135,15 @@
 
             <TextView
                 android:id="@+id/price_item_25"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:textAlignment="center"
                 android:text="8.99$"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_25"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_25"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_25" />
@@ -188,12 +194,15 @@
 
             <TextView
                 android:id="@+id/price_item_50"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:textAlignment="center"
                 android:text="12.99$"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_50"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_50"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_50" />
@@ -260,12 +269,15 @@
 
             <TextView
                 android:id="@+id/price_item_100"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
                 android:layout_marginBottom="14dp"
                 android:text="25.99$"
+                android:textAlignment="center"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_100"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_100"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_100" />
@@ -316,12 +328,15 @@
 
             <TextView
                 android:id="@+id/price_item_250"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:textAlignment="center"
                 android:text="50.99$"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_250"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_250"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_250" />
@@ -372,12 +387,15 @@
 
             <TextView
                 android:id="@+id/price_item_500"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:textAlignment="center"
                 android:text="99.99$"
                 android:textColor="@color/light_grey"
-                android:textSize="24sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_background_item_500"
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_500"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_500" />

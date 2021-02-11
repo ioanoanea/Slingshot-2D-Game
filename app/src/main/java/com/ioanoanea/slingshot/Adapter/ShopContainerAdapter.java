@@ -228,6 +228,10 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
         return 2;
     }
 
+    /**
+     * Purchase an item
+     * @param item (int) item index
+     */
     private void purchaseItem(int item){
         if(billingClient.isReady()){
             List<String> skuList = new ArrayList<> ();
@@ -259,9 +263,13 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
 
-        } else Toast.makeText(context, "Billing client is not ready!", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(context, "Billing client is not responding!", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Handle the purchase
+     * @param purchase (Purchase) purchase object
+     */
     private void handlePurchase(Purchase purchase){
         // Purchase retrieved from BillingClient#queryPurchases or your PurchasesUpdatedListener.
 

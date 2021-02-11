@@ -19,6 +19,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.CoinManager;
 import com.ioanoanea.slingshot.Manager.LevelManager;
+import com.ioanoanea.slingshot.Manager.SoundManager;
 import com.ioanoanea.slingshot.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -47,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // set views
         setViews();
+
+        new SoundManager(this).loadSound(SoundManager.STRETCH);
 
         // set views user interaction
         levelText.setText("Level: " + String.valueOf(levelManager.getLevel()));
