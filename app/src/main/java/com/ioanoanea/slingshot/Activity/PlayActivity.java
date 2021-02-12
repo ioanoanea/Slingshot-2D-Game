@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.ioanoanea.slingshot.GameEngine.GameRender;
 import com.ioanoanea.slingshot.Levels.Level;
 import com.ioanoanea.slingshot.Levels.LevelList;
+import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.LevelManager;
 import com.ioanoanea.slingshot.R;
 
@@ -26,6 +27,7 @@ public class PlayActivity extends AppCompatActivity {
     private int bulletsNumber;
     public final Activity activity = this;
     private LevelManager levelManager;
+    private BulletManager bulletManager;
     private LevelList levelList;
     private Level level;
 
@@ -41,6 +43,7 @@ public class PlayActivity extends AppCompatActivity {
 
         // initializing levels data
         levelManager = new LevelManager(this);
+        bulletManager = new BulletManager(this);
         levelList = new LevelList(this);
         level = levelList.getLevels().get(levelManager.getLevel() - 1);
         bulletsNumber = level.getBullets();
@@ -58,6 +61,9 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnLastBulletDestroyed(new GameRender.OnLastBulletDestroyedListener() {
             @Override
             public void onDestroyed() {
+                if (bulletManager.getBullets() != 0){
+                    startActivity(new Intent(PlayActivity.this, ExtraBulletsActivity.class));
+                }
                 startActivity(new Intent(PlayActivity.this, GameOverActivity.class));
             }
         });
