@@ -9,16 +9,15 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import androidx.core.content.res.TypedArrayUtils;
-
-import com.ioanoanea.slingshot.GameObject.Bullet;
-import com.ioanoanea.slingshot.GameObject.GameArena;
-import com.ioanoanea.slingshot.GameObject.Object;
-import com.ioanoanea.slingshot.GameObject.Obstacle;
-import com.ioanoanea.slingshot.GameObject.Sling;
-import com.ioanoanea.slingshot.GameObject.TargetObject;
+import com.ioanoanea.slingshot.GameObjects.Bullet;
+import com.ioanoanea.slingshot.GameObjects.GameArena;
+import com.ioanoanea.slingshot.GameObjects.Object;
+import com.ioanoanea.slingshot.GameObjects.Obstacle;
+import com.ioanoanea.slingshot.GameObjects.Sling;
+import com.ioanoanea.slingshot.GameObjects.TargetObject;
+import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.SoundManager;
-import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
+import com.ioanoanea.slingshot.MathObjects.DistanceCalculator;
 import com.ioanoanea.slingshot.R;
 
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     private int destroyedBullets = 0;
     private int destroyedTargetObjects = 0;
     private SoundManager soundManager;
+    private BulletManager bulletManager;
     private OnBulletShotListener onBulletShotListener;
     private OnLastBulletDestroyedListener onLastBulletDestroyedListener;
     private OnLastTargetObjectDestroyedListener onLastTargetObjectDestroyedListener;
@@ -57,7 +57,6 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         gameLoop = new GameLoop(this, surfaceHolder);
         gameLoop.startLoop();
-        //onBulletDestroyedListener = null;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -76,6 +75,10 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                     sling.setCordPosition(event.getX() / getDensity(), event.getY() / getDensity());
                     // set bullet position if there are still bullets remained
                     if (bullets.size() < bulletIndex){
+                        bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
+                    }
+                    // set bullet position if there are still extra bullets
+                    if (new BulletManager(getContext()).extraBulletsUnlocked()){
                         bullet.setPosition(sling.getCordPositionX(), sling.getCordPositionY());
                     }
 
@@ -137,6 +140,28 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
                             onBulletShotListener.onShot();
                             bullets.add(bullet);
                         }
+                        // if there are extra bullets remained and unlocked, shot
+                        if (bulletManager.extraBulletsUnlocked()){
+                            bullet.unlock();
+                            // load shot sound
+                            soundManager.loadSound(SoundManager.SHOT);
+                            // Set bullet speed
+                            bullet.setSpeed(0.9995);
+                            // notify a bullet have been shot
+                            onBulletShotListener.onShot();
+                            bullets.add(bullet);
+                            bulletManager.removeBullets(1);
+                            // lock extra bullets if extra if no extra bullets left
+                            if (bulletManager.getBullets() == 0){
+                                bulletManager.lockExtraBullets();
+                                bullet.setOnDestroyed(new Object.DestroyListener() {
+                                    @Override
+                                    public void onDestroyed() {
+                                        onLastBulletDestroyedListener.onDestroyed();
+                                    }
+                                });
+                            }
+                        }
                     }
 
                     // Set sling next cord position X
@@ -188,8 +213,9 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         gameArena = new GameArena(getContext(), getWidth(), getHeight());
         sling = new Sling(getContext(), getWidth(), getHeight());
         soundManager = new SoundManager(getContext());
-        // set target objects inside the arena
-        bullet = new Bullet(getContext(), getWidth(), getHeight(), obstacles);
+        bulletManager = new BulletManager(getContext());
+
+        // set target objects inside arena
         for (i = 0; i < targetObjects.size(); i++){
             TargetObject targetObject = new TargetObject(getContext(), targetObjects.get(i).getPositionX(),
                     targetObjects.get(i).getPositionY(), getWidth(), getHeight());
@@ -205,6 +231,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
             });
             targetObjects.set(i, targetObject);
         }
+
         // set obstacles inside the arena
         for (i = 0; i < obstacles.size(); i++){
             Obstacle obstacle = new Obstacle(getContext(), obstacles.get(i).getLeft(), obstacles.get(i).getRight(),
@@ -215,6 +242,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        bulletManager.lockExtraBullets();
     }
 
     @Override

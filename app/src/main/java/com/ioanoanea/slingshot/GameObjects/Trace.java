@@ -1,10 +1,8 @@
-package com.ioanoanea.slingshot.GameObject;
+package com.ioanoanea.slingshot.GameObjects;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 
 import com.ioanoanea.slingshot.R;

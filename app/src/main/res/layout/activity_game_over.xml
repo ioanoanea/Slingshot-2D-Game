@@ -3,21 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@drawable/window_background"
+    android:background="@color/dark_grey"
     tools:context=".Activity.GameOverActivity">
 
     <TextView
         android:id="@+id/text_game_over"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:text="Game Over!"
         android:textColor="@color/white"
-        android:textSize="32sp"
+        android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,10 +24,10 @@
         android:id="@+id/text_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:background="@color/magenta"
         android:padding="8dp"
-        android:text="No bullets left!"
+        android:text="Bullets left!"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="22sp"
@@ -38,47 +36,100 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_game_over" />
 
+    <TextView
+        android:id="@+id/text_info_extra_bullets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/light_grey"
+        android:padding="8dp"
+        android:text="Extra bullets"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_bulletst_left" />
+
     <Button
         android:id="@+id/button_play_again"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/ic_play_again_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_info" />
+        app:layout_constraintTop_toBottomOf="@+id/text_extra_bullets_left"
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
-        android:id="@+id/button_exit"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/button_extra_bullets"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_close_button"
+        android:background="@drawable/ic_extra_bullets_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_play_again"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_info" />
+        app:layout_constraintTop_toBottomOf="@+id/text_extra_bullets_left"
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/button_watch_ad"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/ic_watch_ad_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/button_play_again"
+        app:layout_constraintTop_toBottomOf="@+id/text_extra_bullets_left"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/text_bulletst_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_info" />
+
+    <TextView
+        android:id="@+id/text_extra_bullets_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_info_extra_bullets" />
+
+    <Button
+        android:id="@+id/button_exit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_close_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

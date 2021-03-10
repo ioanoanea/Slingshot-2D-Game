@@ -2,8 +2,8 @@ package com.ioanoanea.slingshot.Levels;
 
 import android.content.Context;
 
-import com.ioanoanea.slingshot.GameObject.Obstacle;
-import com.ioanoanea.slingshot.GameObject.TargetObject;
+import com.ioanoanea.slingshot.GameObjects.Obstacle;
+import com.ioanoanea.slingshot.GameObjects.TargetObject;
 
 import java.util.ArrayList;
 

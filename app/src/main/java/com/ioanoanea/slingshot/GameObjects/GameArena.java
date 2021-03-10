@@ -1,11 +1,8 @@
-package com.ioanoanea.slingshot.GameObject;
+package com.ioanoanea.slingshot.GameObjects;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.DisplayMetrics;
-import android.widget.Toast;
 
 import com.ioanoanea.slingshot.R;
 

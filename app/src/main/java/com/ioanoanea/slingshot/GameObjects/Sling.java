@@ -1,11 +1,11 @@
-package com.ioanoanea.slingshot.GameObject;
+package com.ioanoanea.slingshot.GameObjects;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import com.ioanoanea.slingshot.MathObject.DistanceCalculator;
+import com.ioanoanea.slingshot.MathObjects.DistanceCalculator;
 import com.ioanoanea.slingshot.R;
 
 public class Sling extends Object {

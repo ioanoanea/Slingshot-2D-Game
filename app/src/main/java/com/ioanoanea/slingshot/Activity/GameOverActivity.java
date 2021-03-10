@@ -29,11 +29,13 @@ import com.ioanoanea.slingshot.R;
 
 public class GameOverActivity extends AppCompatActivity {
 
-    private TextView textInfo;
+    private TextView extraBulletsText;
     private Button playAgainButton;
     private Button exitButton;
     private Button watchAdButton;
+    private Button extraBulletsButton;
     private RewardedAd mRewardedAd;
+    private BulletManager bulletManager;
 
 
     @Override
@@ -42,8 +44,16 @@ public class GameOverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
 
         setView();
-        resizeWindow();
+        // resizeWindow();
 
+        // display extra bullets number
+        bulletManager = new BulletManager(this);
+        extraBulletsText.setText(String.valueOf(bulletManager.getBullets()));
+
+        // hide extra bullets button when there are no extra bullets
+        if (bulletManager.getBullets() == 0){
+            extraBulletsButton.setVisibility(View.INVISIBLE);
+        }
 
         // initialize ad request
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -104,6 +114,14 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
+        extraBulletsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bulletManager.unlockExtraBullets();
+                GameOverActivity.this.finish();
+            }
+        });
+
         watchAdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +129,7 @@ public class GameOverActivity extends AppCompatActivity {
                 if (mRewardedAd != null) {
                     Activity activityContext = GameOverActivity.this;
                     mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        boolean rewardClaimed = false;
                         @Override
                         public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                             // Handle the reward.
@@ -118,10 +137,10 @@ public class GameOverActivity extends AppCompatActivity {
                             // get reward data
                             int rewardAmount = rewardItem.getAmount();
                             String rewardType = rewardItem.getType();
-                            Toast.makeText(activityContext, "Amount: " + rewardAmount, Toast.LENGTH_SHORT).show();
                             // add rewarded bullets to bullet manager
                             BulletManager bulletManager = new BulletManager(GameOverActivity.this);
                             bulletManager.addBullets(1);
+                            rewardClaimed = true;
                         }
                     });
                 } else {
@@ -136,10 +155,11 @@ public class GameOverActivity extends AppCompatActivity {
      * Set activity views
      */
     private void setView(){
-        textInfo = findViewById(R.id.text_info);
+        extraBulletsText = findViewById(R.id.text_extra_bullets_left);
         playAgainButton = findViewById(R.id.button_play_again);
         exitButton = findViewById(R.id.button_exit);
         watchAdButton = findViewById(R.id.button_watch_ad);
+        extraBulletsButton = findViewById(R.id.button_extra_bullets);
     }
 
     /**

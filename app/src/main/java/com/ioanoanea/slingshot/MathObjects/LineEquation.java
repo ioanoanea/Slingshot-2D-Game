@@ -1,4 +1,4 @@
-package com.ioanoanea.slingshot.MathObject;
+package com.ioanoanea.slingshot.MathObjects;
 
 
 import android.content.res.Resources;

@@ -3,7 +3,7 @@ package com.ioanoanea.slingshot.Animation;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import com.ioanoanea.slingshot.GameObject.TargetObject;
+import com.ioanoanea.slingshot.GameObjects.TargetObject;
 
 import java.util.ArrayList;
 import java.util.Random;

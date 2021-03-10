@@ -27,7 +27,6 @@ public class BulletManager {
         editor.apply();
     }
 
-
     /**
      * Returns current number of bullets
      * @return (int) number of bullets
@@ -35,7 +34,6 @@ public class BulletManager {
     public int getBullets(){
         return sharedPreferences.getInt("BULLETS", 0);
     }
-
 
     /**
      * Increase current number by a given value
@@ -45,7 +43,6 @@ public class BulletManager {
         setBullets(getBullets() + bullets);
     }
 
-
     /**
      * Decreases current number of bullets by a given value
      * @param bullets (int) number of bullets to be decreased by
@@ -53,4 +50,29 @@ public class BulletManager {
     public void removeBullets(int bullets){
         setBullets(getBullets() - bullets);
     }
+
+    /**
+     * Unlock extra bullets to be used in game
+     */
+    public void unlockExtraBullets(){
+        editor.putBoolean("UNLOCKED", true);
+        editor.apply();
+    }
+
+    /**
+     * Check if extra bullets are unlocked
+     * @return true if unlocked, false otherwise
+     */
+    public boolean extraBulletsUnlocked(){
+        return sharedPreferences.getBoolean("UNLOCKED", false);
+    }
+
+    /**
+     * Lock extra bullets
+     */
+    public void lockExtraBullets() {
+        editor.putBoolean("UNLOCKED", false);
+        editor.apply();
+    }
+
 }

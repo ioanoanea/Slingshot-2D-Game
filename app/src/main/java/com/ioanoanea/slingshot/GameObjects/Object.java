@@ -1,8 +1,6 @@
-package com.ioanoanea.slingshot.GameObject;
+package com.ioanoanea.slingshot.GameObjects;
 
 import android.content.Context;
-
-import com.ioanoanea.slingshot.GameEngine.GameRender;
 
 public class Object {
 

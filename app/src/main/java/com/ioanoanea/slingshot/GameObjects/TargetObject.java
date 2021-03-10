@@ -1,4 +1,4 @@
-package com.ioanoanea.slingshot.GameObject;
+package com.ioanoanea.slingshot.GameObjects;
 
 import android.content.Context;
 import android.graphics.Canvas;

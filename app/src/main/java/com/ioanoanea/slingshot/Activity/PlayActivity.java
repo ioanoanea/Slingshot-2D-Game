@@ -6,11 +6,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.dynamic.ObjectWrapper;
+import com.google.gson.Gson;
 import com.ioanoanea.slingshot.GameEngine.GameRender;
 import com.ioanoanea.slingshot.Levels.Level;
 import com.ioanoanea.slingshot.Levels.LevelList;
@@ -52,8 +56,12 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnBulletShot(new GameRender.OnBulletShotListener() {
             @Override
             public void onShot() {
-                bulletsText.setText(String.valueOf(bulletsNumber - 1));
-                bulletsNumber--;
+                if (bulletsNumber > 0){
+                    bulletsText.setText(String.valueOf(bulletsNumber - 1));
+                    bulletsNumber--;
+                } else {
+                    bulletsText.setText(String.valueOf(bulletManager.getBullets() - 1));
+                }
             }
         });
 
@@ -61,9 +69,6 @@ public class PlayActivity extends AppCompatActivity {
         gameRender.setOnLastBulletDestroyed(new GameRender.OnLastBulletDestroyedListener() {
             @Override
             public void onDestroyed() {
-                if (bulletManager.getBullets() != 0){
-                    startActivity(new Intent(PlayActivity.this, ExtraBulletsActivity.class));
-                }
                 startActivity(new Intent(PlayActivity.this, GameOverActivity.class));
             }
         });
@@ -105,6 +110,13 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bulletsNumber == 0 && bulletManager.extraBulletsUnlocked()){
+            bulletsText.setText(String.valueOf(bulletManager.getBullets()));
+        }
+    }
 
     /**
      * Hide system UI
