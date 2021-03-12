@@ -103,6 +103,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Hide system UI
+     * Remove nav bar and notification bar
+     * Set fullscreen
+     */
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -120,6 +125,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Set activity views
+     */
     private void setViews(){
         playButton = findViewById(R.id.play_button);
         shopButton = findViewById(R.id.shop_button);

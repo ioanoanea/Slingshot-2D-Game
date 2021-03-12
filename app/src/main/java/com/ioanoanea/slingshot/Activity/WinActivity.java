@@ -61,6 +61,7 @@ public class WinActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
     }
 
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(WinActivity.this, HomeActivity.class);

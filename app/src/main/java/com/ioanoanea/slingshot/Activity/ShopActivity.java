@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.billingclient.api.BillingClient;
@@ -26,9 +27,9 @@ import java.util.List;
 public class ShopActivity extends AppCompatActivity {
 
     private RecyclerView container;
-    private TextView levleText;
     private TextView bulletsText;
     private TextView coinsText;
+    private Button closeButton;
     private ShopContainerAdapter adapter;
     private LevelManager levelManager;
     private BulletManager bulletManager;
@@ -48,9 +49,15 @@ public class ShopActivity extends AppCompatActivity {
         coinManager = new CoinManager(this);
 
         // set info text
-        levleText.setText("Level: " + levelManager.getLevel());
         bulletsText.setText(String.valueOf(bulletManager.getBullets()));
         coinsText.setText(String.valueOf(coinManager.getCoins()));
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // set container adapter
         adapter = new ShopContainerAdapter(this);
@@ -68,6 +75,11 @@ public class ShopActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Hide system UI
+     * Remove nav bar and notification bar
+     * Set fullscreen
+     */
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -89,8 +101,8 @@ public class ShopActivity extends AppCompatActivity {
      */
     private void setViews(){
         container = findViewById(R.id.shop_container);
-        levleText = findViewById(R.id.level_text);
         bulletsText = findViewById(R.id.bullets_text);
         coinsText = findViewById(R.id.coins_text);
+        closeButton = findViewById(R.id.button_close);
     }
 }

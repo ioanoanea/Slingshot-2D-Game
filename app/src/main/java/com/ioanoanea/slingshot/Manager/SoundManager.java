@@ -41,8 +41,8 @@ public class SoundManager {
     /**
      * Check if sound is on
      */
-    private void checkSoundOn(){
-        sharedPreferences.getBoolean("SOUND", true);
+    public boolean checkSoundOn(){
+        return sharedPreferences.getBoolean("SOUND", true);
     }
 
     /**
