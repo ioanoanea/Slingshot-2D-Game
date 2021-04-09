@@ -18,7 +18,7 @@ public class SoundManager {
     @SuppressLint("CommitPrefEdits")
     public SoundManager(Context context){
         this.context = context;
-        sharedPreferences = context.getSharedPreferences("SOUND",0);
+        sharedPreferences = context.getSharedPreferences("SOUND_MANAGER",0);
         editor = sharedPreferences.edit();
     }
 

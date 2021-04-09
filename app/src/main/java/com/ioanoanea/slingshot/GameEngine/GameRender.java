@@ -215,28 +215,31 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         soundManager = new SoundManager(getContext());
         bulletManager = new BulletManager(getContext());
 
-        // set target objects inside arena
-        for (i = 0; i < targetObjects.size(); i++){
-            TargetObject targetObject = new TargetObject(getContext(), targetObjects.get(i).getPositionX(),
-                    targetObjects.get(i).getPositionY(), getWidth(), getHeight());
-            targetObject.setOnDestroyed(new Object.DestroyListener() {
-                @Override
-                public void onDestroyed() {
-                    destroyedTargetObjects++;
-                    if (destroyedTargetObjects == targetObjects.size()){
-                        onLastTargetObjectDestroyedListener.onDestroyed();
-                        gameLoop.pause();
-                    }
-                }
-            });
-            targetObjects.set(i, targetObject);
-        }
-
         // set obstacles inside the arena
         for (i = 0; i < obstacles.size(); i++){
             Obstacle obstacle = new Obstacle(getContext(), obstacles.get(i).getLeft(), obstacles.get(i).getRight(),
                     obstacles.get(i).getTop(), obstacles.get(i).getBottom(), getWidth(), getHeight());
             obstacles.set(i, obstacle);
+        }
+
+        // set target objects inside arena
+        for (i = 0; i < targetObjects.size(); i++){
+            // if object was not destroyed
+            if (!targetObjects.get(i).isDestroyed()){
+                TargetObject targetObject = new TargetObject(getContext(), targetObjects.get(i).getPositionX(),
+                        targetObjects.get(i).getPositionY(), getWidth(), getHeight());
+                targetObject.setOnDestroyed(new Object.DestroyListener() {
+                    @Override
+                    public void onDestroyed() {
+                        destroyedTargetObjects++;
+                        if (destroyedTargetObjects == targetObjects.size()){
+                            onLastTargetObjectDestroyedListener.onDestroyed();
+                            gameLoop.pause();
+                        }
+                    }
+                });
+                targetObjects.set(i, targetObject);
+            }
         }
     }
 

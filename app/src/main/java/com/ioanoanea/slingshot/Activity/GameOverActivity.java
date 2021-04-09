@@ -49,12 +49,6 @@ public class GameOverActivity extends AppCompatActivity {
 
         // display extra bullets number
         bulletManager = new BulletManager(this);
-        extraBulletsText.setText(String.valueOf(bulletManager.getBullets()));
-
-        // hide extra bullets button when there are no extra bullets
-        if (bulletManager.getBullets() == 0){
-            extraBulletsButton.setVisibility(View.INVISIBLE);
-        }
 
         // initialize ad request
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -152,6 +146,21 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (hasFocus){
+            hideSystemUI();
+            extraBulletsText.setText(String.valueOf(bulletManager.getBullets()));
+
+            // hide extra bullets button when there are no extra bullets
+            if (bulletManager.getBullets() == 0){
+                extraBulletsButton.setVisibility(View.INVISIBLE);
+            } else {
+                extraBulletsButton.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     /**
      * Set activity views
      */
@@ -161,15 +170,6 @@ public class GameOverActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.button_exit);
         watchAdButton = findViewById(R.id.button_watch_ad);
         extraBulletsButton = findViewById(R.id.button_extra_bullets);
-    }
-
-    /**
-     * set window width and height
-     */
-    @SuppressLint("ResourceAsColor")
-    private void resizeWindow(){
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
     }
 
     /**

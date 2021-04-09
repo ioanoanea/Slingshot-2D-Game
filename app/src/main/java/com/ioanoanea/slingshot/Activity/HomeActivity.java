@@ -49,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         // set views
         setViews();
 
-        new SoundManager(this).loadSound(SoundManager.STRETCH);
-
         // set views user interaction
         levelText.setText("Level: " + String.valueOf(levelManager.getLevel()));
         bulletsText.setText(String.valueOf(bulletManager.getBullets()));
