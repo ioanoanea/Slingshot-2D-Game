@@ -2,6 +2,7 @@ package com.ioanoanea.slingshot.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,9 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.ioanoanea.slingshot.Activity.BuyObjectActivity;
 import com.ioanoanea.slingshot.BuildConfig;
+import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.CoinManager;
 import com.ioanoanea.slingshot.R;
 import com.ioanoanea.slingshot.ViewHolder.BuyBulletsViewHolder;
@@ -36,9 +39,13 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final Context context;
     private final PurchasesUpdatedListener purchasesUpdatedListener;
     private final BillingClient billingClient;
+    private CoinManager coinManager;
+    private BulletManager bulletManager;
 
     public ShopContainerAdapter(Context context){
         this.context = context;
+        this.coinManager = new CoinManager(context);
+        this.bulletManager = new BulletManager(context);
 
         // set purchases update listener
         purchasesUpdatedListener = new PurchasesUpdatedListener() {
@@ -90,7 +97,11 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
             viewHolder.item5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "You bought 5 bullets", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, "You bought 5 bullets", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, BuyObjectActivity.class);
+                    intent.putExtra("COUNT", 5);
+                    intent.putExtra("PRICE", 50);
+                    context.startActivity(intent);
                 }
             });
 
@@ -98,7 +109,11 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
             viewHolder.item25.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "You bought 25 bullets", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, "You bought 25 bullets", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, BuyObjectActivity.class);
+                    intent.putExtra("COUNT", 25);
+                    intent.putExtra("PRICE", 250);
+                    context.startActivity(intent);
                 }
             });
 
@@ -106,7 +121,11 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
             viewHolder.item50.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "You bought 50 bullets", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, "You bought 50 bullets", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, BuyObjectActivity.class);
+                    intent.putExtra("COUNT", 50);
+                    intent.putExtra("PRICE", 500);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -127,12 +146,12 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                         if (billingClient.isReady()){
                             // set items list
                             List<String> skuList = new ArrayList<>();
-                            skuList.add("10coins");
-                            skuList.add("25coins");
-                            skuList.add("50coins");
-                            skuList.add("100coins");
-                            skuList.add("250coins");
-                            skuList.add("500coins");
+                            skuList.add("1");
+                            skuList.add("2");
+                            skuList.add("3");
+                            skuList.add("4");
+                            skuList.add("5");
+                            skuList.add("6");
                             SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
                             params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
                             billingClient.querySkuDetailsAsync(params.build(),
