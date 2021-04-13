@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ioanoanea.slingshot.Animation.ViewAnimator;
 import com.ioanoanea.slingshot.R;
 
 public class BuyBulletsViewHolder extends RecyclerView.ViewHolder {

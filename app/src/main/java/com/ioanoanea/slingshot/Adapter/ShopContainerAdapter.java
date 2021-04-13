@@ -24,6 +24,7 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.ioanoanea.slingshot.Activity.BuyObjectActivity;
+import com.ioanoanea.slingshot.Animation.ViewAnimator;
 import com.ioanoanea.slingshot.BuildConfig;
 import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.CoinManager;
@@ -41,11 +42,13 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final BillingClient billingClient;
     private CoinManager coinManager;
     private BulletManager bulletManager;
+    private ViewAnimator viewAnimator;
 
     public ShopContainerAdapter(Context context){
         this.context = context;
         this.coinManager = new CoinManager(context);
         this.bulletManager = new BulletManager(context);
+        this.viewAnimator = new ViewAnimator(context);
 
         // set purchases update listener
         purchasesUpdatedListener = new PurchasesUpdatedListener() {
@@ -93,6 +96,11 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (holder.getItemViewType() == 0){
             final BuyBulletsViewHolder viewHolder = (BuyBulletsViewHolder) holder;
 
+            // animate views
+            viewAnimator.animate(viewHolder.item5, ViewAnimator.BOUNCE);
+            viewAnimator.animate(viewHolder.item25, ViewAnimator.BOUNCE, ViewAnimator.DURATION);
+            viewAnimator.animate(viewHolder.item50, ViewAnimator.BOUNCE, 2 * ViewAnimator.DURATION);
+
             // on item 5 bullets click
             viewHolder.item5.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -136,6 +144,14 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 throw new AssertionError("Assertion failed");
             }
             final BuyCoinsViewHolder viewHolder = (BuyCoinsViewHolder) holder;
+
+            // animate views
+            viewAnimator.animate(viewHolder.item10, ViewAnimator.BOUNCE);
+            viewAnimator.animate(viewHolder.item25, ViewAnimator.BOUNCE, ViewAnimator.DURATION);
+            viewAnimator.animate(viewHolder.item50, ViewAnimator.BOUNCE, 2 * ViewAnimator.DURATION);
+            viewAnimator.animate(viewHolder.item100, ViewAnimator.BOUNCE);
+            viewAnimator.animate(viewHolder.item250, ViewAnimator.BOUNCE, ViewAnimator.DURATION);
+            viewAnimator.animate(viewHolder.item500, ViewAnimator.BOUNCE, 2 * ViewAnimator.DURATION);
 
             // Establish a connection to Google Play
             billingClient.startConnection(new BillingClientStateListener() {

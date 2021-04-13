@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.ioanoanea.slingshot.Animation.ViewAnimator;
 import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.CoinManager;
 import com.ioanoanea.slingshot.Manager.LevelManager;
@@ -35,6 +36,8 @@ public class HomeActivity extends AppCompatActivity {
     private BulletManager bulletManager;
     private CoinManager coinManager;
 
+    private com.ioanoanea.slingshot.Animation.ViewAnimator viewAnimator;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         levelManager = new LevelManager(this);
         bulletManager = new BulletManager(this);
         coinManager = new CoinManager(this);
+        viewAnimator = new ViewAnimator(this);
 
         // set views
         setViews();
@@ -85,9 +89,6 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("HomeActivity", "Ads loaded");
             }
         });
-
-
-
     }
 
 
@@ -97,6 +98,10 @@ public class HomeActivity extends AppCompatActivity {
         if(hasFocus){
             // set fullscreen mode
             hideSystemUI();
+            // animate views
+            viewAnimator.animate(shopButton, ViewAnimator.SLIDE_DOWN);
+            viewAnimator.animate(playButton, ViewAnimator.SLIDE_DOWN, ViewAnimator.DURATION);
+            viewAnimator.animate(settingsButton, ViewAnimator.SLIDE_DOWN, 2 * ViewAnimator.DURATION);
         }
     }
 
