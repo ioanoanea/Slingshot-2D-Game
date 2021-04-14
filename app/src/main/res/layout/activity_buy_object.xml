@@ -30,7 +30,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_bullets"
         app:srcCompat="@drawable/magenta_circle" />
@@ -102,20 +101,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <TextView
-        android:id="@+id/text_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+    <Button
+        android:id="@+id/button_exit"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:text="x 10"
-        android:textColor="@color/white"
-        android:textSize="48sp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_close_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/image_bullets"
-        app:layout_constraintTop_toBottomOf="@+id/text_bullets" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

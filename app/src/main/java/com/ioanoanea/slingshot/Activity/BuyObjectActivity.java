@@ -18,9 +18,9 @@ import com.ioanoanea.slingshot.R;
 
 public class BuyObjectActivity extends AppCompatActivity {
 
-    private TextView textBulletCount;
     private TextView textPrice;
     private Button buy;
+    private Button exit;
     private CoinManager coinManager;
     private BulletManager bulletManager;
 
@@ -40,7 +40,6 @@ public class BuyObjectActivity extends AppCompatActivity {
         int price = intent.getIntExtra("PRICE", 0);
         int count = intent.getIntExtra("COUNT", 0);
 
-        textBulletCount.setText("x" + count);
         textPrice.setText("" + price);
 
         buy.setOnClickListener(new View.OnClickListener() {
@@ -58,12 +57,19 @@ public class BuyObjectActivity extends AppCompatActivity {
                 }
             }
         });
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuyObjectActivity.this.finish();
+            }
+        });
     }
 
     private void setViews(){
-        textBulletCount = findViewById(R.id.text_count);
         textPrice = findViewById(R.id.text_price);
         buy = findViewById(R.id.button_buy);
+        exit = findViewById(R.id.button_exit);
     }
 
     /**

@@ -33,6 +33,7 @@ import com.ioanoanea.slingshot.ViewHolder.BuyBulletsViewHolder;
 import com.ioanoanea.slingshot.ViewHolder.BuyCoinsViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -43,12 +44,23 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private CoinManager coinManager;
     private BulletManager bulletManager;
     private ViewAnimator viewAnimator;
+    private HashMap<String, Integer> purchasesDetails;
+    private OnCoinsPurchasedListener onCoinsPurchasedListener;
 
     public ShopContainerAdapter(Context context){
         this.context = context;
         this.coinManager = new CoinManager(context);
         this.bulletManager = new BulletManager(context);
         this.viewAnimator = new ViewAnimator(context);
+        this.purchasesDetails = new HashMap<>();
+
+        // set purchases amount details
+        purchasesDetails.put("1", 10);
+        purchasesDetails.put("2", 25);
+        purchasesDetails.put("3", 50);
+        purchasesDetails.put("4", 100);
+        purchasesDetails.put("5", 250);
+        purchasesDetails.put("6", 500);
 
         // set purchases update listener
         purchasesUpdatedListener = new PurchasesUpdatedListener() {
@@ -145,6 +157,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             final BuyCoinsViewHolder viewHolder = (BuyCoinsViewHolder) holder;
 
+
             // animate views
             viewAnimator.animate(viewHolder.item10, ViewAnimator.BOUNCE);
             viewAnimator.animate(viewHolder.item25, ViewAnimator.BOUNCE, ViewAnimator.DURATION);
@@ -161,7 +174,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                         // The BillingClient is ready. You can query purchases here.
                         if (billingClient.isReady()){
                             // set items list
-                            List<String> skuList = new ArrayList<>();
+                            ArrayList<String> skuList = new ArrayList<>();
                             skuList.add("1");
                             skuList.add("2");
                             skuList.add("3");
@@ -269,13 +282,13 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
      */
     private void purchaseItem(int item){
         if(billingClient.isReady()){
-            List<String> skuList = new ArrayList<> ();
-            skuList.add("10coins");
-            skuList.add("25coins");
-            skuList.add("50coins");
-            skuList.add("100coins");
-            skuList.add("250coins");
-            skuList.add("500coins");
+            ArrayList<String> skuList = new ArrayList<> ();
+            skuList.add("1");
+            skuList.add("2");
+            skuList.add("3");
+            skuList.add("4");
+            skuList.add("5");
+            skuList.add("6");
             SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
             params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
             billingClient.querySkuDetailsAsync(params.build(), new SkuDetailsResponseListener() {
@@ -323,6 +336,9 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     // Handle the success of the consume operation.
                     CoinManager coinManager = new CoinManager(context);
+                    coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
+                    // notify purchase
+                    onCoinsPurchasedListener.onPurchased();
                     Toast.makeText(context, purchase.getOrderId(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -330,5 +346,25 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         billingClient.consumeAsync(consumeParams, listener);
 
+    }
+
+    /**
+     * Set on coins purchased listener
+     * @param onCoinsPurchasedListener - listener
+     */
+    public void setOnCoinsPurchasedListener(OnCoinsPurchasedListener onCoinsPurchasedListener) {
+        this.onCoinsPurchasedListener = onCoinsPurchasedListener;
+    }
+
+    /**
+     * Handles coins purchases events
+     */
+    private interface OnCoinsPurchasedListener {
+        /**
+         * Method called when a purchase is made
+         * Must override this method with code that will be executed when a purchased is made
+         */
+        default void onPurchased() {
+        }
     }
 }

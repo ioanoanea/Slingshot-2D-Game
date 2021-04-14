@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_circle_grey"/>
+    <item android:drawable="@drawable/ic_close"
+        android:top="5dp"
+        android:bottom="5dp"
+        android:start="5dp"
+        android:end="5dp"/>
+</layer-list>
