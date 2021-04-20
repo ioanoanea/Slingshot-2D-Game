@@ -62,7 +62,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_5"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_5"
                 app:layout_constraintTop_toTopOf="@+id/image_background_item_5"
-                app:srcCompat="@drawable/magenta_circle" />
+                app:srcCompat="@drawable/ic_bullets_magenta" />
 
             <TextView
                 android:id="@+id/text_bullet_5"
@@ -142,7 +142,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_25"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_25"
                 app:layout_constraintTop_toTopOf="@+id/image_background_item_25"
-                app:srcCompat="@drawable/magenta_circle" />
+                app:srcCompat="@drawable/ic_bullets_magenta" />
 
             <TextView
                 android:id="@+id/text_bullet_25"
@@ -222,7 +222,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/image_background_item_50"
                 app:layout_constraintStart_toStartOf="@+id/image_background_item_50"
                 app:layout_constraintTop_toTopOf="@+id/image_background_item_50"
-                app:srcCompat="@drawable/magenta_circle" />
+                app:srcCompat="@drawable/ic_bullets_magenta" />
 
             <TextView
                 android:id="@+id/text_bullet_50"

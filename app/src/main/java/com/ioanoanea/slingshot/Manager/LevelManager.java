@@ -20,7 +20,6 @@ public class LevelManager {
         editor = sharedPreferences.edit();
     }
 
-
     /**
      * Set current level
      * saved in sharedPreferences
@@ -31,7 +30,6 @@ public class LevelManager {
         editor.apply();
     }
 
-
     /**
      * Returns current level
      * @return (int) current level
@@ -39,7 +37,6 @@ public class LevelManager {
     public int getLevel(){
         return sharedPreferences.getInt("LEVEL",1);
     }
-
 
     /**
      * Increases current level by 1

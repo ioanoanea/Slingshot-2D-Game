@@ -46,11 +46,13 @@ public class SoundManager {
     }
 
     /**
-     * Load sound
+     * Load sound if sound is on
      * @param sound (int) sound
      */
     public void loadSound(int sound){
-        MediaPlayer loadedSound = MediaPlayer.create(context, sound);
-        loadedSound.start();
+        if (checkSoundOn()){
+            MediaPlayer loadedSound = MediaPlayer.create(context, sound);
+            loadedSound.start();
+        }
     }
 }

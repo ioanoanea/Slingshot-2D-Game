@@ -13,11 +13,13 @@ public class Level {
     private final ArrayList<Obstacle> obstacles;
     private final ArrayList<TargetObject> targetObjects;
     private int bullets;
+    private int bonusCoins;
 
     public Level(Context context){
         this.context = context;
         obstacles = new ArrayList<>();
         targetObjects = new ArrayList<>();
+        bonusCoins = 5;
     }
 
     /**
@@ -50,6 +52,14 @@ public class Level {
     }
 
     /**
+     * Set bonus coins amount
+     * @param bonusCoins (int) bonus coins amount
+     */
+    public void setBonusCoins(int bonusCoins) {
+        this.bonusCoins = bonusCoins;
+    }
+
+    /**
      * Returns obstacles list
      * @return (ArrayList) a list with all obstacles
      */
@@ -71,5 +81,13 @@ public class Level {
      */
     public int getBullets() {
         return bullets;
+    }
+
+    /**
+     * Returns bonus coins amount
+     * @return (int) bonus coins amount
+     */
+    public int getBonusCoins() {
+        return bonusCoins;
     }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/dark_blue"/>
-    <corners android:radius="8dp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/dark_blue_button_shadow"
+        android:state_focused="false"
+        android:state_pressed="true"/>
+    <item android:drawable="@drawable/dark_blue_button_foreground"/>
+</selector>

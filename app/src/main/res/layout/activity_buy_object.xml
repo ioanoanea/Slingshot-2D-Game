@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/image_bullets"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_bullets"
-        app:srcCompat="@drawable/magenta_circle" />
+        app:srcCompat="@drawable/ic_bullets_magenta" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

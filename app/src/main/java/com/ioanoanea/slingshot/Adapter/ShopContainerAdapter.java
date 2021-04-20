@@ -108,10 +108,13 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (holder.getItemViewType() == 0){
             final BuyBulletsViewHolder viewHolder = (BuyBulletsViewHolder) holder;
 
-            // animate views
+            // animate item background
             viewAnimator.animate(viewHolder.item5, ViewAnimator.BOUNCE);
             viewAnimator.animate(viewHolder.item25, ViewAnimator.BOUNCE, ViewAnimator.DURATION);
             viewAnimator.animate(viewHolder.item50, ViewAnimator.BOUNCE, 2 * ViewAnimator.DURATION);
+
+            // animate item images
+            viewAnimator.animate(viewHolder.itemView, ViewAnimator.BOUNCE);
 
             // on item 5 bullets click
             viewHolder.item5.setOnClickListener(new View.OnClickListener() {
@@ -336,7 +339,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     // Handle the success of the consume operation.
                     CoinManager coinManager = new CoinManager(context);
-                    coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
+                    // coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
                     // notify purchase
                     onCoinsPurchasedListener.onPurchased();
                     Toast.makeText(context, purchase.getOrderId(), Toast.LENGTH_SHORT).show();

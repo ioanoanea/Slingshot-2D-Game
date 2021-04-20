@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ioanoanea.slingshot.Levels.Level;
 import com.ioanoanea.slingshot.Levels.LevelList;
+import com.ioanoanea.slingshot.Manager.CoinManager;
 import com.ioanoanea.slingshot.Manager.LevelManager;
 import com.ioanoanea.slingshot.R;
 
@@ -21,7 +23,10 @@ public class WinActivity extends AppCompatActivity {
     private Button nextLevelButton;
     private LevelManager levelManager;
     private LevelList levelList;
+    private TextView textBonusAmount;
+    private CoinManager coinManager;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,10 @@ public class WinActivity extends AppCompatActivity {
         // initialize level manger
         levelManager = new LevelManager(this);
         levelList = new LevelList(this);
+        coinManager = new CoinManager(this);
+
+        textBonusAmount.setText("+" + levelList.getLevels().get(levelManager.getLevel() - 1).getBonusCoins());
+        coinManager.addCoins(levelList.getLevels().get(levelManager.getLevel() - 1).getBonusCoins());
 
         nextLevelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +59,7 @@ public class WinActivity extends AppCompatActivity {
 
     private void setViews(){
         nextLevelButton = findViewById(R.id.button_next_level);
+        textBonusAmount = findViewById(R.id.text_bonus_amount);
     }
 
     /**

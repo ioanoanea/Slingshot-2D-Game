@@ -99,9 +99,9 @@ public class HomeActivity extends AppCompatActivity {
             // set fullscreen mode
             hideSystemUI();
             // animate views
-            viewAnimator.animate(shopButton, ViewAnimator.SLIDE_DOWN);
-            viewAnimator.animate(playButton, ViewAnimator.SLIDE_DOWN, ViewAnimator.DURATION);
-            viewAnimator.animate(settingsButton, ViewAnimator.SLIDE_DOWN, 2 * ViewAnimator.DURATION);
+            viewAnimator.animate(shopButton, ViewAnimator.BOUNCE_BALL);
+            viewAnimator.animate(playButton, ViewAnimator.BOUNCE_BALL, ViewAnimator.DURATION);
+            viewAnimator.animate(settingsButton, ViewAnimator.BOUNCE_BALL, 2 * ViewAnimator.DURATION);
         }
     }
 

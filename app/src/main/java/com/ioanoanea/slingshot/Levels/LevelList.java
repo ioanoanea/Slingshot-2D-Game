@@ -54,6 +54,16 @@ public class LevelList {
         level5.addObstacle(300, 200, 120);
         level5.setBullets(3);
         levels.add(level5);
+
+        // level 6
+        Level level6 = new Level(context);
+        level6.addTargetObject(50, 200);
+        level6.addTargetObject(-50, 200);
+        level6.addObstacle(0, 250, 100);
+        level6.addObstacle(2000, 250, 100);
+        level6.setBullets(3);
+        level6.setBonusCoins(6);
+        levels.add(level6);
     }
 
     /**

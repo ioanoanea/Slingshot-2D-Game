@@ -45,7 +45,9 @@ public class TargetObject extends Object {
         super(context);
 
         // set position X inside of screen
-        if (positionX * getDensity() < 15){
+        if (positionX < 0){
+            this.positionX = screenWidth / getDensity() + positionX;
+        } else if (positionX * getDensity() < 15){
             this.positionX = 15 / getDensity();
         } else if (positionX * getDensity() > screenWidth - 15){
             this.positionX = screenWidth / getDensity() - 15;
@@ -53,7 +55,9 @@ public class TargetObject extends Object {
             this.positionX = positionX;
         }
         // set position Y inside of screen
-        if (positionY * getDensity() < 25){
+        if (positionY < 0){
+            this.positionY = screenHeight / getDensity() +  positionY;
+        } else if (positionY * getDensity() < 25){
             this.positionY = 25 / getDensity();
             //this.positionY = 50 / getDensity();
         } else if (positionY * getDensity() > screenHeight - 15){

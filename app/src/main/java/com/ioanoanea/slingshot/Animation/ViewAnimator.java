@@ -9,10 +9,13 @@ import com.ioanoanea.slingshot.R;
 
 public class ViewAnimator {
 
-    private Context context;
-    public static final int DURATION = 250;
+    private final Context context;
+    public static final int DURATION = 150;
     public static final int SLIDE_DOWN = R.anim.slide_down;
     public static final int BOUNCE = R.anim.bounce;
+    public static final int BLINK = R.anim.blink;
+    public static final int SEQUENTIAL = R.anim.sequential;
+    public static final int BOUNCE_BALL = R.anim.bounce_ball;
 
     public ViewAnimator(Context context){
         this.context = context;

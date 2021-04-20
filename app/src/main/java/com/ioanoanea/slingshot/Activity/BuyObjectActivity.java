@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class BuyObjectActivity extends AppCompatActivity {
     private Button exit;
     private CoinManager coinManager;
     private BulletManager bulletManager;
+    private ImageView bulletImageView;
 
 
     @SuppressLint("SetTextI18n")
@@ -41,6 +44,18 @@ public class BuyObjectActivity extends AppCompatActivity {
         int count = intent.getIntExtra("COUNT", 0);
 
         textPrice.setText("" + price);
+
+        switch (count){
+            case 5:
+                bulletImageView.setImageResource(R.drawable.ic_bullets_5);
+                break;
+            case 25:
+                bulletImageView.setImageResource(R.drawable.ic_bullets_25);
+                break;
+            case 50:
+                bulletImageView.setImageResource(R.drawable.ic_bullets_50);
+                break;
+        }
 
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +85,7 @@ public class BuyObjectActivity extends AppCompatActivity {
         textPrice = findViewById(R.id.text_price);
         buy = findViewById(R.id.button_buy);
         exit = findViewById(R.id.button_exit);
+        bulletImageView = findViewById(R.id.image_bullets);
     }
 
     /**
