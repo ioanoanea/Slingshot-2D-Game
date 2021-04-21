@@ -48,10 +48,6 @@ public class ShopActivity extends AppCompatActivity {
         bulletManager = new BulletManager(this);
         coinManager = new CoinManager(this);
 
-        // set info text
-        bulletsText.setText(String.valueOf(bulletManager.getBullets()));
-        coinsText.setText(String.valueOf(coinManager.getCoins()));
-
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +57,14 @@ public class ShopActivity extends AppCompatActivity {
 
         // set container adapter
         adapter = new ShopContainerAdapter(this);
+
+        adapter.setOnCoinsPurchasedListener(new ShopContainerAdapter.OnCoinsPurchasedListener() {
+            @Override
+            public void onPurchased() {
+                coinsText.setText(String.valueOf(coinManager.getCoins()));
+            }
+        });
+
         container.setLayoutManager(new LinearLayoutManager(this));
         container.setAdapter(adapter);
     }
@@ -72,6 +76,10 @@ public class ShopActivity extends AppCompatActivity {
         if(hasFocus){
             // set fullscreen mode
             hideSystemUI();
+
+            // set info text
+            bulletsText.setText(String.valueOf(bulletManager.getBullets()));
+            coinsText.setText(String.valueOf(coinManager.getCoins()));
         }
     }
 

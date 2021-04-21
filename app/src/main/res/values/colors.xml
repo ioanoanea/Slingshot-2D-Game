@@ -11,7 +11,7 @@
     <color name="teal">#FF018786</color>
     <color name="light_grey">#818B9BA3</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#F3F3F3</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
@@ -21,5 +21,6 @@
     <color name="dark_green">#144150</color>
     <color name="dark">#101119</color>
     <color name="grey">#2B2C35</color>
+    <color name="red">#D80101</color>
 
 </resources>

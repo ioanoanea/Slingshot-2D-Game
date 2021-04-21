@@ -28,7 +28,7 @@ public class BuyObjectActivity extends AppCompatActivity {
     private ImageView bulletImageView;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,10 @@ public class BuyObjectActivity extends AppCompatActivity {
                 break;
         }
 
+        if (count != 0 && price != 0 && coinManager.getCoins() <= price){
+            buy.setTextColor(getResources().getColor(R.color.red));
+        }
+
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,10 @@ public class BuyObjectActivity extends AppCompatActivity {
                     if (coinManager.getCoins() >= price){
                         coinManager.removeCoins(price);
                         bulletManager.addBullets(count);
+                        Toast.makeText(BuyObjectActivity.this, "Bought " + count + " bullets!", Toast.LENGTH_SHORT).show();
+                        if (coinManager.getCoins() < price){
+                            buy.setTextColor(getResources().getColor(R.color.red));
+                        }
                     } else {
                         Toast.makeText(BuyObjectActivity.this, "You don't have enough  coins!", Toast.LENGTH_SHORT).show();
                     }

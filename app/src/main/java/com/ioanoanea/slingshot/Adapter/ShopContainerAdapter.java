@@ -26,6 +26,7 @@ import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.ioanoanea.slingshot.Activity.BuyObjectActivity;
 import com.ioanoanea.slingshot.Animation.ViewAnimator;
 import com.ioanoanea.slingshot.BuildConfig;
+import com.ioanoanea.slingshot.GameEngine.GameRender;
 import com.ioanoanea.slingshot.Manager.BulletManager;
 import com.ioanoanea.slingshot.Manager.CoinManager;
 import com.ioanoanea.slingshot.R;
@@ -339,7 +340,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     // Handle the success of the consume operation.
                     CoinManager coinManager = new CoinManager(context);
-                    // coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
+                    //coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
                     // notify purchase
                     onCoinsPurchasedListener.onPurchased();
                     Toast.makeText(context, purchase.getOrderId(), Toast.LENGTH_SHORT).show();
@@ -362,7 +363,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
     /**
      * Handles coins purchases events
      */
-    private interface OnCoinsPurchasedListener {
+    public interface OnCoinsPurchasedListener {
         /**
          * Method called when a purchase is made
          * Must override this method with code that will be executed when a purchased is made
@@ -370,4 +371,5 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
         default void onPurchased() {
         }
     }
+
 }

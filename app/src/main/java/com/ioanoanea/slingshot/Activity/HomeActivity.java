@@ -1,5 +1,6 @@
 package com.ioanoanea.slingshot.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -38,7 +39,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private com.ioanoanea.slingshot.Animation.ViewAnimator viewAnimator;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +52,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // set views
         setViews();
-
-        // set views user interaction
-        levelText.setText("Level: " + String.valueOf(levelManager.getLevel()));
-        bulletsText.setText(String.valueOf(bulletManager.getBullets()));
-        coinsText.setText(String.valueOf(coinManager.getCoins()));
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,19 +80,26 @@ public class HomeActivity extends AppCompatActivity {
         // initialize ads
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
                 Log.d("HomeActivity", "Ads loaded");
             }
         });
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if(hasFocus){
             // set fullscreen mode
             hideSystemUI();
+
+            // set views user interaction
+            levelText.setText("Level: " + levelManager.getLevel());
+            bulletsText.setText(String.valueOf(bulletManager.getBullets()));
+            coinsText.setText(String.valueOf(coinManager.getCoins()));
+
             // animate views
             viewAnimator.animate(shopButton, ViewAnimator.BOUNCE_BALL);
             viewAnimator.animate(playButton, ViewAnimator.BOUNCE_BALL, ViewAnimator.DURATION);

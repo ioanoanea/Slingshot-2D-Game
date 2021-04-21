@@ -118,6 +118,7 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Hide system UI
      * Remove nav bar and notification bar

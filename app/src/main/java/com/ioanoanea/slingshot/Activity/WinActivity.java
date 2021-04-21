@@ -50,7 +50,9 @@ public class WinActivity extends AppCompatActivity {
                     Toast.makeText(WinActivity.this, "This is the last level!", Toast.LENGTH_SHORT).show();
                 } else {
                     levelManager.nextLevel();
-                    startActivity(new Intent(WinActivity.this, PlayActivity.class));
+                    Intent intent = new Intent(WinActivity.this, PlayActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     WinActivity.this.finish();
                 }
             }
