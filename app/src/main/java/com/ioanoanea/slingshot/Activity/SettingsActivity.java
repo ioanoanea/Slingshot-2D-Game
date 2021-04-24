@@ -2,6 +2,7 @@ package com.ioanoanea.slingshot.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,8 @@ public class SettingsActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SettingsActivity.this, "Shared!", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(SettingsActivity.this, "Shared!", Toast.LENGTH_SHORT).show();
+                shareApp();
             }
         });
 
@@ -106,5 +108,15 @@ public class SettingsActivity extends AppCompatActivity {
         soundOffButton = findViewById(R.id.button_sound_off);
         shareButton = findViewById(R.id.button_share);
         closeButton = findViewById(R.id.button_close);
+    }
+
+    private void shareApp(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = getResources().getString(R.string.app_link);
+        String shareSub = "Your subject here";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
 }

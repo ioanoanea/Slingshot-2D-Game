@@ -64,6 +64,9 @@ public class LevelList {
         level6.setBullets(3);
         level6.setBonusCoins(6);
         levels.add(level6);
+
+        // level 7
+        Level level7 = new Level(context);
     }
 
     /**

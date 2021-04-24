@@ -343,7 +343,7 @@ public class ShopContainerAdapter extends RecyclerView.Adapter<RecyclerView.View
                     //coinManager.addCoins(purchasesDetails.get(purchase.getOrderId()));
                     // notify purchase
                     onCoinsPurchasedListener.onPurchased();
-                    Toast.makeText(context, purchase.getOrderId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, purchase.getSku(), Toast.LENGTH_SHORT).show();
                 }
             }
         };

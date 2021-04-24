@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +58,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // start PlayActivity
-                startActivity(new Intent(HomeActivity.this, PlayActivity.class));
+                Intent intent = new Intent(HomeActivity.this, PlayActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -65,7 +70,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // start ShopActivity
+                Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+                overridePendingTransition(R.anim.slide_in_front_from_left, R.anim.slide_right);
             }
         });
 
