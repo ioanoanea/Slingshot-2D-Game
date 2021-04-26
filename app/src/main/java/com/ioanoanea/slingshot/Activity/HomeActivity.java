@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity {
                 // start PlayActivity
                 Intent intent = new Intent(HomeActivity.this, PlayActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -67,7 +66,6 @@ public class HomeActivity extends AppCompatActivity {
                 // start ShopActivity
                 Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_front_from_left, R.anim.slide_left);
             }
@@ -78,9 +76,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // start SettingsActivity
                 // start ShopActivity
-                Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_front_from_right, R.anim.slide_right);
             }

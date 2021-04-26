@@ -9,8 +9,8 @@ android {
         applicationId "com.ioanoanea.slingshot"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 15
-        versionName "1.7.9"
+        versionCode 18
+        versionName "1.7.12"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -71,7 +71,7 @@ public class LevelList {
         // level 7
         Level level7 = new Level(context);
         level7.addObstacle(Obstacle.CENTER, 350, 120);
-        level7.addObstacle(new Obstacle(context, Object.RIGHT, Object.RIGHT + 20, 170, 370));
+        level7.addObstacle(new Obstacle(context, Object.RIGHT, Object.RIGHT + 20, 90, 370));
         level7.addTargetObject(Object.CENTER, 300);
         level7.setBullets(3);
         levels.add(level7);
@@ -80,7 +80,7 @@ public class LevelList {
         Level level8 = new Level(context);
         level8.addObstacle(Obstacle.LEFT, 350, 120);
         level8.addObstacle(Obstacle.LEFT, 450, 120);
-        level8.addObstacle(new Obstacle(context, Obstacle.RIGHT, Obstacle.RIGHT + 20, 350, 550));
+        level8.addObstacle(new Obstacle(context, Obstacle.RIGHT, Obstacle.RIGHT + 20, 350, 600));
         level8.addTargetObject(20, 300);
         level8.addTargetObject(20, 420);
         level8.setBullets(4);
