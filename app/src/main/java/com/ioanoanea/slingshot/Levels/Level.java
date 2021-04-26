@@ -34,6 +34,14 @@ public class Level {
     }
 
     /**
+     * Add obstacle
+     * @param obstacle (Obstacle) obstacle
+     */
+    public void addObstacle(Obstacle obstacle){
+        obstacles.add(obstacle);
+    }
+
+    /**
      * Add target object
      * @param positionX (double) position x
      * @param positionY (double) position y

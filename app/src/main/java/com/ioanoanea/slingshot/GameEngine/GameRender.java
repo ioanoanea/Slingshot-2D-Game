@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.ioanoanea.slingshot.GameObjects.Bullet;
 import com.ioanoanea.slingshot.GameObjects.GameArena;
@@ -217,8 +218,25 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
 
         // set obstacles inside the arena
         for (i = 0; i < obstacles.size(); i++){
-            Obstacle obstacle = new Obstacle(getContext(), obstacles.get(i).getLeft(), obstacles.get(i).getRight(),
-                    obstacles.get(i).getTop(), obstacles.get(i).getBottom(), getWidth(), getHeight());
+            double left;
+            double right;
+            double top;
+            double bottom;
+            if (Math.abs((obstacles.get(i).getRight() + obstacles.get(i).getLeft()) / 2 - Object.CENTER) < 0.01){
+                left = (double) getWidth() / 2 / getDensity() - (double) obstacles.get(i).getLength() / 2;
+                right = (double) getWidth() / 2 / getDensity() + (double) obstacles.get(i).getLength() / 2;
+            } else {
+                left = obstacles.get(i).getLeft();
+                right = obstacles.get(i).getRight();
+            }
+            if (Math.abs((obstacles.get(i).getBottom() + obstacles.get(i).getTop()) / 2 - Object.CENTER) < 0.01){
+                top = (double) getHeight() / 2 / getDensity() - (double) obstacles.get(i).getHeight() / 2;
+                bottom = (double) getHeight() / 2 / getDensity() + (double) obstacles.get(i).getHeight() / 2;
+            } else {
+                top = obstacles.get(i).getTop();
+                bottom = obstacles.get(i).getBottom();
+            }
+            Obstacle obstacle = new Obstacle(getContext(), left, right, top, bottom, getWidth(), getHeight());
             obstacles.set(i, obstacle);
         }
 
@@ -226,8 +244,19 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
         for (i = 0; i < targetObjects.size(); i++){
             // if object was not destroyed
             if (!targetObjects.get(i).isDestroyed()){
-                TargetObject targetObject = new TargetObject(getContext(), targetObjects.get(i).getPositionX(),
-                        targetObjects.get(i).getPositionY(), getWidth(), getHeight());
+                double positionX;
+                double positionY;
+                if (targetObjects.get(i).getPositionX() == Obstacle.CENTER){
+                    positionX = (double) getWidth() / 2 / getDensity();
+                } else {
+                    positionX = targetObjects.get(i).getPositionX();
+                }
+                if (targetObjects.get(i).getPositionY() == Obstacle.CENTER){
+                    positionY = (double)getHeight() / 2 / getDensity();
+                } else {
+                    positionY = targetObjects.get(i).getPositionY();
+                }
+                TargetObject targetObject = new TargetObject(getContext(), positionX, positionY, getWidth(), getHeight());
                 targetObject.setOnDestroyed(new Object.DestroyListener() {
                     @Override
                     public void onDestroyed() {
