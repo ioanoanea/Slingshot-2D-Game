@@ -16,7 +16,7 @@ public class AnimationObject {
      * @return (float) density
      */
     protected float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
+        return (float) context.getResources().getDisplayMetrics().widthPixels / 400;
     }
 
 }

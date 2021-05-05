@@ -306,7 +306,7 @@ public class GameRender extends SurfaceView implements SurfaceHolder.Callback {
      * @return (float) density
      */
     private float getDensity(){
-        return getContext().getResources().getDisplayMetrics().density;
+        return (float) getContext().getResources().getDisplayMetrics().widthPixels / 400;
     }
 
     /**

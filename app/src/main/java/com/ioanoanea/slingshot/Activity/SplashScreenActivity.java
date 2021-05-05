@@ -3,7 +3,6 @@ package com.ioanoanea.slingshot.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,31 +10,26 @@ import android.widget.ImageView;
 
 import com.ioanoanea.slingshot.R;
 
+
 public class SplashScreenActivity extends AppCompatActivity {
 
-    public static final int SPLASH_DISPLAY_LENGTH = 2000;
+    public static final int SPLASH_DISPLAY_LENGTH = 3000;
     private ImageView animationImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        hideSystemUI();
         setViews();
-
-        animationImage.setBackgroundResource(R.drawable.start_animation);
-        AnimationDrawable startAnimation = (AnimationDrawable) animationImage.getBackground();
-        startAnimation.start();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(SplashScreenActivity.this, HomeActivity.class));
                 SplashScreenActivity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+        hideSystemUI();
     }
 
     /**

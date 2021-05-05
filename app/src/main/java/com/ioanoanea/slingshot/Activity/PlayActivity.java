@@ -144,4 +144,9 @@ public class PlayActivity extends AppCompatActivity {
     public void onBackPressed() {
         PlayActivity.this.finish();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

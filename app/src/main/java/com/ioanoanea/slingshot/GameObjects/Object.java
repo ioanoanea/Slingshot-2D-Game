@@ -8,7 +8,7 @@ public class Object {
     protected DestroyListener destroyListener;
     public static final double CENTER = -0.5;
     public static final double LEFT = 0;
-    public static final double RIGHT = 5000;
+    public static final double RIGHT = 400;
     public static final double TOP = 0;
     public static final double BOTTOM = 5000;
 
@@ -22,7 +22,7 @@ public class Object {
      * @return (float) density
      */
     protected float getDensity(){
-        return context.getResources().getDisplayMetrics().density;
+        return (float) context.getResources().getDisplayMetrics().widthPixels / 400;
     }
 
     public interface DestroyListener {
