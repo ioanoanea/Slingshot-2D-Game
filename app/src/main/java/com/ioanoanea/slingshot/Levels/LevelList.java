@@ -196,8 +196,7 @@ public class LevelList {
 
         // level 18
         Level level18 = new Level(context);
-        level18.addObstacle(new Obstacle(context, 0, 90, 100, 120));
-        level18.addObstacle(new Obstacle(context, 140, 400, 100, 120));
+        level18.addObstacle(new Obstacle(context, 0, 400, 100, 120));
         level18.addObstacle(new Obstacle(context, 380, 400, 120, 240));
         level18.addObstacle(new Obstacle(context, 0, 240, 240, 260));
         level18.addObstacle(new Obstacle(context, 300, 400, 240, 260));
@@ -206,8 +205,24 @@ public class LevelList {
         level18.addTargetObject(260, 350);
         level18.addTargetObject(100, 200);
         level18.setBullets(4);
-        level18.setBonusCoins(7);
+        level18.setBonusCoins(6);
         levels.add(level18);
+
+        // level 19
+        Level level19 = new Level(context);
+        level19.addObstacle(new Obstacle(context, 0, 90, 100, 120));
+        level19.addObstacle(new Obstacle(context, 140, 400, 100, 120));
+        level19.addObstacle(new Obstacle(context, 380, 400, 120, 240));
+        level19.addObstacle(new Obstacle(context, 0, 240, 240, 260));
+        level19.addObstacle(new Obstacle(context, 300, 400, 240, 260));
+        level19.addObstacle(new Obstacle(context, 0, 20, 260, 420));
+        level19.addObstacle(new Obstacle(context, 100, 400, 380, 400));
+        level19.addTargetObject(260, 350);
+        level19.addTargetObject(100, 200);
+        level19.addTargetObject(115, 75);
+        level19.setBullets(5);
+        level19.setBonusCoins(7);
+        levels.add(level19);
     }
 
     /**
