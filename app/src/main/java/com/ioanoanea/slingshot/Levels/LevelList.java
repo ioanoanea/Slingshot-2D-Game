@@ -149,6 +149,47 @@ public class LevelList {
         level14.setBonusCoins(7);
         level14.setBullets(4);
         levels.add(level14);
+
+        // level 15
+        Level level15 = new Level(context);
+        level15.addObstacle(new Obstacle(context, 0, 50, 170, 190));
+        level15.addObstacle(new Obstacle(context, 75, 120, 170, 190));
+        level15.addObstacle(new Obstacle(context, 0, 20, 190, 300));
+        level15.addObstacle(new Obstacle(context, 120, 140, 170, 300));
+        level15.addObstacle(new Obstacle(context, 0, 140, 300, 320));
+        level15.addTargetObject(70, 250);
+        level15.setBullets(2);
+        level15.setBonusCoins(5);
+        levels.add(level15);
+
+        // level 16
+        Level level16 = new Level(context);
+        level16.addObstacle(new Obstacle(context, 0, 50, 170, 190));
+        level16.addObstacle(new Obstacle(context, 75, 120, 170, 190));
+        level16.addObstacle(new Obstacle(context, 0, 20, 190, 300));
+        level16.addObstacle(new Obstacle(context, 120, 140, 170, 300));
+        level16.addObstacle(new Obstacle(context, 0, 140, 300, 320));
+        level16.addTargetObject(70, 250);
+        level16.addObstacle(new Obstacle(context, 280, 320, 210, 230));
+        level16.addObstacle(new Obstacle(context, 345, 400, 210, 230));
+        level16.addObstacle(new Obstacle(context, 260, 280, 210, 360));
+        level16.addObstacle(new Obstacle(context, 380, 400, 230,340));
+        level16.addObstacle(new Obstacle(context, 280, 400, 340, 360));
+        level16.addTargetObject(320, 300);
+        level16.setBullets(3);
+        level16.setBonusCoins(6);
+        levels.add(level16);
+
+        // level 17
+        Level level17 = new Level(context);
+        level17.addObstacle(new Obstacle(context, 0, 50, 170, 190));
+        level17.addObstacle(new Obstacle(context, 75, 120, 170, 190));
+        level17.addObstacle(new Obstacle(context, 0, 20, 190, 500));
+        level17.addObstacle(new Obstacle(context, 120, 140, 170, 500));
+        level17.addObstacle(new Obstacle(context, 35, 140, 300, 320));
+        level17.addTargetObject(70, 250);
+        level17.setBullets(3);
+        levels.add(level17);
     }
 
     /**
