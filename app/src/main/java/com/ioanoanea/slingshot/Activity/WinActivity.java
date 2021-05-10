@@ -48,13 +48,16 @@ public class WinActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (levelList.getLevels().size() == levelManager.getLevel()){
                     Toast.makeText(WinActivity.this, "This is the last level!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(WinActivity.this, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 } else {
                     levelManager.nextLevel();
                     Intent intent = new Intent(WinActivity.this, PlayActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    WinActivity.this.finish();
                 }
+                WinActivity.this.finish();
             }
         });
     }

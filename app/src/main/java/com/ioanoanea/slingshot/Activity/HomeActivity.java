@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -32,6 +34,9 @@ public class HomeActivity extends AppCompatActivity {
     private LevelManager levelManager;
     private BulletManager bulletManager;
     private CoinManager coinManager;
+    private boolean backPressedOnce = false;
+
+    private static int SPLASH_SCREEN_TIME = 2000;
 
     private com.ioanoanea.slingshot.Animation.ViewAnimator viewAnimator;
 
@@ -92,7 +97,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -107,12 +111,28 @@ public class HomeActivity extends AppCompatActivity {
             coinsText.setText(String.valueOf(coinManager.getCoins()));
 
             // animate views
-            viewAnimator.animate(shopButton, ViewAnimator.BOUNCE_BALL);
-            viewAnimator.animate(playButton, ViewAnimator.BOUNCE_BALL, ViewAnimator.DURATION);
-            viewAnimator.animate(settingsButton, ViewAnimator.BOUNCE_BALL, 2 * ViewAnimator.DURATION);
+            viewAnimator.animate(shopButton, ViewAnimator.BOUNCE_BALL, SPLASH_SCREEN_TIME);
+            viewAnimator.animate(playButton, ViewAnimator.BOUNCE_BALL, SPLASH_SCREEN_TIME + ViewAnimator.DURATION);
+            viewAnimator.animate(settingsButton, ViewAnimator.BOUNCE_BALL,SPLASH_SCREEN_TIME + 2 * ViewAnimator.DURATION);
+            SPLASH_SCREEN_TIME = 0;
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce){
+            HomeActivity.this.finish();
+        } else {
+            backPressedOnce = true;
+            Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressedOnce = false;
+                }
+            }, 2000);
+        }
+    }
 
     /**
      * Hide system UI
